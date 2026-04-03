@@ -42,8 +42,8 @@ Lastly, in some protocols the library is amplified with a PCR step, to increase 
 
 The goal of library PCR is to add the remaining adapter sequences (if using indexed primers) and to amplify the library to a measurable concentration (typically 2–10 nM for loading). When deciding on the number of PCR cycles, two scenarios need to be avoided:
 
--	Under-amplification: Leads to a library concentration below the detection limit of the Qubit or TapeStation (<0.5ng/µl), making accurate loading impossible.
--	Over-amplification: Leads to PCR duplicates (reducing unique data) and heteroduplexes (the "bubble product").
+-	**Under-amplification:** Leads to a library concentration below the detection limit of the Qubit or TapeStation (<0.5ng/µl), making accurate loading impossible.
+-	**Over-amplification:** Leads to PCR duplicates (reducing unique data) and heteroduplexes (the "bubble product").
 
 | Input DNA | Typical cycle range |
 |-----------|---------------------|
@@ -60,5 +60,5 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
 
 -	**Use high-fidelity polymerases** (KAPA HiFi, Q5 (NEB), or Phusion): Less error-rates and GC bias than taq polymerases, and proof-reading activity (exonuclease 3´-> 5´).
 -	**Hot-Start technology:** Prevents non-specific amplification at room temperature before the thermocycler starts. This is crucial for reducing Primer Dimers.
--	Final concentration: A well-designed PCR should aim for a final library concentration of >10 nM. This provides enough material for multiple sequencing runs and long-term storage.
+-	**Final concentration:** A well-designed PCR should aim for a final library concentration of >10 nM. This provides enough material for multiple sequencing runs and long-term storage.
 
