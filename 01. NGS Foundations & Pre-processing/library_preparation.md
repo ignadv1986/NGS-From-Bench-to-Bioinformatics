@@ -75,7 +75,7 @@ If an **HMW** (high molecular weight) smear is present, this is usually due to a
 - **Molarity Calculation**
 
 Sequencers don’t take absolute quantities of DNA, they work on molarities. In PCR-free protocols, where the quantification is done through qPCR (see above), the molarity (in nM) is already obtained. If no qPCR was done, then the formula to calculate the molarity of a library is:
-**Molarity (nM) = Concentration (ng/µL)×$10^6$ / Fragment length (bp) x 660**
+**Molarity (nM) = Concentration (ng/µL)×10<sup>6</sup> / Fragment length (bp) x 660**
 This is assuming the result is in nM, where 660 is tha average molecular weight of a bp, the average fragment length is provided by the TapeStation/fragment analyzer, and the concentration is obtained from the mass provided by the Qubit quantification. 
 Note: Always use the region tool in the TapeStation software to capture the entire smear, not just the highest peak, to get a true "average bp" for the formula.
 
