@@ -1,4 +1,4 @@
-# **Library Preparation**
+# Library Preparation
 
 Understanding the chemistry of reversible terminators explains how a single molecule is read. However, to achieve massively parallel sequencing, we must first transform raw biological samples (DNA or RNA) into a format the sequencer can recognize, capture, and amplify. This brings us to **library preparation**.
 
