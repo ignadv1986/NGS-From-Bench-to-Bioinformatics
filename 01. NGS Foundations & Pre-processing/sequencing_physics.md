@@ -13,7 +13,7 @@ While Sanger relies on physical separation by size, the leap to NGS was made pos
 | Slow | Fast |
 | Limited throughput | Detects small changes |
 
--**Library Preparation**
+- **Library Preparation**
 
 Understanding the chemistry of reversible terminators explains how a single molecule is read. However, to achieve massively parallel sequencing, we must first transform raw biological samples (DNA or RNA) into a format the sequencer can recognize, capture, and amplify. This brings us to **library preparation**.
 
@@ -55,3 +55,10 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
 **PCR duplicates:** Because some DNA fragments can be amplified more efficiently than others (medium GC content, no hairpins, etc.), when we amplify for too long we risk getting an overrepresentation of these fragments in the final sample. These can take more space in the flow cell, preventing detection of other fragments that, even though were present in the original sample, were not amplified as much. This is often called a reduction in library complexity or diversity.
 
 **The Bubble Product (heteroduplex):** In the final stages of the library PCR, primers get depleted (they run out) and there is an overabundance of DNA fragments. Instead of a primer binding to a template, two full-length library fragments denature (separate) and then accidentally anneal (re-bind) to each other. Since the adapters are identical for all fragments, they zip up perfectly. However, the genomic inserts (the middle part) are different. They are not complementary. The result is a DNA molecule that is double-stranded at the ends (the adapters), but single-stranded in the middle, forming a bubble (heteroduplex). These molecules are less dynamic and migrate slower in an electrophoresis, so they give rise to a high molecular weight peak . However, the sequencer denatures the dsDNA, so this will have no consequences on the sequencing itself. This is a problem of overamplification, so reducing the amount of PCR cycles to reduce reactive use is recommended.
+
+**Thing to consider when designing the library PCR:**
+
+-	**Use high-fidelity polymerases** (KAPA HiFi, Q5 (NEB), or Phusion): Less error-rates and GC bias than taq polymerases, and proof-reading activity (exonuclease 3´-> 5´).
+-	**Hot-Start technology:** Prevents non-specific amplification at room temperature before the thermocycler starts. This is crucial for reducing Primer Dimers.
+-	Final concentration: A well-designed PCR should aim for a final library concentration of >10 nM. This provides enough material for multiple sequencing runs and long-term storage.
+
