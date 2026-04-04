@@ -37,4 +37,13 @@ Sam are human-readable text files, where each line is tab-delimited, showing:
 - the position
 - the **CIGAR string**. This is a compact code that describes the extend part of the mapping. For example, 150M means 150 bases matched perfectly, while 100M2D48M means 100 matches, a 2-base deletion, and 48 more matches.
 
+| Letter	| Meaning	| What it looks like |
+|---------|---------|--------------------|
+| M	| Alignment Match	| The bases align (can be a match or a mismatch) |
+| I	| Insertion	| The read has extra bases that the reference doesn't |
+| D	| Deletion	| The reference has bases that the read is missing |
+| S	| Soft-clipping	| These bases are at the ends and didn't match, so the aligner ignored them |
+
+**Note:** The presence of many S (Soft-clipping) in a BAM file usually means that the adapter trimming (with fastp or cutadapt) didn't work perfectly. The aligner is doing the work by hiding the adapters so the read can still map.
+
 Due to the immense size of sequencing data, SAM files are typically converted into **BAM** (Binary Alignment Map) files. BAM files are compressed, non-human-readable versions of SAM files that allow for much faster data processing and significantly reduced storage footprints. For most downstream analyses, BAM files must be sorted by genomic coordinate and indexed (creating a .bai file) to allow software to quickly access specific regions of the genome.
