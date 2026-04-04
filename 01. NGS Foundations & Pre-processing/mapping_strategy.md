@@ -1,6 +1,6 @@
 # Mapping the Reads to a Reference Genome
 
-Once the sequencing data has been cleaned and validated through QC, the next step in the primary analysis pipeline is **mapping** or **alignment**. This is the process of determining the original coordinate of each DNA fragment by comparing the sequences in the FASTQ files to a known **reference genome**. Choosing the correct reference and the appropriate alignment algorithm is critical, as any errors at this stage—such as mismatches or multi-mapping reads—will propagate through to the final analysis.
+Once the sequencing data has been cleaned and validated through QC, the next step in the primary analysis pipeline is the **mapping** or **alignment**. This is the process of determining the original coordinate of each DNA fragment by comparing the sequences in the FASTQ files to a known **reference genome**. Choosing the correct reference and the appropriate alignment algorithm is critical, as any errors at this stage—such as mismatches or multi-mapping reads—will propagate through to the final analysis.
 
 ## Reference Genomes
 
