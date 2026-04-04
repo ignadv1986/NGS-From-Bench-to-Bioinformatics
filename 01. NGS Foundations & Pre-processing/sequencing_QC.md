@@ -41,7 +41,7 @@ The uniformity of coverage is usually calculated by tools like Picard or Mosdept
 
 - **Per Base Sequence Quality**
 
-It shows the average **Phred score** for each position in the reads. The Phred score measures how confident the sequencer is that the detected base is the correct one, so the higher the score, the better the quality. The Pred score is calculated as **Q = -10log~10~(P)**, where P is the probability of an incorrect base call. Q30, the usually aimed for Phred score, translates to a 1 in 1000 error rate, or a 99.9% accuracy. Scores above 28 are categorized as good quality, and the score should remain uniform throughout the whole sequence. A drop at the end is normal in Illumina sequencers and it's usually solved during the trimming process.
+It shows the average **Phred score** for each position in the reads. The Phred score measures how confident the sequencer is that the detected base is the correct one, so the higher the score, the better the quality. The Pred score is calculated as **Q = -10log<sub>10</sub>(P)**, where P is the probability of an incorrect base call. Q30, the usually aimed for Phred score, translates to a 1 in 1000 error rate, or a 99.9% accuracy. Scores above 28 are categorized as good quality, and the score should remain uniform throughout the whole sequence. A drop at the end is normal in Illumina sequencers and it's usually solved during the trimming process.
 
 - **Per Sequence Quality Score**
 
@@ -57,12 +57,12 @@ This indicates the percentage of AT-GC bases for all reads, represented as a his
 The GC distribution should form a smooth, bell-shaped curve (approximately normal), matching the GC content of the organism of interest (around 50% in humans).
 If we see two peaks instead of one, that might be a sign of contamination with DNA from a different species. 
 
--**Per Base N Content**
+- **Per Base N Content**
 N is referred by the sequencer as bases that could not be properly identified. Obviously, this number should be close to 0 for all reads.
 As little as an increase to 1% in any position is already a bad sign.
 A raise towards the end of the ends might be normal and depending on the size it might be worth trimming.
 
--**Sequence Length Distribution**
+- **Sequence Length Distribution**
  
 Shows the distribution of the reads' lengths. All reads should be the same size in a successful sequencing, unless different adapters or trimming attributes were applied.
 
