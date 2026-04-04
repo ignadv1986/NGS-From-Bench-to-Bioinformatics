@@ -48,16 +48,19 @@ It shows the average **Phred score** for each position in the reads. The Phred s
 Average Phred score of the bases constituting each read sequence. It shows as a histogram with ideally a unique peak at high Phred scores.
 
 - **Per Base Sequence Content**
+
 Shows the proportion of each nucleotide for each position in our reads. This proportion should be roughly the same for all nucleotides. We should therefore see straight lines very close to each other for all nucleotides. 
 The presence of wavy lines at the beginning of the reads is usually caused by adapters or random hexamer primer bias in the case of RNA-seq. In ATAC-seq, the Tn5 Transposase has a specific "insertion bias". 
 Differences in G-C vs A-T might have a biological meaning, so worth investigating, while sudden peaks are usually a red flag.
 
 - **Per Sequence GC Content**
+
 This indicates the percentage of AT-GC bases for all reads, represented as a histogram.
 The GC distribution should form a smooth, bell-shaped curve (approximately normal), matching the GC content of the organism of interest (around 50% in humans).
 If we see two peaks instead of one, that might be a sign of contamination with DNA from a different species. 
 
 - **Per Base N Content**
+
 N is referred by the sequencer as bases that could not be properly identified. Obviously, this number should be close to 0 for all reads.
 As little as an increase to 1% in any position is already a bad sign.
 A raise towards the end of the ends might be normal and depending on the size it might be worth trimming.
@@ -72,7 +75,9 @@ Shows the percentage of repeated reads, and how many times they are present. The
 This really changes depending on the type of samples we have. In RNA-seq, a high number of duplicated reads is expected, since many reads will map to abundant transcripts, while a high number of duplicates in WGS usually means that the library was overamplified. 
 
 - **Overrepresented sequences**
+
 A sequence is reported if it makes up >0.1% of total reads. This can happen for adapters or primers, which would require further processing of the samples.
 
 - **Adapter Content**
+
 Especifically detects the presence of adapters. It should be 0, or otherwise trimming is required. 
