@@ -32,7 +32,7 @@ The result of this complex scoring and pairing process is recorded in a **SAM fi
 Sam are human-readable text files, where each line is tab-delimited, showing:
 
 - the read name
-- a numerical "flag" (which tells you if it's paired or mapped)
+- a numerical "flag". This is a compact way of storing multiple pieces of information about the read—such as whether it is paired, if it mapped to the forward or reverse strand, or if it failed to map entirely. To check what the number in this column means, [**Broad Institute SAM Flag Explainer**](https://broadinstitute.github.io/picard/explain-flags.html) can be used.
 - the chromosome
 - the position
 - the **CIGAR string**. This is a compact code that describes the extend part of the mapping. For example, 150M means 150 bases matched perfectly, while 100M2D48M means 100 matches, a 2-base deletion, and 48 more matches.
