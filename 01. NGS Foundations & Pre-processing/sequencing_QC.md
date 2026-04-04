@@ -80,4 +80,12 @@ A sequence is reported if it makes up >0.1% of total reads. This can happen for 
 
 - **Adapter Content**
 
-Especifically detects the presence of adapters. It should be 0, or otherwise trimming is required. 
+Especifically detects the presence of adapters. It should be 0, or otherwise trimming is required.
+
+## Trimming
+
+As mentioned above, some sequences, such as **adapters, low quality bases, and poly-N tails** can affect downstream mapping and therefore need to be removed. This process is called trimming, and it can be achieved with different tools. The usual strategy is to run and initial round of fastQC to check the raw state of the run, followed by fastp to remove adapters and other non-desired elements and adding a QC report. It is good practice to run the cleaned data again through fastQC to see how the quality has improved.
+When more customization is needed, **cutadapt** is the preferred option, since it supports more complex trimming rules. This would be the case for small RNA-seq experiments and/or when variable length adapters were used. 
+Usually, trimming adapters is enough; the aligner (like BWA or STAR, see below) can handle a few low-quality bases at the ends.
+
+
