@@ -80,9 +80,9 @@ Importantly, different aligners use different MAPQ scores. This is important whe
 
 After the aligner finishes, it generates a log file with some important statistics about the whole run, including:
 
-•	% of mapped reads: the closer to 100%, the better. Lower mapped reads can be a signed of wrong genome/annotation, contamination or poor library prep.
-•	% of unique mapped reads and % of multi mapped reads: most reads should be uniquely mapped, otherwise it could indicate over-amplification or low library complexity.
-•	% of properly paired reads: a low percentage here despite a high mapping rate often points to library prep issues (like chimeras).
+- % of mapped reads: the closer to 100%, the better. Lower mapped reads can be a signed of wrong genome/annotation, contamination or poor library prep.
+- % of unique mapped reads and % of multi mapped reads: most reads should be uniquely mapped, otherwise it could indicate over-amplification or low library complexity.
+- % of properly paired reads: a low percentage here despite a high mapping rate often points to library prep issues (like chimeras).
 
 
 
