@@ -59,6 +59,15 @@ First, R1 and R2 are aligned independently. Once candidate locations are found, 
 
 If these rules are not fulfilled, the pair is flagged by **discordant** by the aligner, keeping both reads but lowering their MAPQ score. The presence of a high mapping rate, together with a low properly-paired rate signals a problem during library preparation, such as over-fragmentation or chimera generation in the PCR step. In standard pipelines, these are often filtered out as noise, but in cancer genomics, they are essential for identifying structural variants and chromosomal rearrangements.
 
+## Selecting the correct fragment size
+
+As mentioned in the library prep section of this repository, selecting a correct fragment size is critical for the alignment step, and the decision is made based on both the insert size and the read length. To illustrate this, we will use a paired-end sequencing set to 150 bp read length as an example:
+
+- If the insert size is less than 300 bp, the R1 and R2 reads will overlap in the middle (**overlapping reads**). This provides double sequencing depth for the center of the fragment, which can be used to correct sequencing errors, but limits the overall genomic coverage.
+- If inserts are over 400 bp, there will be an unsequenced gap in the middle, which the aligner will fill using pared-end logic. This reduces sequencing depth, but allows for a higher coverage in exchange.
+- Finally, if the insert is shorter than the read length (below 150 bp), both R1 and R2 will cover the full genomic sequence and read into the adapter on the other end. This provides very high sequencing depth, but requires very heavy trimming to remove the adapter sequences.
+
+
 ## Mapping Quality (MAPQ)
 
 The MAPQ score is a logarithmic scale (Phred-scaled) that represents the probability that the alignment is wrong:
