@@ -47,3 +47,42 @@ Sam are human-readable text files, where each line is tab-delimited, showing:
 **Note:** The presence of many S (Soft-clipping) in a BAM file usually means that the adapter trimming (with fastp or cutadapt) didn't work perfectly. The aligner is doing the work by hiding the adapters so the read can still map.
 
 Due to the immense size of sequencing data, SAM files are typically converted into **BAM** (Binary Alignment Map) files. BAM files are compressed, non-human-readable versions of SAM files that allow for much faster data processing and significantly reduced storage footprints. For most downstream analyses, BAM files must be sorted by genomic coordinate and indexed (creating a .bai file) to allow software to quickly access specific regions of the genome.
+
+## Mapping Paired-end Reads
+
+In a paired-end run, the aligner uses the physical properties of the DNA fragment in addition to the sequence to validate the mapping.
+First, R1 and R2 are aligned independently. Once candidate locations are found, the aligner validates the pair based on three criteria:
+
+ - Chromosome: booth reads must map to the same chromosome.
+ - Orientation: inward-facing for most Illumina libraries.
+ - Insert size: the distance between R1 and R2 should match the library preparation.
+
+If these rules are not fulfilled, the pair is flagged by **discordant** by the aligner, keeping both reads but lowering their MAPQ score. The presence of a high mapping rate, together with a low properly-paired rate signals a problem during library preparation, such as over-fragmentation or chimera generation in the PCR step. In standard pipelines, these are often filtered out as noise, but in cancer genomics, they are essential for identifying structural variants and chromosomal rearrangements.
+
+## Mapping Quality (MAPQ)
+
+The MAPQ score is a logarithmic scale (Phred-scaled) that represents the probability that the alignment is wrong:
+MAPQ = -10log<sub>10</sub>(Perr)
+A MAPQ of 0 means that the sequence is multi-mapped: the aligner found two or more places in the genome where the read fits perfectly (e.g., in a repetitive element or a duplicated gene). Because the aligner can't be sure which one is right, it assigns a probability of zero that it chose the "correct" one.
+
+Different factors determine the score:
+-	Uniqueness: How much better is the "best" hit compared to the "second best" hit? If the best hit has 0 mismatches and the second best has 5 mismatches, the MAPQ will be high (~60).
+-	Base Quality: If the bases that match the genome have low Phred scores (Q10 or Q15), the aligner is less confident in the match, and the MAPQ drops.
+-	Paired-End Information: If R1 and R2 map to the same chromosome at the correct distance from each other, the MAPQ gets a "bonus" because the physical constraint of the DNA fragment confirms the location.
+
+Importantly, different aligners use different MAPQ scores. This is important when filtering bams with samtools in later steps of the analysis.
+
+-	BWA-MEM: Max score is 60.
+-	Bowtie2: Max score is 42.
+-	STAR: Max score is 255 (Note: STAR uses 255 to mean "Uniquely Mapped").
+
+## Mapping QC
+
+After the aligner finishes, it generates a log file with some important statistics about the whole run, including:
+
+•	% of mapped reads: the closer to 100%, the better. Lower mapped reads can be a signed of wrong genome/annotation, contamination or poor library prep.
+•	% of unique mapped reads and % of multi mapped reads: most reads should be uniquely mapped, otherwise it could indicate over-amplification or low library complexity.
+•	% of properly paired reads: a low percentage here despite a high mapping rate often points to library prep issues (like chimeras).
+
+
+
