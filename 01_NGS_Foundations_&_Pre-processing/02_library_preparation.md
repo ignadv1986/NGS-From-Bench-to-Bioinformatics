@@ -6,9 +6,15 @@ Understanding the chemistry of reversible terminators explains how a single mole
 
 In the first step of library preparation, the DNA (or cDNA generated from retro-transcribed RNA) is cut in specified sizes through sonication or enzymatic digestion.
 
-Next, small pieces of DNA, known as **adapters**, are added to the DNA. These fragments, specific for the different sequencers, contain the P5/P7 (flow cell binding, see below), priming sites and index/barcodes, and bind to the end of of the library´s DNA. This is the simplest workflow, mandatory for PCR-free protocols (e.g protocols that yield enough DNA that they do not require a PCR amplification step), but also more expensive and requires a different adapter for every single sample (since the index is already on the adapter).
+Next, small pieces of DNA, known as **adapters**, are bound to the DNA. These fragments, specific for the different sequencers, contain:
 
-However, the most common high-throughput method involves the use of truncated (stubby) adapters, known as **TA-ligation with indexed PCR** or **universal adapter ligation**. In this protocol, adapters contain only the initial priming sites, and the library is "completed" during a subsequent indexed PCR step, where primers add the barcodes and the P5/P7 flow-cell binding sequences. If this PCR fails, then the sequencing will also fail, since the fragments won´t contain the P5/P7 needed for the binding.
+- **P5 and P7 sites:** These are terminal oligos that are complementary to the lawn of primers on the Illumina flow cell. They are responsible for the physical capture of the library and act as the anchors for bridge amplification (cluster generation, see below).
+- **Priming sites** (SBS priming sites): Located just "inside" the P5/P7. These are the binding sites for the sequencing primers that give rise to read 1 (R1) and read 2 (R2) in paired-end runs.
+- **Index(barcode) sequences:** These are unique 8–10 bp sequences that act as a "digital tag" for the sample, so a different one needs to be used and kept track of for every sample. While a single barcode (generally i7) per sample can be used, currently the **Unique Dual Indexing (UDI)** method, where both i7 and i5 positions contain unique barcodes , is preferred. UDIs virtually eliminate **index hopping**, a phenomenon where reads from high-concentration samples are misassigned to low-concentration samples during demultiplexing. Without these indexes, libraries could not be pooled (see below), and samples would have to be sequenced one by one. The barcodes allow the sequencing software to sort millions of raw reads back into their original sample identities in a process called **demultiplexing**.
+
+This is the simplest workflow, mandatory for PCR-free protocols (e.g protocols that yield enough DNA that they do not require a PCR amplification step), but also more expensive and requires a different adapter for every single sample (since the index is already on the adapter).
+
+The most common high-throughput method involves the use of truncated (stubby) adapters, known as **TA-ligation with indexed PCR** or **universal adapter ligation**. In this protocol, adapters contain only the initial priming sites, and the library is "completed" during a subsequent indexed PCR step, where primers add the barcodes and the P5/P7 flow-cell binding sequences. If this PCR fails, then the sequencing will also fail, since the fragments won´t contain the P5/P7 needed for the binding.
 
 In order for the adapters to bind to the DNA, a previous step of **end repair** is required, where all fragment ends are converted to blunt, by removing the 3´overhangs and filling in the 5´, and subsequently 5´phosphorylated. Finally, a single A is added to the 3´end of each fragment (**“A-tailling”**). Adapters, which contain a a complementary single 3′-T overhang, can now be added and bound to the fragments by a DNA ligase. T-A ligation is much more efficient than blunt-end, prevents the fragments from binding each other, which would create chimeras, and reduces (although doesn´t eliminate) adapter dimers. 
 As we will see later, ATAC-seq uses tagmentation, so there´s no end-repair, A-tailing, or ligation. 
@@ -60,7 +66,7 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
 
 To ensure library integrity, fragment size and concentration are assessed before sequencing. Fragment size distribution is analyzed with instruments such as the **BioAnalyzer** or the **TapeStation** to ensure that DNA is in the expected size range. For library quantification, while Nanodrop can be used as a quick first check, **Qubit**, a fluorescence based method where only dsDNA is quantified, as opposed to Nanodrop, which detects all nucleic acids, is preferred. This is the case for libraries that have undergone an amplification step. However, in PCR-free protocols, as mentioned before, many fragments do not have both adapters, and therefore they won't be sequenced. Qubit will nevertheless detect these fragments, leading to an inflation in the amount of sequencing-ready DNA present in the sample. Therefore, in these protocols, the concentration must be calculated by **qPCR-based quantification** with KAPA/NEB Library Quant, which uses primers that bind to the P5/P7 adapters.
 
-- **Fragment Size**
+### Fragment Size
 
 Both Tapestation and Bioanalyzer are microfluidic electrophoresis instruments, while the fragment analyzer uses capillary electrophoresis. For all of them, the principle is the same: samples are loaded together with a fluorescent dye and a molecular size marker and fragments are subjected to an electric field so that they separate by size. The instruments detects the fluorescent signal vs time and transforms it into bp using the provided ladder.
 Tapestation takes more samples than Bioanalyzer, and the sample preparation is easier, so it´s usually the preferred option. However, the fragment analyzer has higher throughput and precision than the other two, allowing greater resolution and distinction between small framents and primer dimers or other artifacts.
@@ -79,12 +85,38 @@ When the DNA/RNA has been degraded during the process, the electropherogram show
 
 If an **HMW** (high molecular weight) smear is present, this is usually due to a problem with the fragmentation or sonication conditions.
 
-- **Molarity Calculation**
+### Molarity Calculation
 
 Sequencers don’t take absolute quantities of DNA, they work on molarities. In PCR-free protocols, where the quantification is done through qPCR (see above), the molarity (in nM) is already obtained. If no qPCR was done, then the formula to calculate the molarity of a library is:
 **Molarity (nM) = Concentration (ng/µL)×10<sup>6</sup> / Fragment length (bp) x 660**
 This is assuming the result is in nM, where 660 is tha average molecular weight of a bp, the average fragment length is provided by the TapeStation/fragment analyzer, and the concentration is obtained from the mass provided by the Qubit quantification. 
 Note: Always use the region tool in the TapeStation software to capture the entire smear, not just the highest peak, to get a true "average bp" for the formula.
+
+## Library Pooling
+
+Once the molarity (nM) of each individual library is determined, they must be combined into a single **master pool**. This process of normalization ensures that the sequencing system's total clustering capacity is distributed accurately among the samples.
+
+### The Pooling Ratio
+
+In most NGS workflows, samples are pooled at a **1:1 molar ratio** to achieve equal read depth. Negative controls (like IgG in CUT&RUN workflows) are often pooled at a lower ratio (25%-50% less). Given their lower biological complexity, these samples require fewer total reads to establish a statistical background, allowing more clustering capacity to be diverted to experimental targets.
+
+### Normalization Calculation
+
+To minimize pipetting error, libraries should be diluted to a standardized intermediate concentration (e.g., 4 nM or 10 nM) before mixing. Utilizing volumes greater than 2 µL significantly improves the precision of the final pool.
+
+The volume of each library (V<sub>lib</sub> ) required for a specific total pool volume (V<sub>pool</sub> ) is calculated using the following formula:
+
+**V<sub>lib</sub>  = (Molarity<sub>target</sub> x V<sub>pool</sub> ) / (Molarity<sub>initial</sub> x n)**
+
+where n is the number of samples.
+
+### Final Pool QC
+
+Before the master pool is loaded onto the sequencer, a final verification step is required. This is the critical juncture for identifying technical failures before committing to the cost of a sequencing run.
+
+An automated electrophoresis run (e.g., TapeStation) of the final master pool should exhibit a distribution reflecting the weighted average of the constituent libraries. If a clear peak of adapter dimers are found in the pool, a new SPRI purification step might be required. 
+
+**Note:** If the overall concentration of the pool is significantly lower than the mathematical expectation, it suggests the DNA is sticking to the tube walls (often due to using a low-cation buffer or water instead of Tris-HCl).
 
 
  
