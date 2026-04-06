@@ -11,7 +11,13 @@ There are many tools to calculate the fragment size distribution, but [bedtools]
 
 ## Spike-in Normalization & Scaling Factor
 
-Because CUT&RUN has such a low background signal, traditional normalization methods (like total read count) can be misleading. It is critical to normalize using spike-in DNA (usually E. coli or yeast DNA added during the protocol). For a deeper dive into the theory behind this, see the section on [Spike-in Normalization](../02_Mapping_&_Alignment/03_post-alignment_processing.md) of this repository.
+Because CUT&RUN has such a low background signal, traditional normalization methods (like total read count) can be misleading. It is critical to normalize using spike-in DNA (usually E. coli or yeast DNA added during the protocol). For a deeper dive into the theory behind this, see the section on [Spike-in Correction](../02_Mapping_&_Alignment/03_post-alignment_processing.md) of this repository.
+
+In CUT&RUN, we normalize technical variations by calculating a **Scaling Factor** for each sample:
+
+Scaling Factor = max spike-in reads across all samples / sample spike-in reads
+
+​This normalizes technical variations between samples, since the apike-in  DNA goes through the same processes as the samples themselves. If spike-in fails for a sample (very low counts), scaling may produce extreme inflation and should be excluded.
 
 
 
