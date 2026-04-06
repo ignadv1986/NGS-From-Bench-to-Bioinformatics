@@ -18,7 +18,7 @@ Once the run is over, the actual sequencing depth achieved can be calculated thr
 
 If a bacterial genome of 5 Mb is sequenced, and we obtain 2000000 reads of 150 bp, then the sequencing depth would be 60x
 
-**Coverage** or **breadth of coverage** is closely related to sequencing depth but provides a broader perspective. Coverage is the proportion or percentage of a genome that has been sequenced at a certain depth. It gives an idea of how much of the entire genome has been effectively read and is usually expressed as a multiple of the genome's size, expressed as a percentage. For example, “95% coverage” means that 95% of the intended region has been sequenced at least once or a certain amount of times. It is calculated by bioinformatics tools ([bedtools](https://bedtools.readthedocs.io/en/latest/) or [samtools](https://www.htslib.org) after the mapping step, with the following formula:
+**Coverage** or **breadth of coverage** is closely related to sequencing depth but provides a broader perspective. Coverage is the proportion or percentage of a genome that has been sequenced at a certain depth. It gives an idea of how much of the entire genome has been effectively read and is usually expressed as a multiple of the genome's size, expressed as a percentage. For example, “95% coverage” means that 95% of the intended region has been sequenced at least once or a certain amount of times. It is calculated by bioinformatics tools ([bedtools](https://bedtools.readthedocs.io/en/latest/) or [samtools](https://www.htslib.org)) after the mapping step, with the following formula:
 
 **Coverage (%) = (Number of bases with at least one read / Total genome size) x 100**
 
