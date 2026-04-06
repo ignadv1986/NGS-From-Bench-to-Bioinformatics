@@ -33,7 +33,7 @@ One important term is **uniformity of coverage**. This is a measure of the varia
 
 The most common cause of low uniformity of coverage is **PCR bias**. Some regions are easier to amplify by the polymerase, including those with lower GC content, leading to an overrepresentation of these fragments.
 
-The uniformity of coverage is usually calculated by tools like [Picard](https://broadinstitute.github.io/picard/) or [Mosdepth](https://github.com/brentp/mosdepth) with the following formula:
+The uniformity of coverage is usually calculated by tools like **[Picard](https://broadinstitute.github.io/picard/)** or **[Mosdepth](https://github.com/brentp/mosdepth)** with the following formula:
 
 **Coefficient of Variation (CV) = Standard Deviation of Depth / Average Sequencing Depth**. The lower this metric (0.1-0.2), the more uniform the data.
 
