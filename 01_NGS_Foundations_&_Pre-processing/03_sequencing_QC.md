@@ -18,7 +18,7 @@ Once the run is over, the actual sequencing depth achieved can be calculated thr
 
 If a bacterial genome of 5 Mb is sequenced, and we obtain 2000000 reads of 150 bp, then the sequencing depth would be 60x
 
-**Coverage** or **breadth of coverage** is closely related to sequencing depth but provides a broader perspective. Coverage is the proportion or percentage of a genome that has been sequenced at a certain depth. It gives an idea of how much of the entire genome has been effectively read and is usually expressed as a multiple of the genome's size, expressed as a percentage. For example, “95% coverage” means that 95% of the intended region has been sequenced at least once or a certain amount of times. It is calculated by bioinformatics tools (bedtools or samtools) after the mapping step, with the following formula:
+**Coverage** or **breadth of coverage** is closely related to sequencing depth but provides a broader perspective. Coverage is the proportion or percentage of a genome that has been sequenced at a certain depth. It gives an idea of how much of the entire genome has been effectively read and is usually expressed as a multiple of the genome's size, expressed as a percentage. For example, “95% coverage” means that 95% of the intended region has been sequenced at least once or a certain amount of times. It is calculated by bioinformatics tools ([bedtools](https://bedtools.readthedocs.io/en/latest/) or [samtools](https://www.htslib.org) after the mapping step, with the following formula:
 
 **Coverage (%) = (Number of bases with at least one read / Total genome size) x 100**
 
@@ -33,11 +33,13 @@ One important term is **uniformity of coverage**. This is a measure of the varia
 
 The most common cause of low uniformity of coverage is **PCR bias**. Some regions are easier to amplify by the polymerase, including those with lower GC content, leading to an overrepresentation of these fragments.
 
-The uniformity of coverage is usually calculated by tools like Picard or Mosdepth with the following formula:
+The uniformity of coverage is usually calculated by tools like [Picard](https://broadinstitute.github.io/picard/) or [Mosdepth](https://github.com/brentp/mosdepth) with the following formula:
 
 **Coefficient of Variation (CV) = Standard Deviation of Depth / Average Sequencing Depth**. The lower this metric (0.1-0.2), the more uniform the data.
 
 ## Sequencing QC
+
+The industry standard for visualizing raw data quality is **[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)**. It provides the following reports:
 
 - **Per Base Sequence Quality**
 
@@ -84,8 +86,8 @@ Especifically detects the presence of adapters. It should be 0, or otherwise tri
 
 ## Trimming
 
-As mentioned above, some sequences, such as **adapters, low quality bases, and poly-N tails** can affect downstream mapping and therefore need to be removed. This process is called trimming, and it can be achieved with different tools. The usual strategy is to run and initial round of fastQC to check the raw state of the run, followed by fastp to remove adapters and other non-desired elements and adding a QC report. It is good practice to run the cleaned data again through fastQC to see how the quality has improved.
-When more customization is needed, **cutadapt** is the preferred option, since it supports more complex trimming rules. This would be the case for small RNA-seq experiments and/or when variable length adapters were used. 
+As mentioned above, some sequences, such as **adapters, low quality bases, and poly-N tails** can affect downstream mapping and therefore need to be removed. This process is called trimming, and it can be achieved with different tools. The usual strategy is to run and initial round of fastQC to check the raw state of the run, followed by **[fastp](https://github.com/opengene/fastp)** to remove adapters and other non-desired elements and adding a QC report. It is good practice to run the cleaned data again through fastQC to see how the quality has improved.
+When more customization is needed, [**cutadapt**](https://cutadapt.readthedocs.io/en/stable/) is the preferred option, since it supports more complex trimming rules. This would be the case for small RNA-seq experiments and/or when variable length adapters were used. 
 Usually, trimming adapters is enough; the aligner (like BWA or STAR, see below) can handle a few low-quality bases at the ends.
 
 
