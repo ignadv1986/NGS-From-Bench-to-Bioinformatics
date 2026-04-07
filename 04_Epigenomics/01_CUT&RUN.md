@@ -29,9 +29,11 @@ If the IgG shows a massive, high-molecular-weight smear on the TapeStation, it i
 
 Since the IgG is a low-complexity library—it represents only the rare, non-specific locations where the MNase happened to cut without antibody guidance-it should not be pooled at the same ratio as the actual samples: ff the target is pooled at 4 nM, the IgG should often be pooled at 1 nM or 2 nM. This saves a lot of space on the flow cell that would otherwise be used to generate many duplicates from the unique fragments present in the IgG sample.
 
-## PCR amplification
+## PCR amplification & Handling of Duplicates
 
 After the adapters are ligated to the MNase-cut fragments, the library must be amplified to reach the concentration required for sequencing (typically 0.5–10 nM). Most CUT&RUN protocols aim for 12–14 cycles. If the protein is a high-abundance histone mark, 10 cycles may be sufficient. The PCR reaction must use a high-fidelity polymerase and an optimized extension time. If the extension time is too long, the polymerase may favor longer fragments, causing the library to lose the tiny, 50 bp transcription factor footprints that are the hallmark of CUT&RUN.
+
+A critical decision point in the CUT&RUN bioinformatic pipeline is the management of duplicate reads—identical fragments that map to the same genomic coordinates. While standard ChIP-seq protocols often mandate the removal of duplicates to mitigate PCR bias, CUT&RUN requires a more nuanced approach. Due to the targeted nature of pAG-MNase cleavage and the low starting cell numbers typical of CUT&RUN, multiple cells often yield identical DNA fragments. These are categorized as **biological duplicates** rather than technical artifacts. Indiscriminate removal of these reads can artificially truncate peak signal and reduce the dynamic range of the data, particularly for high-abundance targets like histone marks. Keeping the duplicate reads is recommended when PCR cycles are kept low (12–14 cycles) and the duplication rate remains within a standard range (<30–40%). This preserves the quantitative relationship between binding sites.
 
 It is worth noting that is perfectly normal to see no DNA in the IgG sample, since in this sample there was no antibody to guide the MNase. The IgG conditions should never be run for more cycles than the experimental samples. If the IgG is amplified more, the background noise would be artificially inflated, and if it shows no DNA after the same number of cycles as the target, that is actually a sign of a very clean experiment with low non-specific binding.
 
