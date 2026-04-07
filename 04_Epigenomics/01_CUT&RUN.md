@@ -19,7 +19,7 @@ When assessing fragment size with the TapeStation, a clean peak at the target si
 
 When the binding nature of the protein is unknown, the goal is to preserve the entire biological spectrum—from tiny footprints to large nucleosomal structures. This is achieved through a 1.8x-2.0x SPRI isolation step. In this scenario, an adapter dimer peak is often unavoidable at the bench. In such cases, if the dimer signal exceeds the biological signal, alternative purification methods—such as automated gel excision (e.g., Pippin Prep) set to a >140 bp collection window—may be required to salvage the library for sequencing.
 
-There are many tools to calculate the fragment size distribution, but [bedtools](https://bedtools.readthedocs.io/en/latest/) or the **bamPEFragmentSize** of **[deepTools](https://deeptools.readthedocs.io/en/latest/) are usually the go-to options.
+There are many tools to calculate the fragment size distribution, but [bedtools](https://bedtools.readthedocs.io/en/latest/) or the **bamPEFragmentSize** of **[deepTools]**(https://deeptools.readthedocs.io/en/latest/) are usually the go-to options.
 
 ## The IgG Control
 
