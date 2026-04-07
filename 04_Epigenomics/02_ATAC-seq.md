@@ -26,8 +26,11 @@ While a single-sided 1.8x SPRI is standard for high-quality cell suspensions, pr
 
 ## Alignment Strategy
 
+As mentioned in the mapping section of this repository, both [bowtie2](https://github.com/benlangmead/bowtie2) and [BWA MEME2](https://github.com/kaist-ina/BWA-MEME) are valid options for mapping when analyzing ATAC-seq data, with the second being preferred for two main reasons:
 
-
+- It can "soft-clip" the ends of reads if they contain a bit of adapter sequence that wasn't fully trimmed, whereas Bowtie2 might reject the entire read as an "unmapped" fragment. This maximizes the recovery of short, nucleosome-free fragments.
+- In low-input ATAC-seq, Tn5 can occasionally create chimeric "pasted" fragments. BWA-MEM2 handles these complex alignments more gracefully, preventing false-positive peaks.
+- 
 ## Post-alignment QC
 
 ### Mitochondrial DNA
@@ -42,6 +45,10 @@ The remaining reads mapping to mtDNA are removed in the processing steps after m
 
 TSS enrichment is a standard ATAC-seq quality metric that measures how strongly reads accumulate around transcription start sites. In high-quality ATAC-seq, accessible promoters show a sharp peak of signal exactly at the TSS and a well-defined nucleosome pattern flanking it. Low-quality libraries (e.g., too much background, poor nuclei prep, excessive mitochondrial contamination) show a flat or noisy profile.
 The TSS enrichment is calculated after mtDNA reads removal, with methods like [ATACseqQC](https://bioconductor.org/packages/release/bioc/html/ATACseqQC.html) or [deepTools](https://deeptools.readthedocs.io/en/latest/) (computeMatrix + plotProfile):  reads are aggregated across thousands of annotated TSSs (±2 kb window), signal is normalized to the background flanking regions and the final TSS enrichment score is obtained with the formula (signal at TSS) / (signal in background). A score > 10 is usually considered as an excellent ATAC-seq experiment, while 6-10 contains some acceptable backgrpund noise and a score below 5 suggests over-digestion, poor nuclei prep, or low library complexity.
+
+## Peak Calling
+
+The goal of peak calling in ATAC-seq is to identify regions of the genome significantly enriched for transposition events compared to the random genomic background. Unlike CUT&RUN, which has an extremely "clean" background, ATAC-seq contains a much higher level of ambient genomic noise due to the nature of the Tn5 tagmentation in a complex nuclear environment, which makes SEACR a poor choice when selecting a peak calling tool. The standard for ATAC-seq is [MACS3](https://macs3-project.github.io/MACS/), which uses a sophisticated Poisson distribution to model the aforementioned background and distinguish true accessibility from random noise or tn5 bias.
 
 ## Analysis Workflow
 
