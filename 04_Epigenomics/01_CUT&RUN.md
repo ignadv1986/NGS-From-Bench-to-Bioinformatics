@@ -63,7 +63,7 @@ Once the reads have been mapped and filtered, the next step in a CUT&RUN workflo
 
 There are two ways to represent coverage from BAM files: generating **bedGraph** or **BigWig** files. bedGraph are plain text versions, easily readable, while BigWig are a compressed binary version, lighter but not human-readable. In consequence, BigWig files are smaller and easier to read for software but, unlike bedGraph, they cannot be edited.
 
-Both bedGraph and BigWig files are usually generated with the **bamcoverage** function of [deepTools](https://deeptools.readthedocs.io/en/latest/). This tool is preferred because it allows the spike-in scaling factor to be applied during the conversion process, thereby producing already normalized bedGraph/BigWig files.
+Both bedGraph and BigWig files are usually generated with the **bamcoverage** function of [deepTools](https://deeptools.readthedocs.io/en/develop/content/tools/bamCoverage.html). This tool is preferred because it allows the spike-in scaling factor to be applied during the conversion process, thereby producing already normalized bedGraph/BigWig files.
 
 The choice between generating bedGraph or BigWig files is largely dictated by the requirements of the downstream peak-calling software (see next section), but the generation of BigWig files is always recommended to ensure smooth, high-performance visualization in IGV or other genome browsers. It is possible to generate BigWig files from bedGraph with [bedGraphToBigWig](https://anaconda.org/channels/bioconda/packages/ucsc-bedgraphtobigwig/overview). 
 
