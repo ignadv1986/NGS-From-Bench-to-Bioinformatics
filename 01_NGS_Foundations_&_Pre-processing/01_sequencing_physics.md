@@ -25,8 +25,11 @@ Once bound, the DNA fragment (or forward strand) serves as a template for the ex
 After the initial extension, the original strand is washed away. The remaining strand bends over to **bridge** and bind a complementary oligonucleotide, serving as a template for the extension of the latter. Through repeated cycles of denaturing and extension, a monoclonal **cluster** (thousands of copies of the same DNA molecule) is formed in a single spot. Importantly, longer fragments (700-800 bp) are stiffer and therefore have more problems bending, leading to poor cluster generation and a bias toward shorter fragments in the final data.
 The reverse strands get cut (thanks to a specific sequence in the adapter) and washed away, and only copies of the strands that originally bound the flow cell remain.
 
-<img src="../Figures/bridge_amplification.png" width="500">
-*Figure 1: The process of bridge amplification.*
+<div align="center">
+  <img src="../Figures/bridge_amplification.png" width="500">
+  <br>
+  <em>Figure 1: The process of bridge amplification. Image by Abizar (CC BY-SA 3.0).</em>
+</div>
 
 ### Reading the Fragments
 
