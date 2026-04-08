@@ -94,6 +94,8 @@ The standard tool used to count reads after the consensus peak BED file generati
 | **Peak_3** | chr2 | 78200 | 78650 | . | 450 | 88 | 92 | 85 | 90 |
 | **Peak_4** | chr10 | 500120 | 500400 | . | 280 | 310 | 295 | 45 | 38 |
 
+The first few columns (Chr, Start, End, Length) are metadata. If differential accesibility studies with DESeq2 (see below) are to be performed, these are stripped in R, leaving only the **Peak IDs** as rows and the **Sample Counts** as columns.
+
 The workflow for ATAC-seq varies a lot depending on the aim of the experiment.
 
 ### Global chromatin compaction analysis
