@@ -61,12 +61,16 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
 -	**Under-amplification:** Leads to a library concentration below the detection limit of the Qubit or TapeStation (<0.5ng/µl), making accurate loading impossible.
 -	**Over-amplification:** Leads to PCR duplicates (reducing unique data) and heteroduplexes (the "bubble product").
 
+<div align="center">
+
 | Input DNA | Typical cycle range |
 |-----------|---------------------|
 | 1 µg (WGS) | 0-4 cycles |
 | 50–100 ng (standard) | 5-8 cycles |
 | 1–10 ng (low input) | 10-15 cycles |
 | <1 ng (single-cell, ultra-low) | 18+ cycles |
+
+</div>
 
 **PCR duplicates:** Because some DNA fragments can be amplified more efficiently than others (medium GC content, no hairpins, etc.), when we amplify for too long we risk getting an overrepresentation of these fragments in the final sample. These can take more space in the flow cell, preventing detection of other fragments that, even though were present in the original sample, were not amplified as much. This is often called a reduction in library complexity or diversity.
 
@@ -104,7 +108,9 @@ If an **HMW** (high molecular weight) smear is present, this is usually due to a
 ### Molarity Calculation
 
 Sequencers don’t take absolute quantities of DNA, they work on molarities. In PCR-free protocols, where the quantification is done through qPCR (see above), the molarity (in nM) is already obtained. If no qPCR was done, then the formula to calculate the molarity of a library is:
+
 $$ \text{Molarity (nM)} = \frac{\text{Concentration (ng/µL)} \times 10^6}{\text{Average Fragment Length (bp)} \times 660} $$
+
 This is assuming the result is in nM, where 660 is the average molecular weight of a bp, the average fragment length is provided by the TapeStation/fragment analyzer, and the concentration is obtained from the mass provided by the Qubit quantification. 
 Note: Always use the region tool in the TapeStation software to capture the entire smear, not just the highest peak, to get a true "average bp" for the formula.
 
@@ -122,7 +128,7 @@ To minimize pipetting error, libraries should be diluted to a standardized inter
 
 The volume of each library (V<sub>lib</sub> ) required for a specific total pool volume (V<sub>pool</sub> ) is calculated using the following formula:
 
-**V<sub>lib</sub>  = (Molarity<sub>target</sub> x V<sub>pool</sub> ) / (Molarity<sub>initial</sub> x n)**
+$$V_{lib} = \frac{Molarity_{target} \times V_{pool}}{Molarity_{initial} \times n}$$
 
 where n is the number of samples.
 
@@ -133,7 +139,3 @@ Before the master pool is loaded onto the sequencer, a final verification step i
 An automated electrophoresis run (e.g., TapeStation) of the final master pool should exhibit a distribution reflecting the weighted average of the constituent libraries. If a clear peak of adapter dimers are found in the pool, a new SPRI purification step might be required. 
 
 **Note:** If the overall concentration of the pool is significantly lower than the mathematical expectation, it suggests the DNA is sticking to the tube walls (often due to using a low-cation buffer or water instead of Tris-HCl).
-
-
- 
-
