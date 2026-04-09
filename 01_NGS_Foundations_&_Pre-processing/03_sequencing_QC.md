@@ -79,7 +79,7 @@ where P is the probability of an incorrect base call. Q30, the usually aimed for
 Average Phred score of the bases constituting each read sequence. It shows as a histogram with ideally a unique peak at high Phred scores.
 
 <div align="center">
-  <img src="../Figures/per_base_quality_score.png" width="700">
+  <img src="../Figures/per_sequence_quality_score.png" width="700">
   <br>
   <em>Figure: Example of a per sequence quality score</em>
 </div>
