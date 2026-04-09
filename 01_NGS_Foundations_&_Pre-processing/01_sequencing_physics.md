@@ -46,6 +46,8 @@ As explained above, the sequencer identifies bases by exciting fluorophores with
 - **4-channel chemistry** (e.g., MiSeq, HiSeq): Each of the four bases has a unique dye and is captured in four separate images per cycle. While highly accurate, the time required for four imaging steps per cycle limits throughput.
 - **2-channel chemistry** (e.g., NextSeq, NovaSeq): only two dyes are used and the sequencer takes two pictures, one through a red filter and one through a green filter. Each nucleotide bound to one (red for C and green for G), 2 (red and green for T, resulting in yellow signal), or none (A, the sequencer registers no fluorescence in that position and registers it as an A).
 
+Note: 2-channel color mappings vary by instrument. For example, on the NextSeq 500, 'A' is detected in both channels, whereas on the NovaSeq 6000, 'T' is the mixed signal. In all 2-channel systems, 'G' is characterized by the absence of signal (Dark).
+
 ## Patterned Flow Cells
 
 In earlier systems (MiSeq, HiSeq), DNA fragments bound to the flow cell at random. As bridge amplification occurred, clusters could grow too close to each other, leading to fluorescence overlapping, and thereby causing the camera to fail to distinguish the two signals. To overcome this challenge, a Poisson distribution was employed: a limiting dilution of sample was used, reducing the possibility that two different DNA fragments "landed" too close. However, this also leads to a big part of the flow cell being empty, limiting sequencing efficiency.
