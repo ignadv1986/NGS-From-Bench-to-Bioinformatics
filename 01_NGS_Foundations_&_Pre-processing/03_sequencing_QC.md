@@ -25,12 +25,14 @@ $$\text{Coverage (\%)} = \left( \frac{\text{Number of bases with } \ge 1 \text{ 
 The higher the sequencing depth, the lower the possibility that some positions won't be sequenced or, in other words, the higher the coverage.
 
 <div align="center">
-  <img src="../Figures/bubble_product_simple.png" width="700">
+  <img src="../Figures/sequencingdepth_vs_coverage.png" width="700">
   <br>
-  <em>Figure: Generation of bubble products during library amplification by PCR</em>
+  <em>Figure: Representation of sequencing depth vs coverage</em>
 </div>
 
 <div style="height: 40px;"></div>
+
+<div align="center">
 
 | Coverage | Sequencing Depth |
 | :--- | :--- |
