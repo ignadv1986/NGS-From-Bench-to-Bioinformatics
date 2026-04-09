@@ -17,7 +17,7 @@ A key difference between STAR/BWA-MEM2 and bowtie2 is that the first two use sof
 ## Salmon/kallisto
 
 [Salmon](https://combine-lab.github.io/salmon/about/) and [kallisto](https://github.com/pachterlab/kallisto) can work both as aligners and as read quantification tools, e.g., providing information on how many reads come from each transcript or gene. Instead of mapping to a whole genome, these tools “quasi-map” to a transcriptome index, meaning it has no introns, which can be obtained from Ensembl or GENCODE. It is good practice to combine this transcriptome with the whole genome as decoy to reduce erroneous mapping to unannotated regions.
-Salmon not only is faster and lighter, it also corrects based on fragment GC content bias, transcript positional bias, and sequencing bias. However, it does not generate BAM files, since it doesn't map using the whole genome (this is why Salmon is sometimes referred to as a **pseudo-aligner**). It is therefore best to use it over the other aligners when the downstream analysis consists only of differential expression and clustering. For variant calling, splicing analysis, etc., an aligner that generates BAM files is needed.
+Salmon not only is faster and lighter, it also corrects based on fragment GC content bias, transcript positional bias, and sequencing bias. However, it does not generate BAM files by default, since it doesn't map using the whole genome (this is why Salmon is sometimes referred to as a **pseudo-aligner**). It is therefore best to use it over the other aligners when the downstream analysis consists only of differential expression and clustering. For variant calling, splicing analysis, etc., an aligner that generates BAM files is needed.
 
 The main attributes given by these tools are NumReads and Transcripts Per Million (TPM). **NumReads** is the sum of reads assigned to a specific transcript, so it is not normalized and is used for differential expression analysis with tools like DESeq2, which have their own normalization algorithms. **TPM**, on the other hand, provides a normalized value that allows comparison between genes within a sample. It corrects for gene length (longer genes will have more reads) and scales each sample to a total of one million to account for different sequencing depths. Because the "Total Counts" denominator changes between samples, TPM is used for comparing gene expression within the same sample. DESeq2 (which employs a median-of-ratios normalization) should be used for between-sample comparisons, since it is more robust in detecting outliers and composition biases.
 
@@ -28,7 +28,7 @@ The main attributes given by these tools are NumReads and Transcripts Per Millio
 | Assay | Aligner | Reasoning |
 |-------|---------|-----------|
 | Standard RNA-seq (Eukaryotes) | STAR | It is splice-aware and handles introns via "N" operations in the CIGAR string |
-| WGS/Variant Calling | BWA-MEM | It handles longer reads and indels more robustly |
+| WGS/Variant Calling | BWA-MEM2 | It handles longer reads and indels more robustly |
 | ATAC / CUT&RUN | Bowtie2 | Higher speed and specific end-to-end alignment |
 | Prokaryotic RNA-seq | Bowtie2 | There are no introns in bacterial genomes |
 
