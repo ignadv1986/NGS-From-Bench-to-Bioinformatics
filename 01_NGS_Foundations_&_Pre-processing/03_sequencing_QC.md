@@ -69,7 +69,7 @@ where P is the probability of an incorrect base call. Q30, the usually aimed for
 <div align="center">
   <img src="../Figures/sequencing_per_base_quality.png" width="700">
   <br>
-  <em>Figure: Representation of sequencing depth vs coverage</em>
+  <em>Figure: Eaxmple of a per base sequence quality score</em>
 </div>
 
 <br>
