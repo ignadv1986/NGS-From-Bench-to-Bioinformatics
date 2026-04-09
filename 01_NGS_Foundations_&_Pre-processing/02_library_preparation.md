@@ -82,6 +82,7 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
   <em>Figure: Generation of bubble products during library amplification by PCR</em>
 </div>
 
+
 **Things to consider when designing the library PCR:**
 
 -	**Use high-fidelity polymerases** (KAPA HiFi, Q5 (NEB), or Phusion): Less error-rates and GC bias than taq polymerases, and proof-reading activity (exonuclease 3´-> 5´).
