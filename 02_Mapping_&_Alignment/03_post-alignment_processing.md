@@ -1,6 +1,6 @@
 # Post-Alignment Processing
 
-Once the aligner has generated a BAM file, the data is still "raw." It contains biological noise, technical noise, and mapping artifacts. This folder covers the steps required to "clean" the BAM before it is used for downstream analysis
+Once the aligner has generated a BAM file, the data is still not ready for downstream processing. It contains biological and technical noise, as weel as mapping artifacts. This folder covers the steps required to clean the BAM before it is used for downstream analysis
 
 ## Blacklist Regions and Non-Canonical Chromosomes
 
