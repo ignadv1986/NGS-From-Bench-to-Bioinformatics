@@ -37,6 +37,7 @@ The process relies on charge-shielding rather than direct molecular bridging. Hi
 Large DNA molecules dehydrate more easily, so they bind to the beads even at lower PEG concentrations, while small molecules are more soluble and therefore require higher PEG concentrations to bind the beads. Using different bead volume to sample volume ratios, different DNA sizes can be selected. A lower ratio (0.5x) captures only very large fragments, while a higher ratio (1.8x), captures almost everything.
 To make sure that only the fragments of the right size are captured, a double-sided selection is normally used. First, a “right-side cut”, where a really low ratio (0.5x) is used, is performed. In this scenario, large pieces of DNA bind to the beads, and the rest stays on the liquid, so the beads can be discarded. Then, more beads are added to bring the total ratio up to, say, 0.8x (“left-side cut”), so that the rest of the DNA, except for small pieces like adapter dimers stick to the beads. These are kept, washed with ethanol 80% to remove contaminants, and finally eluted with water or a low-salt buffer. 80% ethanol is used because it’s strong enough to keep the DNA precipitated on the bead, but contains enough water to dissolve the salts and PEG so they can be washed away.
 
+<br><br>
 
 <div align="center">
   <img src="../Figures/SPRI.png" width="900">
@@ -44,6 +45,7 @@ To make sure that only the fragments of the right size are captured, a double-si
   <em>Figure: Overview of Solid Phase Reversible Immobilization (SPRI). Adapted from Russel AJ et al., Nature Communications (2018) under CC-BY 4.0.</em>
 </div>
 
+<br><br>
 
 When performing the size selection step, two measurements need to be considered:
 
@@ -82,6 +84,7 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
   <em>Figure: Generation of bubble products during library amplification by PCR</em>
 </div>
 
+<br><br>
 
 **Things to consider when designing the library PCR:**
 
