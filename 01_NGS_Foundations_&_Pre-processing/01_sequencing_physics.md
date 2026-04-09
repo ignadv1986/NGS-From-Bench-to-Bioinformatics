@@ -35,7 +35,7 @@ Once the cluster is formed, it contains a mixture of both forward and reverse st
 <div align="center">
   <img src="../Figures/bridge_amplification.png" width="500">
   <br>
-  <em>Figure 1: The process of bridge amplification. Image by Abizar (CC BY-SA 3.0).</em>
+  <em>The process of bridge amplification. Image by Abizar (CC BY-SA 3.0).</em>
 </div>
 
 ### Reading the Fragments
@@ -60,7 +60,7 @@ Note: 2-channel color mappings vary by instrument. For example, on the NextSeq 5
 <div align="center">
   <img src="../Figures/optical_chemistry.png" width="650">
   <br>
-  <em>Figure 2: Comparison of Illumina 4-Channel vs. 2-Channel optical chemistry. Note how 'G' (Guanine) relies on the absence of signal in 2-channel systems.</em>
+  <em>Comparison of Illumina 4-Channel vs. 2-Channel optical chemistry. Note how 'G' (Guanine) relies on the absence of signal in 2-channel systems.</em>
 </div>
 
 ## Patterned Flow Cells
