@@ -76,7 +76,7 @@ As mentioned in the library prep section of this repository, selecting a correct
 - Finally, if the insert is shorter than the read length (below 150 bp), both R1 and R2 will cover the full genomic sequence and read into the adapter on the other end. This provides very high sequencing depth, but requires very heavy trimming to remove the adapter sequences.
 
 <div align="center">
-  <img src="../Figures/fragment_size.png" width="500">
+  <img src="../Figures/fragment_size.png" width="800">
   <br>
   <em>Figure: Fragment size selection logic.</em>
 </div>
