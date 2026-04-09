@@ -76,21 +76,7 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
 
 **The Bubble Product (heteroduplex):** In the final stages of the library PCR, primers get depleted (they run out) and there is an overabundance of DNA fragments. Instead of a primer binding to a template, two full-length library fragments denature (separate) and then accidentally anneal (re-bind) to each other. Since the adapters are identical for all fragments, they zip up perfectly. However, the genomic inserts (the middle part) are different. They are not complementary. The result is a DNA molecule that is double-stranded at the ends (the adapters), but single-stranded in the middle, forming a bubble (heteroduplex). These molecules are less dynamic and migrate slower in an electrophoresis, so they give rise to a high molecular weight peak. However, the sequencer denatures the dsDNA, so this will have no consequences on the sequencing itself. This is a problem of overamplification, so reducing the amount of PCR cycles to reduce reactive use is recommended.
 
-graph LR
-    subgraph "Bubble Product (Heteroduplex)"
-    A1[P5 Adapter] --- B1(( ))
-    A2[P5 Adapter] --- B1
-    B1 -. "Single-stranded 'Bubble'" .- C1(( ))
-    C1 --- D1[P7 Adapter]
-    C1 --- D2[P7 Adapter]
-    end
 
-    style B1 fill:#f9f,stroke:#333,stroke-width:0px
-    style C1 fill:#f9f,stroke:#333,stroke-width:0px
-    style A1 fill:#ff9300,stroke:#000
-    style A2 fill:#ff9300,stroke:#000
-    style D1 fill:#7030a0,stroke:#000,color:#fff
-    style D2 fill:#7030a0,stroke:#000,color:#fff
 
 **Thing to consider when designing the library PCR:**
 
