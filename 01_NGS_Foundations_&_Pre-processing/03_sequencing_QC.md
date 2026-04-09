@@ -16,7 +16,7 @@ Once the run is over, the actual sequencing depth achieved can be calculated thr
 
 $$\text{Sequencing Depth} = \frac{\text{Total Number of Reads} \times \text{Fragment Length (bp)}}{\text{Total Genome Size (bp)}}$$
 
-If a bacterial genome of 5 Mb is sequenced, and we obtain 2,000.000 reads of 150 bp, then the sequencing depth would be 60x
+If a bacterial genome of 5 Mb is sequenced, and we obtain 2,000,000 reads of 150 bp, then the sequencing depth would be 60x
 
 **Coverage** or **breadth of coverage** is closely related to sequencing depth but provides a broader perspective. Coverage is the proportion or percentage of a genome that has been sequenced at a certain depth. It gives an idea of how much of the entire genome has been effectively read and is usually expressed as a multiple of the genome's size, expressed as a percentage. For example, “95% coverage” means that 95% of the intended region has been sequenced at least once or a certain amount of times. It is calculated by bioinformatics tools ([bedtools](https://bedtools.readthedocs.io/en/latest/) or [samtools](https://www.htslib.org)) after the mapping step, with the following formula:
 
@@ -118,7 +118,7 @@ If we see two peaks instead of one, that might be a sign of contamination with D
 
 N is referred by the sequencer as bases that could not be properly identified. Obviously, this number should be close to 0 for all reads.
 As little as an increase to 1% in any position is already a bad sign.
-A rise towards the end of the ends might be normal and depending on the size it might be worth trimming.
+A rise towards the end of the reads might be normal and depending on the size it might be worth trimming.
 
 - **Sequence Length Distribution**
  
