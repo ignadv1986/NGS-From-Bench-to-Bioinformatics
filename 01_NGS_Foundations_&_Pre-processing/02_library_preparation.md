@@ -92,10 +92,11 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
 -	**Hot-Start technology:** Prevents non-specific amplification at room temperature before the thermocycler starts. This is crucial for reducing primer dimers.
 -	**Final concentration:** A well-designed PCR should aim for a final library concentration of >10 nM. This provides enough material for multiple sequencing runs and long-term storage.
 
-## Library Quality Control
+## Library Quantification & Quality Control
 
-To ensure library integrity, fragment size and concentration are assessed before sequencing. Fragment size distribution is analyzed with instruments such as the **BioAnalyzer** or the **TapeStation** to ensure that DNA is in the expected size range.
-For library quantification, while Nanodrop can be used as a quick first check, **Qubit**, a fluorescence based method where only dsDNA is quantified, as opposed to Nanodrop, which detects all nucleic acids, is preferred. This is the case for libraries that have undergone an amplification step. However, in PCR-free protocols, as mentioned before, many fragments do not have both adapters, and therefore they won't be sequenced. Qubit will nevertheless detect these fragments, leading to an inflation in the amount of sequencing-ready DNA present in the sample. Therefore, in these protocols, the concentration must be calculated by **qPCR-based quantification** with KAPA/NEB Library Quant, which uses primers that bind to the P5/P7 adapters.
+For library quantification, while Nanodrop can be used as a quick first check, fluorescence-based method **Qubit** are required. This is because, while Nanodrop detects detects all species of nucleic acids, Qubit exclusively detects dsDNA, giving a more exact estimation of how much usable library there is. This is the standard quantification method for libraries that have undergone a PCR amplification step. However, in PCR-free protocols, as mentioned before, many fragments do not have both adapters, and therefore they won't be sequenced. Qubit will nevertheless detect these fragments, leading to an inflation in the amount of sequencing-ready DNA present in the sample. Therefore, in these protocols, the concentration must be calculated by **qPCR-based quantification** with KAPA/NEB Library Quant, which uses primers that bind to the P5/P7 adapters.
+
+Once it is established that the library prep yielded enough material, its integrity needs to be assessed. This is mainly done by checking the fragment size distribution with instruments such as the **BioAnalyzer** or the **TapeStation**, to ensure that DNA is in the expected size range.
 
 ### Fragment Size
 
