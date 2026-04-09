@@ -22,7 +22,7 @@ As we will see later, ATAC-seq uses tagmentation, so there´s no end-repair, A-t
 <div align="center">
   <img src="../Figures/library_prep.png" width="900">
   <br>
-  <em>Figure: Overview of a library preparation workflow</em>
+  <em>Overview of a library preparation workflow</em>
 </div>
 
 ## Size Selection
@@ -42,7 +42,7 @@ To make sure that only the fragments of the right size are captured, a double-si
 <div align="center">
   <img src="../Figures/SPRI.png" width="900">
   <br>
-  <em>Figure: Overview of Solid Phase Reversible Immobilization (SPRI). Adapted from Russel AJ et al., Nature Communications (2018) under CC-BY 4.0.</em>
+  <em>Overview of Solid Phase Reversible Immobilization (SPRI). Adapted from Russel AJ et al., Nature Communications (2018) under CC-BY 4.0.</em>
 </div>
 
 <br><br>
@@ -81,7 +81,7 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
 <div align="center">
   <img src="../Figures/bubble_product.png" width="900">
   <br>
-  <em>Figure: Generation of bubble products during library amplification by PCR</em>
+  <em>Generation of bubble products during library amplification by PCR</em>
 </div>
 
 <br><br>
@@ -108,7 +108,7 @@ Ideally, the tapestation returns a main peak with the desired fragment size, tha
 <div align="center">
 <img src="../Figures/tapestation_profile.png" width="700">
 
-<em>Figure: Example of a high-quality NGS library fragment size analysis</em>
+<em>Example of a high-quality NGS library fragment size analysis</em>
 </div>
 
 The presence of a high concentration of adapter dimers can be problematic for several reasons:
