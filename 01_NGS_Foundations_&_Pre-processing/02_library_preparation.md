@@ -20,7 +20,7 @@ In order for the adapters to bind to the DNA, a previous step of **end repair** 
 As we will see later, ATAC-seq uses tagmentation, so there´s no end-repair, A-tailing, or ligation.
 
 <div align="center">
-  <img src="../Figures/library_prep.png" width="600">
+  <img src="../Figures/library_prep.png" width="900">
   <br>
   <em>Figure: Overview of a library preparation workflow</em>
 </div>
