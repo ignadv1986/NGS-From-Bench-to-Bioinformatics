@@ -66,6 +66,14 @@ $$Q = -10 \log_{10}(P)$$
 
 where P is the probability of an incorrect base call. Q30, the usually aimed for Phred score, translates to a 1 in 1000 error rate, or a 99.9% accuracy. Scores above 28 are categorized as good quality, and the score should remain uniform throughout the whole sequence. A drop at the end is normal in Illumina sequencers and it's usually solved during the trimming process.
 
+<div align="center">
+  <img src="../Figures/sequencing_per_base_quality.png" width="700">
+  <br>
+  <em>Figure: Representation of sequencing depth vs coverage</em>
+</div>
+
+<br>
+
 - **Per Sequence Quality Score**
 
 Average Phred score of the bases constituting each read sequence. It shows as a histogram with ideally a unique peak at high Phred scores.
