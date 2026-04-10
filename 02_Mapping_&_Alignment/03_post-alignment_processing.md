@@ -27,6 +27,8 @@ RNA-seq, on the other hand keeps both mtDNA and contigs, since an increase in th
 
 ### What to keep?
 
+<br>
+
 <div align="center">
 
 | Assay | mtDNA | Haplotypes | Reasoning |
@@ -36,6 +38,8 @@ RNA-seq, on the other hand keeps both mtDNA and contigs, since an increase in th
 | ChIP/CUT&RUN | Drop | Drop | We only want high-confidence nuclear binding peaks |
 
 </div>
+
+<br>
 
 ## Duplicate Removal
 
