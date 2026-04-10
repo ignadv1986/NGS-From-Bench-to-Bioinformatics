@@ -1,6 +1,8 @@
+In this section, we go through the computational workflow for RNA-seq analysis starting from the generated alignment files. For technical details on the preferred aligners (such as STAR or HISAT2) and the reasoning behind splice-aware mapping, please refer to the [Alignment & Mapping](../02_Mapping_&_Alignment/02_aligners.md) section of this manual.
+
 # Quantification of reads
 
-The bam files generated during the alignment contain the coordinates of the detected genes, but not the number of copies that were detected. To convert the reads into a digital **count matrix**, the go-to option in the feature of the Subread binary package, [featureCounts](https://subread.sourceforge.net/featureCounts.html). Here is the [link](https://bioconductor.org/packages/release/bioc/html/Rsubread.html) for R users, where featureCounts is wrapped in the Bioconductor package Rsubread. It is very fast and memory efficient, and it takes a GTF annotation file to define the boundaries between exons and genes. **Important note:** if the GTF doesn't match the genome build, the counts will be zero. 
+The BAM files generated during the alignment contain the coordinates of the detected genes, but not the number of copies that were detected. To convert the reads into a digital **count matrix**, the go-to option in the feature of the Subread binary package, [featureCounts](https://subread.sourceforge.net/featureCounts.html). Here is the [link](https://bioconductor.org/packages/release/bioc/html/Rsubread.html) for R users, where featureCounts is wrapped in the Bioconductor package Rsubread. It is very fast and memory efficient, and it takes a GTF annotation file to define the boundaries between exons and genes. **Important note:** if the GTF doesn't match the genome build, the counts will be zero. 
 The 3 critical settings that must be taken into account when using featureCounts are the following:
 
 - **Strandness** (unstranded, forward stranded, or reverse stranded (standard dUTP/Illumina workflow): Picking the wrong one will lead to a massive decrease in the count number.
@@ -19,6 +21,8 @@ For the identification of differentially expressed genes, the R/Bioconductor pac
 
 Example of a count matrix:
 
+<br>
+
 <div align="center">
 
 | Gene | Sample1 | Sample2 | Sample3 | Sample4 | Sample5 | Sample6 |
@@ -29,7 +33,11 @@ Example of a count matrix:
 
 </div>
 
+<br>
+
 Example of a metadata matrix:
+
+<br>
 
 <div align="center">
 
@@ -43,6 +51,8 @@ Example of a metadata matrix:
 | Sample6 | Treated | 3 |
 
 </div>
+
+<br>
 
 When analyzing differential expression, DESeq2 does the following three things:
 
