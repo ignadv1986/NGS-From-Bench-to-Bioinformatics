@@ -51,8 +51,6 @@ The process relies on charge-shielding rather than direct molecular bridging. Hi
 Large DNA molecules dehydrate more easily, so they bind to the beads even at lower PEG concentrations, while small molecules are more soluble and therefore require higher PEG concentrations to bind the beads. Using different bead volume to sample volume ratios, different DNA sizes can be selected. A lower ratio (0.5x) captures only very large fragments, while a higher ratio (1.8x), captures almost everything.
 To make sure that only the fragments of the right size are captured, a double-sided selection is normally used. First, a “right-side cut”, where a really low ratio (0.5x) is used, is performed. In this scenario, large pieces of DNA bind to the beads, and the rest stays on the liquid, so the beads can be discarded. Then, more beads are added to bring the total ratio up to, say, 0.8x (“left-side cut”), so that the rest of the DNA, except for small pieces like adapter dimers stick to the beads. These are kept, washed with ethanol 80% to remove contaminants, and finally eluted with water or a low-salt buffer. 80% ethanol is used because it’s strong enough to keep the DNA precipitated on the bead, but contains enough water to dissolve the salts and PEG so they can be washed away.
 
-<br><br>
-
 <div align="center">
   <img src="../Figures/SPRI.png" width="900">
   <br>
@@ -92,8 +90,6 @@ The goal of library PCR is to add the remaining adapter sequences (if using inde
 
 **The Bubble Product (heteroduplex):** In the final stages of the library PCR, primers get depleted (they run out) and there is an overabundance of DNA fragments. Instead of a primer binding to a template, two full-length library fragments denature (separate) and then accidentally anneal (re-bind) to each other. Since the adapters are identical for all fragments, they zip up perfectly. However, the genomic inserts (the middle part) are different. They are not complementary. The result is a DNA molecule that is double-stranded at the ends (the adapters), but single-stranded in the middle, forming a bubble (heteroduplex). These molecules are less dynamic and migrate slower in an electrophoresis, so they give rise to a high molecular weight peak. However, the sequencer denatures the dsDNA, so this will have no consequences on the sequencing itself. This is a problem of overamplification, so reducing the amount of PCR cycles to reduce reactive use is recommended.
 
-<br><br>
-
 <div align="center">
   <img src="../Figures/bubble_product.png" width="900">
   <br>
@@ -127,6 +123,8 @@ Ideally, the tapestation returns a main peak with the desired fragment size, tha
 
 <em>Example of a high-quality NGS library fragment size analysis</em>
 </div>
+
+<br><br>
 
 The presence of a high concentration of adapter dimers can be problematic for several reasons:
 
