@@ -6,7 +6,20 @@ Beyond biology, aligners differ in their stringency, RAM requirements, speed, an
 
 ## STAR and HISAT2
 
-[STAR](https://github.com/alexdobin/STAR) and [HISAT2](https://daehwankimlab.github.io/hisat2/) are the standard aligners for RNA-seq analysis because they can handle intron-exon junctions. Since the cDNA is obtained from mature mRNAs, where introns have already been removed, then these sequences will not be present in the sequenced library. Therefore, if some reads fall between an exon-intron boundary (**splice junction**), it won't be possible to normally map them to the reference genome. STAR and HISAT2 allow to “jump” over the introns, marking those genomic regions as splice sites. Both aligners can take a **GTF/GFF annotation file**, a “map” with the characteristics of the reference genome, in this case one with with exon boundaries and known splice junctions, but they can also identify splice junctions themselves. When providing an annotation file, it is critical that it matches the reference genome used for the mapping itself. 
+[STAR](https://github.com/alexdobin/STAR) and [HISAT2](https://daehwankimlab.github.io/hisat2/) are the standard aligners for RNA-seq analysis because they can handle intron-exon junctions. Since the cDNA is obtained from mature mRNAs, where introns have already been removed, then these sequences will not be present in the sequenced library. Therefore, if some reads fall between an exon-intron boundary (**splice junction**), it won't be possible to normally map them to the reference genome. 
+
+<br>
+
+<div align="center">
+  
+  <img src="../Figures/RNA_seq_alignment.png" width="800">
+  <br>
+  <em>Schematic of read misalignment during mapping with a non-splice aware aligner</em> 
+</div>
+
+<br>
+
+STAR and HISAT2 allow to “jump” over the introns, marking those genomic regions as splice sites. Both aligners can take a **GTF/GFF annotation file**, a “map” with the characteristics of the reference genome, in this case one with with exon boundaries and known splice junctions, but they can also identify splice junctions themselves. When providing an annotation file, it is critical that it matches the reference genome used for the mapping itself. 
 
 ## bowtie2 and BWA-MEM2
 
