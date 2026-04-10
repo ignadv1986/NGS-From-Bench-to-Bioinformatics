@@ -27,11 +27,15 @@ RNA-seq, on the other hand keeps both mtDNA and contigs, since an increase in th
 
 ### What to keep?
 
+<div align="center">
+
 | Assay | mtDNA | Haplotypes | Reasoning |
 |-------|-------|------------|-----------|
 | RNA-seq | Keep | Keep | Expression in these regions can be biologically meaningful |
 | ATA-seq | Keep for QC, drop afterwards | Drop | mtDNA is used for QC, but then often removed to save budget |
 | ChIP/CUT&RUN | Drop | Drop | We only want high-confidence nuclear binding peaks |
+
+</div>
 
 ## Duplicate Removal
 
