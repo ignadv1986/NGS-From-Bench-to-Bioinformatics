@@ -6,7 +6,7 @@ Once the aligner has generated the BAM files, the data is still not ready for do
 
 ### **Blacklist regions**
 
-Blacklist regions are specific parts of the reference genome that systematically produce artificial high signals in sequencing-based assays, even when there’s no biological reason for enrichment. These mainly include **repetitive regions** (satelites, rDNA, telomeres, centromeres, etc). Mapping of these regions will give raise to many reads, just because of the high number of repeats, suggesting that there is a real effect when in fact there isn't. ENCODE has blacklist BED files compiled from previous experiments that can be used to exclude these reads from the samples. These are specific to the genome version used in the mapping, so a mismatch will result in the removal of the wrong sequences. The removal of blacklist regions is standard in most NGS pipelines.
+Blacklist regions are specific parts of the reference genome that systematically produce artificial high signals in sequencing-based assays, even when there’s no biological reason for enrichment. These mainly include **repetitive regions** (satelites, rDNA, telomeres, centromeres, etc). Mapping of these regions will give raise to many reads, just because of the high number of repeats, suggesting that there is a real effect when in fact there isn't. ENCODE has blacklist BED files (such as the V2 blacklists for hg38) compiled from previous experiments that can be used to exclude these reads from the samples. These are specific to the genome version used in the mapping, so a mismatch will result in the removal of the wrong sequences. The removal of blacklist regions is standard in most NGS pipelines.
 
 ### **Non-canonical chromosomes**
 
@@ -30,8 +30,8 @@ RNA-seq, on the other hand keeps both mtDNA and contigs, since an increase in th
 <div align="center">
 
 | Assay | mtDNA | Haplotypes | Reasoning |
-|-------|-------|------------|-----------|
-| RNA-seq | Keep | Keep | Expression in these regions can be biologically meaningful |
+| :--- | :--- | :--- | :--- |
+| RNA-seq | Keep | Drop | Expression in these regions can be biologically meaningful |
 | ATA-seq | Keep for QC, drop afterwards | Drop | mtDNA is used for QC, but then often removed to save budget |
 | ChIP/CUT&RUN | Drop | Drop | We only want high-confidence nuclear binding peaks |
 
@@ -39,15 +39,15 @@ RNA-seq, on the other hand keeps both mtDNA and contigs, since an increase in th
 
 ## Duplicate Removal
 
-Depending on the technique, the presence of duplicated reads can be a red flag. Duplicated reads are reads that map to the exact same sequence, from start to finish. Since random fragmentation is very unlikely to generate reads that start (and sometimes end) at the exact same position, duplicated reads are usually generated when the PCR amplification step in the library prep amplifies more copies of a specific fragment (**PCR duplicates**). Therefore, these fragments weren't more present in the original sample, they were just overamplified and are thereby going to generate more reads. 
+Depending on the technique, the presence of duplicated reads can be a red flag. Duplicated reads are reads that map to the exact same sequence, from start to finish. Since random fragmentation is very unlikely to generate reads that start (and sometimes end) at the exact same position (especially when using paired-end sequencing) duplicated reads are usually generated when the PCR amplification step in the library prep amplifies more copies of a specific fragment (**PCR duplicates**). Therefore, these fragments weren't more present in the original sample, they were just overamplified and are thereby going to generate more reads. 
 
-In RNA-seq it is normal to have many duplicates, since some genes are expressed more than others (the more transcripts, the more cDNA generated). In ATAC-seq, on the other hand, because the Tn5 inserts randomly, it is statistically impossible for it to cut at the exact same two genomic coordinates twice in a small cell population, and therefore duplicates are always removed. In the case of CUT%RUN/ChIP, duplicates are marked, but they need to be looked into before removal: very narrow peaks (like a transcription factor), might give natural duplicates. In this case, some researchers keep them, but the standard conservative pipeline removes them to avoid PCR bias.
+In RNA-seq it is normal to have many duplicates, since some genes are expressed more than others (the more transcripts, the more cDNA generated). In ATAC-seq, on the other hand, because the Tn5 inserts randomly, it is statistically impossible for it to cut at the exact same two genomic coordinates twice in a small cell population, and therefore duplicates are always removed. In the case of CUT&RUN/ChIP, duplicates are marked, but they need to be looked into before removal: very narrow peaks (like a transcription factor), might give natural duplicates. In this case, some researchers keep them, but the standard conservative pipeline removes them to avoid PCR bias.
 
-Other type of duplicates are the so-called **optical duplicates**. These happen when the sequencer’s camera misidentifies a single cluster as two separate ones (usually because the flow cell is too crowded/overloaded). To avoid this, it is important to load the right amount of DNA into the sequencer, which is highly dependent on the the type of sequencer used.
+Other type of duplicates are the so-called **optical duplicates**. These happen when the sequencer’s camera misidentifies a single cluster as two separate ones (usually because the flow cell is too crowded/overloaded). To avoid this, it is important to load the right amount of DNA into the sequencer, which is highly dependent on the the type of sequencer used. It is worth mentioning that, in patterned flow cells (NovaSeq/HiSeq 4000), an optical duplicate is often actually a **pad-hop duplicate**. This happens during ExAmp when a DNA fragment escaping one nanowell seeds a neighboring empty well.
 
-The most commonly used tools for duplicate handling are [Picard MarkDuplicates](https://gatk.broadinstitute.org/hc/en-us/articles/360037052812-MarkDuplicates-Picard) and [samtools markdup](https://www.htslib.org/doc/samtools-markdup.html). They group reads/pairs by alignment positions; the read with the highest quality (sum of base qualities) is kept, while others are flagged as duplicates. It is important that these duplicates are just flagged and not deleted, since they are used to calculate the QC metric “duplication rate”. Downstream tools are told to ignore these flagged sequences.
+The most commonly used tools for duplicate handling are [Picard MarkDuplicates](https://gatk.broadinstitute.org/hc/en-us/articles/360037052812-MarkDuplicates-Picard) and [samtools markdup](https://www.htslib.org/doc/samtools-markdup.html). They group reads/pairs by alignment positions; the read with the highest quality (sum of base qualities) is kept, while others are flagged as duplicates. It is important that these duplicates are just flagged and not deleted, since they are used to calculate the QC metric “duplication rate”: standard tools (Picard/Samtools) apply the **0x400 (1024) SAM flag to duplicate**s, and most downstream analysis tools are configured to recognize this flag and skip these reads automatically.
 
-Picard actually tries to distinguish between PCR duplicates and Optical duplicates, and the measures to be taken vary depending on the result. If the number of PCR replicates is too high, then the number of PCR cycles needs to be reduced. On the other hand, if the optical duplicates are particularily high, then we need to load less library into the sequencer.
+Picard actually tries to distinguish between PCR duplicates and optical duplicates, and the measures to be taken vary depending on the result. If the number of PCR replicates is too high, then the number of PCR cycles needs to be reduced. On the other hand, if the optical duplicates are particularily high, then we need to load less library into the sequencer.
 
 ## Spike-in Correction
 
@@ -61,6 +61,6 @@ Importantly, this requires that the reads are aligned to both the genome of the 
 While ppike-in DNA is present from the initial stages of the protocol and undergoes the same PCR amplification as the target library, it is typically absent from TapeStation or Bioanalyzer traces. This is due to two main reasons:
 
 - **Concentration:** To prevent the spike-in from dominating sequencing depth, it is added at a concentration designed to constitute only 1–5% of the final library.
-- **Distribution:** Especifically for CUT&RUN, unlike the target DNA, which is cleaved at specific intervals by tethered MNase to form distinct peaks, spike-in DNA undergoes non-specific, random cleavage. This results in a broad, low-molarity smear that falls below the limit of fluorescent detection.
+- **Distribution:** Specifically for CUT&RUN, unlike the target DNA, which is cleaved at specific intervals by tethered MNase to form distinct peaks, spike-in DNA undergoes non-specific, random cleavage. This results in a broad, low-molarity smear that falls below the limit of fluorescent detection.
 
 If a spike-in signal is visible on the TapeStation, the spike-in-to-target ratio is too high. This swamping will necessitate significantly higher sequencing depth to recover sufficient target reads for downstream analysis.
