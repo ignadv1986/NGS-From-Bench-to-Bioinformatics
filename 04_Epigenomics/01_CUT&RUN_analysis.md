@@ -88,13 +88,17 @@ This allows for functional enrichment analysis (GO Terms/KEGG Pathways) to see i
 
 Finally, the enrichment of specific motifs, such as known transcription factor binding sites can be analyzed. The table below summarizes the main tools used for motif enrichment and their goals:
 
+<br>
+
+<div align="center">
+
 | Tool | Focus | Best for |
 | :--- | :--- | :--- |
 | [HOMER](http://homer.ucsd.edu/homer/) | Known motifs + simple *de novo* | Quick, reliable enrichment of established motifs |
 | [MEME Suite](https://meme-suite.org/meme/) | Advanced *de novo* discovery | Identifying novel or complex motifs with high statistical rigor |
 | [TOBIAS](https://github.com/loosolab/TOBIAS) | TF footprinting / activity | Analyzing differential TF occupancy within open chromatin (often paired with ATAC-seq) |
 
-
+</div>
 
 
 
