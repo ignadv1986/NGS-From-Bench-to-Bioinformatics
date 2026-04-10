@@ -4,6 +4,20 @@ CUT&RUN (Cleavage Under Targets and Release Using Nuclease) is an "in-situ" mapp
 
 These small, targeted fragments diffuse out of the nuclei and are collected for sequencing. This method results in extremely low background noise, requires significantly fewer cells (down to 100 cells or fewer in some protocols), and provides high-resolution mapping of protein-DNA interactions. Because the DNA is cleaved specifically at the site of interest, the resulting sequencing data is exceptionally clean, making it a "gold standard" for researchers working with limited sample material or requiring high-precision binding data.
 
+<br>
+
+<div align="center">
+  
+  <img src="../Figures/CUT&RUN.png" width="800">
+  <br>
+  <em>"CUT&RUN Sequencing Workflow" by Mannan369 (2018), Wikimedia Commons. 
+Licensed under CC BY-SA 4.0 International (https://creativecommons.org/licenses/by-sa/4.0/).
+Source: https://commons.wikimedia.org/wiki/File:CUT%26RUN_Protocol.tif</em> 
+</div>
+
+<br>
+
+
 ## Fragment Size
 
 While in other techniques, like RNA-seq, the size of the fragments is controlled during library prep, in CUT&RUN, fragments are generated during the protocol by the MNase. Because the nuclease cleaves specifically where the antibody is bound, the length of the resulting DNA is highly informative of the protein’s identity and its "footprint" on the genome. Generally, it is accepted that fragments <120 bp correspond to those bound by transcription factor, while 150 bp and 300 bp correspond to mono- and di-nucleosomes, respectively, indicating that the protein of interest is a histone or a histone binding protein. Fragments of 500 bp or above are usually considered background. Therefore, the SPRI step of the library prep is highly dependent on what is known about the protein of interest. In all cases, a double-sided size selection is recommended: first, a low ratio (~0.6x) is used to remove the big, uninformative pieces of DNA. The beads are discarded and the supernatant is kept. Depending on the type of protein being studied, the second SPRI, isolation step varies:
@@ -15,7 +29,7 @@ While in other techniques, like RNA-seq, the size of the fragments is controlled
 | Type of protein | Size (after adapter binding) | SPRI ratio | Purpose |
 |-----------------|------------------------------|------------|---------|
 | Transcription factor | 140-240 bp | 1x-1.2x | Captures small footprints while excluding <120 bp adapter dimers |
-| Histone-binding factor | ~270 bp | 0.8×-0.9× | Captures nucleosomal units while aggressively cleaning out TF "noise" and dimers |
+| Histone-binding factor | ~270 bp | 0.8×-0.9× | Captures nucleosomal units while aggressively cleaning out TF noise and dimers |
 
 </div>
 
@@ -35,7 +49,7 @@ Every CUT&RUN experiment must include an IgG (non-specific antibody) control. Th
 
 If the IgG shows a massive, high-molecular-weight smear on the TapeStation, it indicates a failure in the wash steps: the MNase wasn't washed away and was allowed to digest the genome globally, which defeats the purpose of the control.
 
-Since the IgG is a low-complexity library—it represents only the rare, non-specific locations where the MNase happened to cut without antibody guidance-it should not be pooled at the same ratio as the actual samples: ff the target is pooled at 4 nM, the IgG should often be pooled at 1 nM or 2 nM. This saves a lot of space on the flow cell that would otherwise be used to generate many duplicates from the unique fragments present in the IgG sample.
+Since the IgG is a low-complexity library—it represents only the rare, non-specific locations where the MNase happened to cut without antibody guidance-it should not be pooled at the same ratio as the actual samples: if the target is pooled at 4 nM, the IgG should often be pooled at 1 nM or 2 nM. This saves a lot of space on the flow cell that would otherwise be used to generate many duplicates from the unique fragments present in the IgG sample.
 
 ## PCR amplification & Handling of Duplicates
 
