@@ -12,6 +12,8 @@ The most widely used versions of human reference genome are GRCh37 and GRCh38, w
 
 GENCODE and Ensembl are now technically the same for human and mouse. Since 2018, Ensembl uses the GENCODE gene set as its default, but the latter includes a lot of "long non-coding RNAs" (lncRNAs) and pseudogenes that standard RefSeq might ignore. This is why RNA-seq scientists almost always prefer GENCODE/Ensembl over UCSC/RefSeq.
 
+<br>
+
 <div align="center">
 
 | Version	Source	| Common Alias	| Chromosome Naming	| Annotation | Source	Notes |
@@ -23,6 +25,8 @@ GENCODE and Ensembl are now technically the same for human and mouse. Since 2018
 
 </div>
 
+<br>
+
 ## Genome Indexing
 
 Without an index, the aligner would have to read the entire 3.2 billion base pairs of the human genome for every single read in the FASTQ files. With 400 million reads, the analysis would take years. **Indexing** reduces this to minutes or hours. This involved turning the reference FASTA file into a fast-searchable database (index) of short, overlapping subsequences, known as **k-mers** (sequences of length *k*). 
@@ -32,6 +36,7 @@ Importantly, each aligner generates a different indexing, and they are not compa
 
 Aligners take short sequences (**seeds**) from the sequencing reads and try to find candidate alignment locations in the index. Once the aligner has "anchored" the read to a specific spot, it attempts to align the remainder of the read to the adjacent genomic coordinates, allowing for a predefined number of mismatches or gaps (indels). This is called the **seed-and-extend method**, and it is essential because, if the aligner tried to find an exact 150-base match in the 3-billion-base human genome, it would almost always fail, due to the presence of point mutations and sequencing errors. The aligner calculates an **alignment score** by rewarding matches and applying "penalties" for mismatches and indels. If a sequences maps to several locations, the aligner chooses the one with the highest alignment score. If multiple locations have the same top score, the read is considered **multi-mapped**, which significantly lowers its Mapping Quality (MAPQ) score (see below).
 
+<br>
 
 <div align="center">
   
@@ -52,6 +57,8 @@ Sam files are human-readable text files, where each line is tab-delimited, showi
 - the position
 - the **CIGAR string**. This is a compact code that describes the extend part of the mapping. For example, 150M means 150 bases matched perfectly, while 100M2D48M means 100 matches, a 2-base deletion, and 48 more matches.
 
+<br>
+
 <div align="center">
 
 | Letter	| Meaning	| What it looks like |
@@ -62,6 +69,8 @@ Sam files are human-readable text files, where each line is tab-delimited, showi
 | S	| Soft-clipping	| These bases are at the ends and didn't match, so the aligner ignored them |
 
 </div>
+
+<br>
 
 **Note:** The presence of many S (Soft-clipping) in a BAM file usually means that the adapter trimming (with fastp or cutadapt) didn't work perfectly. The aligner is doing the work by hiding the adapters so the read can still map.
 
@@ -86,11 +95,15 @@ As mentioned in the library prep section of this repository, selecting a correct
 - If inserts are over 400 bp, there will be an unsequenced gap in the middle, which the aligner will fill using paired-end logic. This reduces sequencing depth, but allows for a higher coverage in exchange.
 - Finally, if the insert is shorter than the read length (below 150 bp), both R1 and R2 will cover the full genomic sequence and read into the adapter on the other end. This provides very high sequencing depth, but requires very heavy trimming to remove the adapter sequences.
 
+<br>
+
 <div align="center">
   <img src="../Figures/fragment_size.png" width="800">
   <br>
   <em>Fragment size selection logic.</em>
 </div>
+
+<br>
 
 ## Mapping Quality (MAPQ)
 
