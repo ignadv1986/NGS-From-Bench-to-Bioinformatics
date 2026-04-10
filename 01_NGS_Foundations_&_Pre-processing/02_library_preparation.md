@@ -12,6 +12,16 @@ Next, small pieces of DNA, known as **adapters**, are bound to the DNA. These fr
 - **Priming sites** (SBS priming sites): Located just "inside" the P5/P7. These are the binding sites for the sequencing primers that give rise to read 1 (R1) and read 2 (R2) in paired-end runs.
 - **Index(barcode) sequences:** These are unique 8–10 bp sequences that act as a "digital tag" for the sample, so a different one needs to be used and kept track of for every sample. While a single barcode (generally i7) per sample can be used, currently the **Unique Dual Indexing (UDI)** method, where both i7 and i5 positions contain unique barcodes , is preferred. UDIs virtually eliminate **index hopping**, a phenomenon where reads from high-concentration samples are misassigned to low-concentration samples during demultiplexing. Without these indexes, libraries could not be pooled (see below), and samples would have to be sequenced one by one. The barcodes allow the sequencing software to sort millions of raw reads back into their original sample identities in a process called **demultiplexing**.
 
+<br><br>
+
+<div align="center">
+  <img src="../Figures/adapter.png" width="900">
+  <br>
+  <em>Sequencing library architecture</em>
+</div>
+
+<br><br>
+
 This is the simplest workflow, mandatory for PCR-free protocols (e.g protocols that yield enough DNA that they do not require a PCR amplification step), but also more expensive and requires a different adapter for every single sample (since the index is already on the adapter).
 
 The most common high-throughput method involves the use of truncated (stubby) adapters, known as **TA-ligation with indexed PCR** or **universal adapter ligation**. In this protocol, adapters contain only the initial priming sites, and the library is "completed" during a subsequent indexed PCR step, where primers add the barcodes and the P5/P7 flow-cell binding sequences. If this PCR fails, then the sequencing will also fail, since the fragments won´t contain the P5/P7 needed for the binding.
