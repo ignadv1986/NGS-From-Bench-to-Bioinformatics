@@ -8,7 +8,7 @@ These small, targeted fragments diffuse out of the nuclei and are collected for 
 
 <div align="center">
   
-  <img src="../Figures/CUT&RUN.png" width="800">
+  <img src="../Figures/CUT&RUN.png" width="600">
   <br>
   <em>"CUT&RUN Sequencing Workflow" by Mannan369 (2018), Wikimedia Commons. 
 Licensed under CC BY-SA 4.0 International (https://creativecommons.org/licenses/by-sa/4.0/).
