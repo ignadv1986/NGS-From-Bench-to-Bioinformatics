@@ -68,7 +68,16 @@ It outputs a table containing:
 - **log2FoldChange (LFC):** The magnitude of the change (e.g., a value of 1 means a 2-fold increase; a value of -1 represents a 2-fold decrease).
 - **The adjusted p-value (padj):** Corrects for multiple testing, controlling for false discovery rate (FDR), using the Benjamini-Hochberg correction. Let´s say we have a p-value of 0.01. That means we have a 1% possibility of our result being a false positive. Padj drastically reduces this number, and in consequence a padj < 0.05 is considered the threshold for significance.
 
-DESeq2 results are usually plotted as volcano plots, with the shrunk LFC (see below) in the x-axis, and the -log10(padj) on the y axis. This transformation turns tiny p-values into large positive numbers, placing the most significant genes at the top of the plot
+DESeq2 results are usually plotted as volcano plots, with the shrunk LFC (see below) in the x-axis, and the -log10(padj) on the y axis. This transformation turns tiny p-values into large positive numbers, placing the most significant genes at the top of the plot.
+
+<br>
+
+<div align="center">
+<img src="../Figures/RNA-seq_volcano_plot.png" width="600">
+<em>Example of volcano plots obtained from an RNA-seq experiment analysed through the workflow explained in this repository.</em>
+</div>
+
+<br>
 
 ### LFC shrinkage
 
