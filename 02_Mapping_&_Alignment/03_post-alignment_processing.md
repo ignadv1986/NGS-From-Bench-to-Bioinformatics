@@ -72,7 +72,7 @@ While spike-in DNA is present from the initial stages of the protocol and underg
 <div align="center">
   <img src="../Figures/spike-in.png" width="700">
   <br>
-  <em>Workflow and Logic of Spike-in Normalization in CUT&RUN</em>
+  <em>Workflow and Logic of Spike-in Normalization</em>
 </div>
 
 <br>
