@@ -6,7 +6,7 @@ Assay for Transposase-Accessible Chromatin using sequencing (ATAC-seq) is a powe
 
 <div align="center">
   
-  <img src="../Figures/ATAC-seq.png" width="800">
+  <img src="../Figures/ATAC-seq.png" width="600">
   <br>
   <em>Description of the ATAC-seq technique. Adapted from "ATAC-Seq Figure" by Deema108 (2018), Wikimedia Commons. 
 Licensed under Creative Commons Attribution-Share Alike 4.0 International (https://creativecommons.org/licenses/by-sa/4.0/deed.en).
@@ -26,6 +26,17 @@ The fragment size profile of an ATAC-seq library is a direct reflection of chrom
 - **Nucleosomal-free fragments (180-220 bp):** Corresponds to ~70 bp of open DNA + adapters
 - **Mononucleosome peak (~300–330 bp):** Corresponds to ~147 bp of nucleosomal DNA + ~50 bp of linker DNA + adapters
 - **Multinucleosome peaks (~500 bp, ~700 bp+):** Represent di- and tri-nucleosomal spans plus adapters
+
+<br>
+
+<div align="center">
+  
+  <img src="../Figures/ATAC-seq_fragment_size.png" width="600">
+  <br>
+  <em>Representation of a TapeStation analysis of a succesful ATAC-seq experiment.
+</div>
+
+<br>
 
 ### The 9 bp Tn5 Shift
 
