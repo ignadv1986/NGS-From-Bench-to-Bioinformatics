@@ -10,9 +10,9 @@ These small, targeted fragments diffuse out of the nuclei and are collected for 
   
   <img src="../Figures/CUT&RUN.png" width="600">
   <br>
-  <em>Description of the ATAC-seq technique. Adapted from "ATAC-Seq Figure" by Deema108 (2018), Wikimedia Commons. 
+  <em>"Visual Representation of the CUT&RUN Sequencing Work-Flow" by Mannan369 (2018), Wikimedia Commons. 
 Licensed under Creative Commons Attribution-Share Alike 4.0 International (https://creativecommons.org/licenses/by-sa/4.0/deed.en).
-Source: (https://commons.wikimedia.org/wiki/File:ATAC-Seq_Figure_.svg)</em> 
+Source: (https://commons.wikimedia.org/wiki/File:CUT%26RUN_Protocol.tif)</em> 
 </div>
 
 <br>
