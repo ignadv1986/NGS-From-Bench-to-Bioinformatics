@@ -2,7 +2,7 @@
 
 ## Early Visualization
 
-Before doing any analysis on the generated BAM files (the preferred tools for this can be found on [this](../02_Mapping_&_Alignment/02_aligners.md), it is good practice to check the coverage from each replication [SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/), [IGV](https://igv.org) or the [USCS browser](https://genome.ucsc.edu). This serves as a QC control, where enrichment at expected regions, replicate similarity and whole genome background can be assessed.
+Before doing any analysis on the generated BAM files (the preferred tools for this can be found [here](../02_Mapping_&_Alignment/02_aligners.md)), it is good practice to check the coverage from each replicate with visualization tools like [SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/), [IGV](https://igv.org) or the [UCSC browser](https://genome.ucsc.edu). This serves as a QC control, where enrichment at expected regions, replicate similarity and whole genome background can be assessed.
 
 **Important note:** When raw BAM files are viewed, the IgG control may appear to have peaks as tall as the experimental samples. This is caused by an artifact of auto-scaling within the browser. Because the IgG library contains very few reads, the background noise is zoomed in upon by the software to fill the vertical space of the track. Bigwig generation and spike-in normalization must be completed before the true, scaled relationship between the samples can be observed.
 
@@ -61,6 +61,16 @@ To capture the benefits of both sensitivity and reproducibility, a common approa
 - The reproducible peaks from step 2 are intersected with the master set from step 1 (using [bedtools intersect](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) to build the **final consensus peak set**.
 
 Why is intersection necessary? When files are merged, subtle differences in the signal shape of individual replicates can cause shifts in peak boundaries. Intersecting ensures that the reported peak width is consistent with the individual replicates (which is likely more accurate) while confirming the peak's presence in the higher-depth merged file. Furthermore, merging can create artifacts where weak signals from multiple replicates combine to "trick" SEACR into calling a peak that wasn't reproducible; intersection effectively prevents these artifacts from being included in the final data.
+
+<br>
+
+<div align="center">
+  <img src="../Figures/consensus_peaks.png" width="800">
+  <br>
+  <em>Consensus peak logic. Adapted from "Consensus Peak Calling for ATAC-seq and CUT and RUN Replicates", Lucille Delisle (2026) https://github.com/galaxyproject/iwc/tree/main/workflows/epigenetics/consensus-peaks. Under MIT license</em>
+</div>
+
+<br>
 
 ### Read counting on consensus peaks
 
