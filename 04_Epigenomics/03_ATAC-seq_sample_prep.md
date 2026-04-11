@@ -2,6 +2,19 @@
 
 Assay for Transposase-Accessible Chromatin using sequencing (ATAC-seq) is a powerful and rapid method used to map global chromatin accessibility. The technique relies on the action of a hyperactive **Tn5 transposase**, which simultaneously fragments the DNA and ligates sequencing adapters, a process known as **tagmentation**. Because the bulky Tn5 dimer can only access DNA that is not tightly wrapped around nucleosomes or obstructed by high-density protein complexes, the resulting sequencing reads are highly enriched in "open" regions, such as active promoters, enhancers, and other regulatory elements. By analyzing the density and distribution of these insertion sites, researchers can determine the regulatory landscape of a cell and identify shifts in chromatin reachability across different experimental conditions.
 
+<br>
+
+<div align="center">
+  
+  <img src="../Figures/ATAC-seq.png" width="800">
+  <br>
+  <em>Description of the ATAC-seq technique. Adapted from "ATAC-Seq Figure" by Deema108 (2018), Wikimedia Commons. 
+Licensed under Creative Commons Attribution-Share Alike 4.0 International (https://creativecommons.org/licenses/by-sa/4.0/deed.en).
+Source: (https://commons.wikimedia.org/wiki/File:ATAC-Seq_Figure_.svg)</em>
+</div>
+
+<br>
+
 ## Tn5 Mechanism
 
 The Tn5 transposase functions as a homodimer that is pre-loaded in vitro with synthetic, double-stranded 19-bp **Mosaic End** (ME) sequences of 19 bp attached to **truncated adapters** (for more information on truncated adapter, refer to the [library prepararion](../01_NGS_Foundations_&_Pre-processing/02_library_preparation.md) section of this repository). This pre-activated complex, known as **transposome**, physically scans for accessible, nucleosome-free DNA, where it simultaneously cleaves the genomic DNA backbone and ligates the ME-containing adapters to the new ends. The full-length sequencing adapters and i5/i7 barcodes are subsequently added during a limited-cycle PCR step.
