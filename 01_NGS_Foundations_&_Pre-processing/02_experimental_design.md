@@ -12,7 +12,6 @@ Before the experiment is performed, the flow cell that will be used needs to be 
 $$\text{Total Data (Gb)} = \text{Genome Size (Gb)} \times \text{Desired Depth (} \times \text{)}$$
 
 Based on this formula, a full sequencing of a human genome (around 3.2 Gb) at 30x sequencing depth, requires 96 Gb of raw data.
-Choosing the right flow cell for the experiment can save money and time. High-output flow cells are more expensive and take more time to image, but they might not be ideal if the total data required by the experiment isn’t very high.
 
 **Coverage** or **breadth of coverage** is closely related to sequencing depth but provides a broader perspective. Coverage is the proportion or percentage of a genome that has been sequenced at a certain depth. It gives an idea of how much of the entire genome has been effectively read and is usually expressed as a multiple of the genome's size, expressed as a percentage. For example, “95% coverage” means that 95% of the intended region has been sequenced at least once or a certain amount of times.
 
@@ -22,4 +21,16 @@ The higher the sequencing depth, the lower the possibility that some positions w
   <img src="../Figures/sequencingdepth_vs_coverage.png" width="700">
   <br>
   <em>Representation of sequencing depth vs coverage</em>
+</div>
+
+Choosing the appropriate flow cell is critical for cost efficiency. Flow cells differ in total data output, and the optimal choice depends on the number of samples and the required sequencing depth. Smaller flow cells are more suitable for low sample numbers or pilot experiments, as they minimize unused capacity. In contrast, high-output flow cells reduce cost per base but are only cost-effective when fully utilized. Underfilling a high-capacity flow cell can significantly increase the cost per sample, making careful planning essential.
+
+<br>
+
+<div align="center">
+| Project Scale | Data Requirement | Recommended Strategy | Cost Consideration |
+|--------------|------------------|----------------------|--------------------|
+| Small (pilot, few samples) | Low (≤100 Gb) | Use low-output runs | Minimizes wasted capacity |
+| Medium (tens of samples) | Moderate (100–1000 Gb) | Use mid-output runs or multiplex samples | Balance between flexibility and cost |
+| Large (cohort studies, WGS) | High (≥1 Tb) | Use high-output runs | Lowest cost per Gb if fully utilized |
 </div>
