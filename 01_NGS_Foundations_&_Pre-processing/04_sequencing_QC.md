@@ -4,7 +4,7 @@
 
 While  specific sequence depth and coverage (see the [experimental design](./02_experimental_design.md) section of this repo for more details on this) are defined during experimental design, it is important to check if they have been achieved once the run is over.
 
-The actual sequencing depth achieved can be calculated through the following formula:
+The observed sequencing depth achieved in a sequencing run can be calculated through the following formula:
 
 $$\text{Sequencing Depth} = \frac{\text{Total Number of Reads} \times \text{Fragment Length (bp)}}{\text{Total Genome Size (bp)}}$$
 
@@ -12,7 +12,7 @@ Coverage is calculated by bioinformatics tools such as ([bedtools](https://bedto
 
 $$\text{Coverage } = \left( \frac{\text{Number of bases with } \ge 1 \text{ read}}{\text{Total Genome Size}} \right) \times 100$$
 
-One important term is **uniformity of coverage**. This is a measure of the variability of coverage across the genome. While the overall coverage might be the desired one, this is an average across all positions, so some bases might not be reaching it while others have an inflated coverage, skewing the %. This can be problematic, especially or WGS, where we want flat coverage. If a position shows a much lower coverage, then the detection of mutations with high confidence won’t be possible. For ATAC-seq or CUT&RUN, we actually want bumpy coverage (peaks where the protein binds and valleys everywhere else).
+One important term is **uniformity of coverage**. This is a measure of the variability of coverage across the genome. While the overall coverage might be the desired one, this is an average across all positions, so some bases might not be reaching it while others have an inflated coverage, skewing the %. This can be problematic, especially in WGS, where we want flat coverage: if a position shows a much lower coverage, then the detection of mutations with high confidence won't be possible. In contrast, applications such as ATAC-seq or CUT&RUN benefit from non-uniform (“bumpy”) coverage patterns that reflect biological signal.
 
 The most common cause of low uniformity of coverage is **PCR bias**. Some regions are easier to amplify by the polymerase, including those with lower GC content, leading to an overrepresentation of these fragments.
 
