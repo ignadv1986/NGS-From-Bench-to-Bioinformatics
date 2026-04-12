@@ -17,6 +17,8 @@ For example, if a specific nucleotide is sequenced 30 times, the sequencing dept
 
 Before the experiment is performed, the flow cell that will be used needs to be decided based on the aimed sequencing depth and the genome size:
 
+\text{Total Data (Gb)} = \text{Genome Size (Gb)} \times \text{Desired Depth}
+
 $$\text{Total Data (Gb)} = \text{Genome Size (Gb)} \times \text{Desired Depth (} \times \text{)}$$
 
 Based on this formula, a full sequencing of a human genome (around 3.2 Gb) at 30x sequencing depth, requires 96 Gb of raw data.
