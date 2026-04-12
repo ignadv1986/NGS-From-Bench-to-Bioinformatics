@@ -23,14 +23,18 @@ The higher the sequencing depth, the lower the possibility that some positions w
   <em>Representation of sequencing depth vs coverage</em>
 </div>
 
+<br>
+
 Choosing the appropriate flow cell is critical for cost efficiency. Flow cells differ in total data output, and the optimal choice depends on the number of samples and the required sequencing depth. Smaller flow cells are more suitable for low sample numbers or pilot experiments, as they minimize unused capacity. In contrast, high-output flow cells reduce cost per base but are only cost-effective when fully utilized. Underfilling a high-capacity flow cell can significantly increase the cost per sample, making careful planning essential.
 
 <br>
 
 <div align="center">
+  
 | Project Scale | Data Requirement | Recommended Strategy | Cost Consideration |
 |--------------|------------------|----------------------|--------------------|
 | Small (pilot, few samples) | Low (≤100 Gb) | Use low-output runs | Minimizes wasted capacity |
 | Medium (tens of samples) | Moderate (100–1000 Gb) | Use mid-output runs or multiplex samples | Balance between flexibility and cost |
 | Large (cohort studies, WGS) | High (≥1 Tb) | Use high-output runs | Lowest cost per Gb if fully utilized |
+
 </div>
