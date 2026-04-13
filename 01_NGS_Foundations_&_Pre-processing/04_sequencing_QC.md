@@ -120,7 +120,7 @@ A useful addition to any sequencing QC workflow is [MultiQC](https://seqera.io/m
 <div align="center">
   <img src="../Figures/multiQC.png" width="700">
   <br>
-  <em>Figure: "Top of a typical MultiQC report." MultiQC: summarize analysis results formultiple tools and samples in a single report. Käller et. al, Bioinformatics (2016). Licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)</em>
+  <em>Figure: "Top of a typical MultiQC report." MultiQC: summarize analysis results for multiple tools and samples in a single report. Käller et. al, Bioinformatics (2016). Licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)</em>
 </div>
 
 <br>
