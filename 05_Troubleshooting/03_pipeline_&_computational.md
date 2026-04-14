@@ -12,7 +12,9 @@ After successful alignment, read counting tools such as featureCounts may produc
 
 Additionally, gene quantification using featureCounts can produce unexpected or biased results depending on **parameter selection**. In most cases, issues are not caused by the data itself, but by mismatches between library properties and counting settings.
 
+- **Strand-specific counting:** One of the most common sources of incorrect gene counts is a mismatch between library strandedness and the -s parameter used in featureCounts. If the strandedness setting does not match the library preparation protocol, reads may be incorrectly assigned or discarded.
+
 | Parameter | Possible Selections | Issue | Consequence |
 | :--- | :--- | :--- | :--- |
-| Strand-specific Counting | -s 0 (unstranded)<br><br>-s 1 (forward stranded)<br><br> -s 2 (reverse stranded) | Choice of a strandness method not matching the library preparation protocol | -Increased proportion of unassigned reads<br><br>-Apparent loss of signal in antisense or overlapping genes
--Reduced correlation with expected gene expression profiles |
+| -s | 0 (unstranded)<br><br>1 (forward stranded)<br><br>2 (reverse stranded) | Strand specification does not match library protocol | Increased unassigned reads, loss of antisense signal, distorted gene expression profiles |
+
