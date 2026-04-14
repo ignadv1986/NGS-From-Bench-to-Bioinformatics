@@ -118,7 +118,7 @@ Different factors determine the score:
 -	**Base Quality:** If the bases that match the genome have low Phred scores (Q10 or Q15), the aligner is less confident in the match, and the MAPQ drops.
 -	**Paired-End Information:** If R1 and R2 map to the same chromosome at the correct distance from each other, the MAPQ gets a "bonus" because the physical constraint of the DNA fragment confirms the location.
 
-Importantly, different aligners use different MAPQ scores. This is important when filtering BAMs with samtools in later steps of the analysis.
+Importantly, different aligners use different MAPQ scores. This is critical when filtering BAMs with samtools in later steps of the analysis.
 
 -	BWA-MEM: Max score is 60.
 -	Bowtie2: Max score is 42.
