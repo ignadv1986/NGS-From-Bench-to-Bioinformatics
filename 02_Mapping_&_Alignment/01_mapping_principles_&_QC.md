@@ -17,7 +17,7 @@ GENCODE and Ensembl are now technically the same for human and mouse. Since 2018
 <div align="center">
 
 | Version	Source	| Common Alias	| Chromosome Naming	| Annotation | Source	Notes |
-|-----------------|---------------|-------------------|------------|--------------|
+| :--- | :--- | :--- | :--- | :--- |
 | GRCh37 |	Ensembl	| —	1, 2, 3…MT |	Ensembl 75 / GENCODE v19	| Older but stable |
 | hg19 |	UCSC	| —	chr1, chr2…chrM	| RefSeq / GENCODE v19	| Equivalent to GRCh37 |
 | GRCh38 |	Ensembl	| —	1, 2, 3…MT	| Ensembl ≥76 / GENCODE v40	| Current standard |
