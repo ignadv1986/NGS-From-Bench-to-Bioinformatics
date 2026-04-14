@@ -6,50 +6,66 @@ Even when sequencing QC and mapping metrics are within expected ranges, RNA-seq 
 
 After successful alignment, read counting tools such as featureCounts may produce unexpected or biologically inconsistent gene count distributions. A common cause is **incomplete or mismatched gene annotation**. If the GTF file does not match the genome build used for alignment, a substantial fraction of reads may map correctly but fail to be assigned to any feature. This results in inflated “unassigned” fractions and artificially reduced gene counts, and should therefore be the first thing to be checked.
 
-Additionally, gene quantification using featureCounts can produce unexpected or biased results depending on **parameter selection**. In most cases, issues are not caused by the data itself, but by mismatches between library properties and counting settings.
+<br>
+
+<div align="center">
+  
+  <img src="../Figures/GTF.png" width="800">
+  <br>
+  <em>"GTF file example", by Cjpenaponton.  Licensed under Creative Commons Attribution-Share Alike 4.0 International (https://creativecommons.org/licenses/by-sa/4.0/deed.en).</em> 
+</div>
+
+<br>
+
+In particular, the presence and consisten annotation of selected feature type (e.g., exon) and attribute (e.g., gene_id) in the GTF file should be verified.
+
+Even when the annotation is correct, unexpected results can arise when **counting assumptions** do not match the properties of the sequencing library.
 
 ### High proportion of unassigned reads
 
 If the correct GTF file was used, but the proportion of unassigned reads is still too high (>25-30%):
 
-- This might be due to an incorrect selection in the strandedness (-s) parameter, e.g., the strand specification (s-0 for unstranded, s-1 for forward stranded, and s-2 for reverse stranded) does not match the library generation.
-- This can also be caused by an incorrect feature type selection (-t) or a mismatch with the one present on the GTF file. The standard in RNA-seq analysis is "-t exon": if the GTF contains "transcript" information instead of "exon", a mismatch will happen and quantification will fail. One of the most common sources of incorrect gene counts is a mismatch between library strandedness and the -s parameter used in featureCounts. If the strandedness setting does not match the library preparation protocol, reads may be incorrectly assigned or discarded.
+- This is often due to an incorrect selection in the strandedness (*-s*) parameter, e.g., the strand specification (*s-0* for unstranded, *s-1* for forward stranded, and *s-2* for reverse stranded) does not match the library generation.
+- This can also be caused by an incorrect feature type selection (*-t*) or a mismatch with the one present on the GTF file. The standard in RNA-seq analysis is *-t exon*: if the GTF contains exon information under a different name, a mismatch will happen and reads will not be assigned correctly.
+- Finally a mismatch with attribute type (*-g*). The -t flag works in tandem with the -g flag; if *-t exon* is used, the *-g* flag must point to an attribute that exists within the exon lines (e.g., gene_id).
 
-| Parameter | Possible Selections | Issue | Consequence |
-| :--- | :--- | :--- | :--- |
-| -s | 0 (unstranded)<br>1 (forward stranded)<br>2 (reverse stranded) | Strand specification does not match library protocol | Increased unassigned reads, loss of antisense signal, distorted gene expression profiles |
+### Gene counts lower than expected across all samples
 
-- **Feature definition:** This type of error is typically detected by an unusually high proportion of unassigned reads in the featureCounts summary, often accompanied by reduced signal in genes expected to be expressed.
+If overall expression levels appear systematically reduced, this often indicates a structural issue in counting.
 
-| Parameter | Possible Selections | Issue | Consequence |
-| :--- | :--- | :--- | :--- |
-| -t | Exon/other feature types | Incorrect feature type selection relative to annotation | Systematic under-counting |
-| -g | gene_id/other grouping keys | Mismatch with annotation structure | Fragmented or inconsistent gene-level counts |
+- Choosing the wrong feature type (*-t*) leads to underestimation of gene expression. While, as mentioned above, *-t exon* is the standard in most RNA-seq pipelines, different experimental aims require a specific selection. For example, if the goal is to detect unspliced transcripts, *-t gene* should be used instead of *-t exon*.
+- Incorrect attribute type (*-g*) selection can fragment counts across multiple identifiers, leading to gene count underestimation.
 
-- **Paired-end handling:** For paired-end datasets, reads must be treated as fragments rather than independent sequences. Failure to properly enable paired-end counting can distort library size estimates and gene expression values.
+### Inflated library sizes or unusually high counts 
 
-| Parameter | Possible Selections | Issue | Consequence |
-| :--- | :--- | :--- | :--- |
-| -p | Enabled/disabled | Paired-end data treated as single-end  | Inflated read counts and incorrect library size estimation |
-| --countReadPairs | Enabled/disabled | Fragment not counted as a single unit | Double counting of fragments and distorted expression levels |
+If total counts per sample are unexpectedly high, especially in paired-end data, counting may be incorrect.
 
--**Fragment filtering:** Additional parameters control which fragments are considered valid for counting. While these filters can improve specificity, overly strict or inappropriate settings can remove biologically relevant reads.
+- When analysing data from paired-end sequencing, paired mode (*-p*) should be enabled, or paired reads will be treated as independent single reads, leading to double counting.
+- The parameter *--countReadPairs* also needs to be enabled, to ensure that fragments from paired-end reads are counted as single units.
 
-| Parameter | Possible Selections | Issue | Consequence |
-| :--- | :--- | :--- | :--- |
-| -d/-D | Thresholds | Fragment size constraints too strict or too permissive  | Loss of valid fragments or inclusion of low-quality alignments |
-| -B | On/off | Requires both ends to be mapped | Loss of valid partially mapped fragments |
-| -C | On/off | Excludes chimeric fragments | Removal of potentially biologically relevant reads in some contexts |
+### Loss of reads in specific regions
 
--**Quick diagnostic guide:**
+If specific regions or the overall dataset show reduced counts, filtering parameters such as the following may be too strict:
+
+- Selecting the wrong fragment length thresholds (*-d*, *-D*) can lead to the loss of valid fragments, but also to the inflation of counts if the lower threshold is too small.
+- Enabling proper pairing requirement (*-B*) can lead to the loss of valid partially mapped fragments
+- While chimeric read exclusion (*-C*) is usually recommended, there are very specific contexts in which doing so might remove potentially biologically relevant reads.
+
+### Quick diagnostic guide
+
+<br>
+
+<div align="center">
 
 | Symptom | Likely cause | Parameter(s) to check |
 | :--- | :--- | :--- |
 | High proportion of unassigned reads despite good mapping | Incorrect strand specification | `-s` |
 | Gene counts lower than expected across all samples | Mismatch between annotation and feature definition | `-t`, `-g` |
 | Unexpectedly high library sizes / inflated counts | Paired-end reads counted incorrectly as single reads | `-p`, `--countReadPairs` |
-| Strong discrepancies between featureCounts and Salmon results | Differences in read assignment or annotation structure | `-t`, `-g` |
 | Loss of reads in specific regions or globally reduced counts | Overly strict fragment filtering | `-d`, `-D`, `-B`, `-C` |
+</div>
+
+<br>
 
 ## Gene Quantification (Salmon)
 
