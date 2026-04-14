@@ -68,6 +68,12 @@ It outputs a table containing:
 - **log2FoldChange (LFC):** The magnitude of the change (e.g., a value of 1 means a 2-fold increase; a value of -1 represents a 2-fold decrease).
 - **The adjusted p-value (padj):** Corrects for multiple testing, controlling for false discovery rate (FDR), using the Benjamini-Hochberg correction. Let´s say we have a p-value of 0.01. That means we have a 1% possibility of our result being a false positive. Padj drastically reduces this number, and in consequence a padj < 0.05 is considered the threshold for significance.
 
+### LFC shrinkage
+
+For genes with low counts or high variability, LFC estimates can be unstable and exaggerated in magnitude due to noise. For example, a gene moving from 1 read to 5 reads represents a "5-fold increase" that is likely statistically meaningless. The R/Bioconductor package [apeglm](https://bioconductor.org/packages/release/bioc/html/apeglm.html) shrinks LFCs per gene, instead of using a fixed prior like other methods, to get more stable, interpretable, and realistic estimates of gene expression changes — reducing noise without erasing true biological effects.
+
+### Visualization
+
 DESeq2 results are usually plotted as volcano plots, with the shrunk LFC (see below) in the x-axis, and the -log10(padj) on the y axis. This transformation turns tiny p-values into large positive numbers, placing the most significant genes at the top of the plot.
 
 <br>
@@ -80,9 +86,17 @@ DESeq2 results are usually plotted as volcano plots, with the shrunk LFC (see be
 
 <br>
 
-### LFC shrinkage
+While shrunk LFC is essential for determining the magnitude of change, it is not suitable for distance-based visualizations like **heatmaps** or **Principal Component Analysis (PCA)**. In raw RNA-seq data, the variance of a gene's counts naturally increases with its mean expression. If a heatmap is plotted using raw or log-normalized counts, the "noisiest" genes or those with the highest absolute expression will dominate the clustering, even if their relative biological change is minimal. To account for this, **Variance Stabilizing Transformation (VST)** or **Regularized Log (rlog)** are used, transforming the count data to a log-like scale where the variance is approximately constant across the mean.
 
-For genes with low counts or high variability, LFC estimates can be unstable and exaggerated in magnitude due to noise. For example, a gene moving from 1 read to 5 reads represents a "5-fold increase" that is likely statistically meaningless. The R/Bioconductor package [apeglm](https://bioconductor.org/packages/release/bioc/html/apeglm.html) shrinks LFCs per gene, instead of using a fixed prior like other methods, to get more stable, interpretable, and realistic estimates of gene expression changes — reducing noise without erasing true biological effects.
+<br>
+
+<div align="center">
+  <img src="../Figures/RNA-seq_heatmap.png" width="700">
+  <br>
+  <em>Example of a heatmap plot obtained from an RNA-seq experiment analysed through the workflow explained in this repository.</em>
+</div>
+
+<br>
 
 ## Functional Enrichment
 
