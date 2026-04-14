@@ -88,8 +88,6 @@ DESeq2 results are usually plotted as volcano plots, with the shrunk LFC (see be
 
 While shrunk LFC is essential for determining the magnitude of change, it is not suitable for distance-based visualizations like **heatmaps** or **Principal Component Analysis (PCA)**. In raw RNA-seq data, the variance of a gene's counts naturally increases with its mean expression. If a heatmap is plotted using raw or log-normalized counts, the "noisiest" genes or those with the highest absolute expression will dominate the clustering, even if their relative biological change is minimal. To account for this, **Variance Stabilizing Transformation (VST)** or **Regularized Log (rlog)** are used, transforming the count data to a log-like scale where the variance is approximately constant across the mean.
 
-<br>
-
 <div align="center">
   <img src="../Figures/RNA-seq_heatmap.png" width="700">
   <br>
