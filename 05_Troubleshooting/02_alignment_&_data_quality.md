@@ -51,19 +51,21 @@ How multi-mapped reads are handled highly depends on the context (mainly used te
 - Alternatively, all alignments reported by the aligner can be retained. This preserves the full set of sequencing data and can be useful in analyses focused on repetitive elements or in exploratory settings. However, because the true origin of multi-mapped reads is uncertain, this approach can introduce ambiguity and artificially inflate signal in downstream analyses if not handled carefully.
 - A third strategy, commonly used in RNA-seq, is to assign multi-mapped reads probabilistically. In this case, statistical models (like the one used by Salmon) are used to distribute reads across their possible genomic or transcriptomic origins. This approach allows the use of all available data while reducing some of the biases introduced by strict filtering, although it relies on model assumptions and is less straightforward to interpret.
 
-## Duplicated Reads
+## Integrated Interpretation of Mapping Metrics
 
-The proportion of duplicate reads should be interpreted in the context of the sequencing strategy and library type, rather than treated as an absolute quality metric (see the [post-alignment processing](../02_Mapping_&_Alignment/03_post-alignment_processing.md) section of this document for more details on this).
+<br>
 
-High duplication rates can arise from technical factors such as PCR overamplification or low-input libraries, which reduce library complexity and increase the likelihood that the same original fragments are sequenced multiple times. However, in some experimental techniques, elevated duplication levels are expected as part of the biological signal. In RNA-seq, for example, highly expressed genes naturally generate a large number of identical fragments. Similarly, in CUT&RUN or other targeted enrichment assays, strong signal enrichment at specific loci can produce locally high duplication levels without indicating a technical problem.
+<div align="center">
 
-Conversely, low duplication rates are generally expected in high-complexity libraries with sufficient input material. However, unusually low duplication in techniques such as RNA-seq or CUT&RUN may reflect over-fragmentation or insufficient sequencing depth, where the complexity of the library is not fully captured.
+| Mapping Rate	| Multi-Mapping | Duplication | Interpretation	| Likely Cause	|
+| :--- | :--- | :--- | :--- | :--- |
+| High |	High | Normal | Reads align well but not uniquely	| Repetitive genome, short reads, permissive alignment settings |
+| High | Normal | High | Good alignment, low library complexity	| PCR overamplification, low input material, saturation	|
+| Low | Normal | Normal | Reads are high quality but fail alignment	| Wrong reference genome, contamination, annotation mismatch	|
 
-In practice, duplicate rates become most informative when interpreted alongside library complexity and sequencing depth. A high duplication rate in combination with low library complexity usually indicates that most of the original material has already been sequenced, and additional sequencing would yield diminishing returns. This is typical in low-input libraries or over-amplified samples.
+</div>
 
-However, a high duplication rate in a library with otherwise sufficient sequencing depth may suggest technical bias introduced during library preparation, such as excessive PCR amplification. In this case, increasing sequencing depth alone will not improve data quality, and protocol optimization is required instead.
-
-To distinguish between these scenarios, duplication rates should be evaluated together with metrics such as total number of unique fragments, overall mapping rate, and coverage saturation. A library showing high duplication but still increasing numbers of unique fragments with additional sequencing depth is likely depth-limited rather than amplification-limited. In contrast, libraries that quickly plateau in unique fragment discovery despite deeper sequencing are typically amplification-limited.
+<br>
 
 
 
