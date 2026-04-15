@@ -25,3 +25,10 @@ If no peaks are present when inspecting the BAM files in the genome browser, the
 Transcription factors generate sharp peaks, while histone binding factors lead to wider ones. The observed peak width therefore needs to match the nature of the targeted protein.
 
 - **Wrong fragment selection:** As mentioned in the library preparation section, in CUT&RUN fragment selection varies depending on whether the protein of interest is a TF or a histone binding factor. If the fragment size selection is too permissive, peaks not corresponding to protein binding sites may appear.
+
+### Peaks are present in non-expected regions
+
+If known loci are empty but signal appears elsewhere, the issue is usually mislocalization of signal rather than complete failure of the experiment.
+
+- **Wrong genome build or annotation mismatch:** If the genome assembly or annotation version does not match the expected reference, enrichment may appear “shifted” or assigned to incorrect genes/regions. This does not usually erase signal, but it makes expected loci appear empty while signal is observed elsewhere. This is especially relevant when comparing results to published datasets or known peak sets.
+- **Artifacts in repetitive or low-complexity regions:** Some genomic regions inherently attract ambiguous alignments. If not properly accounted for, (usually in the blacklist region removal step of BAM clean-up) these regions can accumulate reads that resemble real peaks. In this case, signal may look strong and well-defined, but it will not correspond to known regulatory or binding sites. This often leads to apparent “new peaks” that are not reproducible or biologically meaningful.
