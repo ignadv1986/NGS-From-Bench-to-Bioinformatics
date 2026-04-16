@@ -32,7 +32,7 @@ The fragment size profile of an ATAC-seq library is a direct reflection of chrom
 <div align="center"> 
   <img src="../Figures/ATAC-seq_fragment_size.png" width="600">
   <br>
-  <em>Representation of a TapeStation analysis of a succesful ATAC-seq experiment.<em>
+  <em>Representation of a TapeStation analysis of a succesful ATAC-seq experiment.</em>
 </div>
 
 <br>
