@@ -61,4 +61,35 @@ If coverage profiles do not match the ones observed on the BAM files and/or they
 
 ## Peak Calling & Interpretation
 
-Even with high-quality alignments and clean fragment profiles, peak calling remains one of the most critical and error-prone steps in CUT&RUN analysis. The choice of algorithm, parameters, and controls can dramatically influence the final set of detected binding sites.
+Even with high-quality alignments and clean fragment profiles, peak calling remains one of the most critical and error-prone steps in CUT&RUN analysis. This is particularly relevant when using SEACR, which relies on a global thresholding approach rather than complex statistical modeling.
+Because of this, SEACR has very limited parameterization (primarily *relaxed* vs *stringent* modes), and its behavior is largely dictated by the structure and distribution of the input signal, rather than user-defined thresholds.
+
+### Excessive number of peaks
+
+If peak calling returns a very large number of peaks despite reasonable-looking coverage tracks:
+
+- **Overly permissive thresholds:** Running SEACR in *relaxed* mode can classify background fluctuations as peaks.
+- **Sensitivity to low-level noise:** Even small variations in low-background CUT&RUN data can be interpreted as enrichment by threshold-based methods.
+
+### Low number of detected peaks
+
+If SEACR returns very few peaks, even when enrichment is visible in coverage tracks:
+
+- **Too stringent filtering of peaks:** While the *stringent* mode helps preventing unspecific peaks detection, it also filters out real, low-signal peaks, so it should be used carefully.
+- **Low contrast between peaks and background:** If enrichment is shallow relative to background, SEACR may fail to distinguish peaks.
+
+### Peaks detected in control (IgG) samples
+
+- **Structured background signal:** Open chromatin regions can produce consistent low-level signal, even in controls.
+- **Threshold sensitivity:** In *relaxed* mode, these regions may exceed the detection threshold.
+
+This does not necessarily indicate a failure of the experiment, but highlights the importance of comparing against controls during interpretation.
+
+### Inconsistent peak detection across replicates
+
+Even when coverage profiles appear similar, peak calling results may differ substantially between replicates when using SEACR.
+
+- **Peaks present in merged data but absent in individual replicates:** Weak enrichment signals that are consistently present across replicates may not exceed the detection threshold individually, but can accumulate in merged data and be called as peaks.
+- **Poor overlap between replicate peak sets:** Small differences in signal intensity can cause regions to fall above the global threshold in one replicate but below it in another, leading to inconsistent peak detection.
+- **Variable peak boundaries:** Because SEACR defines peaks based on a global threshold, slight differences in signal shape can shift peak edges between replicates.
+
