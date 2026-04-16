@@ -6,6 +6,10 @@ Even when alignment rates and fragment size profiles look reasonable, CUT&RUN re
 
 As mentioned in the [CUT&RUN analysis](../04_Epigenomics/02_CUT&RUN_analysis.md) section of this repository, after BAM file generation it is good practice to inspect the generated BAM files in a genome browser like IGV. A good CUT&RUN profile whould show sharp, discrete enrichment sites, with low background between them, and fragment size consistent with biology. Additionally, if binding sites for the protein of interest are known, enrichment at these sites should also be checked.
 
+**Note:** In practice, many analyses proceed directly to coverage files (BigWig) for visualization, as they are faster to load and easier to compare across samples. However, BigWig tracks represent a processed signal and can obscure read-level artifacts.
+When peak calling or downstream analysis produces unexpected results, it is often necessary to return to the BAM files to diagnose the issue. Artifacts such as PCR duplicates, misaligned reads, or improper fragment handling can generate convincing but biologically meaningless signal that is not easily identifiable in coverage tracks.
+Early inspection of BAM files therefore helps identify these issues before they propagate through peak calling and downstream analysis, reducing the risk of interpreting artifactual “ghost peaks” as real biological signal.
+
 ### Presence of signal across the whole genome
 
 A high, uniform background in a CUT&RUN experiment can be caused by different factors:
