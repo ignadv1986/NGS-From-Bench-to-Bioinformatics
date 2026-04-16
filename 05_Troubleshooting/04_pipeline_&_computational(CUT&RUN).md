@@ -43,7 +43,7 @@ It is therefore easier to assess coverage file generation from the tracks that t
 
 ### Inflated or compressed signal
 
-Usually caused by a wrong normalization, this is one of the most common issues observed in a CUT&RUN protocol. Not using, or using an incorrect apike-in scaling factor results in signal differences reflecting sequencing depth rather than biology. Importantly, the scaling factor has to be applied to all samples, or the comparisons between them will likely not be valid. However, before applying it, it is important to look at the number of spike-in reads per sample: samples with very few spike-in reads will produce artificially inflated coverage, leading to noisy, over-amplified tracks, so their presence in the final quantification steps should be assessed.
+Usually caused by a wrong normalization, this is one of the most common issues observed in a CUT&RUN protocol. Not using, or using an incorrect spike-in scaling factor results in signal differences reflecting sequencing depth rather than biology. Importantly, the scaling factor has to be applied to all samples, or the comparisons between them will likely not be valid. However, before applying it, it is important to look at the number of spike-in reads per sample: samples with very few spike-in reads will produce artificially inflated coverage, leading to noisy, over-amplified tracks, so their presence in the final quantification steps should be assessed.
 
 ### No signal in coverage tracks
 
@@ -59,10 +59,23 @@ If coverage profiles do not match the ones observed on the BAM files and/or they
 - **Mis-centering of reads:** While centering reads (*--centerReads*) can improve apparent peak sharpness in transcription factor CUT&RUN experiments, it assumes relatively uniform fragment sizes. If applied to heterogeneous fragment populations (e.g., mixed nucleosomal and sub-nucleosomal fragments), it can distort peak shape and shift apparent binding sites. For this reason, centering is best restricted to analyses focusing on short fragments, and should be avoided in general or histone mark workflows.
 - **Fragment size considerations:** Including all fragment sizes without filtering can obscure the distinction between TF binding (short fragments) and nucleosomal signal.
 
+### Quick diagnostics guide
+
+| Symptom | Likely cause | What to check |
+| :--- | :--- | :--- |
+| One sample shows globally higher signal than others | Incorrect or inconsistent spike-in normalization | Scaling factor, spike-in read counts |
+| Noisy / over-amplified signal across genome | Inflation due to low spike-in counts | Spike-in counts per sample |
+| Signal appears overly smooth or broad | Bin size too large / over-smoothing | `--binSize` |
+| Peaks appear artificially wide | Inappropriate read extension | `--extendReads` |
+| Weak or missing signal compared to BAM | Over-filtering of reads | MAPQ filtering, duplicate removal |
+| Coverage does not match BAM visualization | Incorrect coverage parameters | Consistency of `bamCoverage` settings |
+| Differences between replicates introduced at this step | Inconsistent normalization or parameters | Scaling factors, identical processing |
+
 ## Peak Calling & Interpretation
 
-Even with high-quality alignments and clean fragment profiles, peak calling remains one of the most critical and error-prone steps in CUT&RUN analysis. This is particularly relevant when using SEACR, which relies on a global thresholding approach rather than complex statistical modeling.
-Because of this, SEACR has very limited parameterization (primarily *relaxed* vs *stringent* modes), and its behavior is largely dictated by the structure and distribution of the input signal, rather than user-defined thresholds.
+Even with well-behaved coverage profiles, peak calling remains one of the most critical and error-prone steps in CUT&RUN analysis. This is particularly relevant when using SEACR, which relies on a global thresholding approach rather than complex statistical modeling. Because of this, SEACR has very limited parameterization (primarily *relaxed* vs *stringent* modes), and its behavior is largely dictated by the structure and distribution of the input signal, rather than user-defined thresholds.
+
+Importantly, SEACR will always return a set of peaks. The presence of peaks alone does not guarantee biological relevance, and must always be interpreted in the context of signal quality and reproducibility.
 
 ### Excessive number of peaks
 
@@ -85,6 +98,16 @@ If SEACR returns very few peaks, even when enrichment is visible in coverage tra
 
 This does not necessarily indicate a failure of the experiment, but highlights the importance of comparing against controls during interpretation.
 
+### Quick diagnostics guide
+
+| Symptom | Likely cause | What to check |
+| :--- | :--- | :--- |
+| Excessive number of peaks | Permissive detection in relaxed mode | SEACR mode, background signal |
+| Very few peaks despite visible enrichment | Stringent mode filtering out low-signal peaks | SEACR mode, signal-to-noise ratio |
+| Peaks detected in IgG control | Structured background signal | Control track, SEACR mode |
+| Peaks in unexpected genomic regions | Alignment artifacts or annotation mismatch | Genome build, blacklist filtering |
+| Peaks present but weak or not convincing | Marginal signal above threshold | Coverage tracks vs peak locations |
+
 ### Inconsistent peak detection across replicates
 
 Even when coverage profiles appear similar, peak calling results may differ substantially between replicates when using SEACR.
@@ -92,4 +115,13 @@ Even when coverage profiles appear similar, peak calling results may differ subs
 - **Peaks present in merged data but absent in individual replicates:** Weak enrichment signals that are consistently present across replicates may not exceed the detection threshold individually, but can accumulate in merged data and be called as peaks.
 - **Poor overlap between replicate peak sets:** Small differences in signal intensity can cause regions to fall above the global threshold in one replicate but below it in another, leading to inconsistent peak detection.
 - **Variable peak boundaries:** Because SEACR defines peaks based on a global threshold, slight differences in signal shape can shift peak edges between replicates.
+
+| Symptom | Likely cause | What to check |
+| :--- | :--- | :--- |
+| Peaks present in merged data but absent in individual replicates | Signal accumulation across replicates | Compare merged vs individual peak sets |
+| Poor overlap between replicate peak sets | Threshold sensitivity to small signal differences | Replicate consistency, signal strength |
+| Inconsistent peak boundaries across replicates | Threshold-based peak definition | Peak coordinates across replicates |
+| Many peaks lost after intersection | Weak or borderline enrichment | Signal strength, replicate quality |
+| Large number of non-reproducible peaks | Noise-driven peak detection | Intersection criteria (e.g., 2/3 replicates) |
+| Final peak set differs from individual replicates | Merging artifacts or inconsistent signal | Merged vs intersected peak comparison |
 
