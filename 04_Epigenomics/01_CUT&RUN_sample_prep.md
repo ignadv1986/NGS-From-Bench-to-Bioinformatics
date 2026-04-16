@@ -36,9 +36,7 @@ While in other techniques, like RNA-seq, the size of the fragments is controlled
 
 Now the DNA of interest will be bound to the beads, and the supernatant can be discarded. After a series of 80% ethanol washes, the purified library is eluted.
 
-When assessing fragment size with the TapeStation, a clean peak at the target size, with no peak at 120 bp, should be observed. The presence of a sharp, dominant peak at 120–130 bp indicates that your SPRI ratio was too high (captured adapter dimers) or that the MNase digestion was insufficient, leaving the adapters with nothing to bind to but themselves.
-
-When the binding nature of the protein is unknown, the goal is to preserve the entire biological spectrum—from tiny footprints to large nucleosomal structures. This is achieved through a 1.8x-2.0x SPRI isolation step. In this scenario, an adapter dimer peak is often unavoidable at the bench. In such cases, if the dimer signal exceeds the biological signal, alternative purification methods—such as automated gel excision (e.g., Pippin Prep) set to a >140 bp collection window—may be required to salvage the library for sequencing.
+When assessing fragment size with the TapeStation, a clean peak at the target size, with no or a very small peak at 120 bp, should be observed.
 
 <br>
 
