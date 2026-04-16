@@ -32,3 +32,33 @@ If known loci are empty but signal appears elsewhere, the issue is usually mislo
 
 - **Wrong genome build or annotation mismatch:** If the genome assembly or annotation version does not match the expected reference, enrichment may appear “shifted” or assigned to incorrect genes/regions. This does not usually erase signal, but it makes expected loci appear empty while signal is observed elsewhere. This is especially relevant when comparing results to published datasets or known peak sets.
 - **Artifacts in repetitive or low-complexity regions:** Some genomic regions inherently attract ambiguous alignments. If not properly accounted for, (usually in the blacklist region removal step of BAM clean-up) these regions can accumulate reads that resemble real peaks. In this case, signal may look strong and well-defined, but it will not correspond to known regulatory or binding sites. This often leads to apparent “new peaks” that are not reproducible or biologically meaningful.
+
+## Coverage File Generation
+
+Although coverage file generation is often treated as a straightforward format conversion step, it plays a critical role in shaping how signal is interpreted in downstream analyses. Errors introduced here will propagate into visualization, peak calling (in the case of SEACR, since it uses these files as input), and quantitative comparisons.
+
+In a pipeline in which bedGraph files are generated from BAM files (normally with deepTools bamCoverage), and then converted to BigWig format for visualization in a genome browser with bedGraphtoBigWig, in the vast majority of cases, if a coverage track looks incorrect, **the problem originates in coverage generation**, not in the bedGraph file or the bedGraph → BigWig conversion step.
+
+It is therefore easier to assess coverage file generation from the tracks that the BigWig files form in a genome browser.
+
+### Inflated or compressed signal
+
+Usually caused by a wrong normalization, this is one of the most common issues observed in a CUT&RUN protocol. Not using, or using an incorrect apike-in scaling factor results in signal differences reflecting sequencing depth rather than biology. Importantly, the scaling factor has to be applied to all samples, or the comparisons between them will likely not be valid. However, before applying it, it is important to look at the number of spike-in reads per sample: samples with very few spike-in reads will produce artificially inflated coverage, leading to noisy, over-amplified tracks, so their presence in the final quantification steps should be assessed.
+
+### No signal in coverage tracks
+
+- **Excessive removal of reads:** strict MAPQ thresholds or duplicate removal (using the *--ignoreDuplicates* parameter of bamcoverage) can eliminate real CUT&RUN signal.
+- **Improper bin size selection:** while the default bin size used by bamcoverage is 50 bp, this can be modified with the *--binSize* parameter. A lower bin size will increase resolution, but will make the transformation more computationally demanding, and viceversa.
+- **Use of read extension:** CUT&RUN does not require fragment extension; applying it with *--extendReads* artificially broadens peaks and reduces apparent enrichment.
+
+### Unexpected enrichment patterns
+
+If coverage profiles do not match the ones observed on the BAM files and/or they look biologically implausible:
+
+- **Over-smoothing of signal:** Caused by large bin sizes or inappropriate parameters, leading to broad, ChIP-seq-like profiles instead of sharp CUT&RUN peaks.
+- **Mis-centering of reads:** While centering reads (*--centerReads*) can improve apparent peak sharpness in transcription factor CUT&RUN experiments, it assumes relatively uniform fragment sizes. If applied to heterogeneous fragment populations (e.g., mixed nucleosomal and sub-nucleosomal fragments), it can distort peak shape and shift apparent binding sites. For this reason, centering is best restricted to analyses focusing on short fragments, and should be avoided in general or histone mark workflows.
+- **Fragment size considerations:** Including all fragment sizes without filtering can obscure the distinction between TF binding (short fragments) and nucleosomal signal.
+
+## Peak Calling & Interpretation
+
+Even with high-quality alignments and clean fragment profiles, peak calling remains one of the most critical and error-prone steps in CUT&RUN analysis. The choice of algorithm, parameters, and controls can dramatically influence the final set of detected binding sites.
