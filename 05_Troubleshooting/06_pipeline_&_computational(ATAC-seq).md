@@ -50,7 +50,7 @@ If enrichment exists but lacks sharp peaks:
 If strong signal appears outside known regulatory elements:
 
 - **Genome build:** The genome build used for visualization must match the one used in the mapping step, or the peaks will seem to appear in unexpected regions.
-- **Incorrect filtering:** If not removed, reads may accumulate in repetitive or blacklist regions if not removed. These regions can produce convincing but non-reproducible peaks.
+- **Incorrect filtering:** If not removed, reads may accumulate in repetitive or blacklist regions. These regions can produce convincing but non-reproducible peaks.
 
 ## Coverage File Generation
 
@@ -60,81 +60,45 @@ After BAM processing, normalized coverage tracks (usually BigWig files generated
 
 If coverage appears broadly distributed with little contrast between regions:
 
-- **Incomplete filtering of reads:** Incomplete BAM filtering increases baseline signal and masks true accessibility
-- **Over-tagmentation:** Excessive enzymatic activity can generate widespread low-level accessibility signal
-- **Scaling issues:** Lack of proper normalization with CPM or RPKM may make high-depth samples appear uniformly elevated
+- **Incomplete filtering of reads:** Incomplete BAM filtering increases baseline signal and masks true accessibility.
+- **Over-tagmentation:** Excessive enzymatic activity can generate widespread low-level accessibility signal.
+- **Scaling issues:** Lack of proper normalization with CPM or RPKM may make high-depth samples appear uniformly elevated.
 
-A correct coverage track should show clear enrichment at promoters and regulatory regions, low background signal, and consistent profiles across replicates.
+### Signal intensity differs strongly between samples
 
-Peak Calling (MACS3 in ATAC-seq)
+If one sample appears globally stronger or weaker than others:
+
+- **Missing or inconsistent normalization:** All samples should be normalized using the same method, or library sizes and other factors can affect the scaling and lead to result misinterpretation.
+- **chrM contamination:** High mitochondrial content can compress nuclear signal in affected samples, so it should be equally removed in all samples.
+
+### Lack of enrichment at promoters or known regulatory regions
+
+If expected accessible regions show weak or no signal:
+
+- **Low accesibility:** Biologically true accesibility can occur due to specific treatments or vary between cell lines, but it should be consistent across replicates.
+- **Missing Tn5 correction:** Signal becomes blurred and less concentrated at true cut sites, sometimes making it impossible to detect enrichment at such sites.
+
+### Signal present but poorly defined (blurred or wide peaks)
+
+If enrichment exists but lacks sharp boundaries:
+
+- **Missing Tn5 correction:** Signal is spread around true cut sites, blurring the signal.
+- **Incorrect bin size:** Large bins oversmooth signal; very small bins introduce noise. The default for deepTools bamCoverage is 50 bp, but sometimes this can prevent detection of narrow peak information. 1-10 bp ranges can be used to detect these peaks.
+- **Fragment handling issues:** Treating paired-end data as single-end reduces resolution
+
+### Enrichment in unexpected regions
+
+If strong signal appears outside known regulatory elements:
+
+- **Genome build mismatch:** Coverage does not align with annotation or browser reference
+- **Incomplete filtering:** Reads accumulating in blacklist or repetitive regions
+- **Multimapping reads retained:** Artificial signal in low-complexity regions
+
+## Peak Calling
+
 After alignment and preprocessing, MACS3 peak calling may still produce biologically inconsistent or unstable peak sets even when QC metrics look acceptable. In ATAC-seq, this is often due to mismatch between fragment representation, signal structure, and MACS3 assumptions, rather than the peak caller itself.
-A reliable peak set should show strong overlap with promoter regions, sharp peak boundaries, and consistency across replicates. When this is not observed, the first step is to assume a modeling or input inconsistency, not a biological absence of signal.
-Fragment structure mismatch (paired-end vs single-end assumptions)
-A common source of distorted peak profiles is incorrect handling of fragment structure.
-If paired-end data is not treated in BAMPE mode, fragments are artificially reconstructed from reads rather than actual fragment lengths.
-This leads to broader, less resolved peaks and reduced peak height at true accessible sites.
-Conversely, applying single-end shift/extsize logic to paired-end data introduces artificial centering and can distort true accessibility boundaries.
-If fragment handling is incorrect:
-peaks become broader than expected
-promoter enrichment becomes weaker relative to background
-replicate agreement decreases even if mapping quality is high
-Tn5 positioning inconsistency (single-end workflows)
-If single-end ATAC-seq data is processed without proper Tn5 shift correction, MACS3 will not be operating on true cut-site positions.
-This results in positional smearing of accessibility signal
-TSS enrichment may appear reduced even when raw signal is strong
-Peaks may appear offset relative to promoter annotations in genome browsers
-This is not a MACS3 limitation, but a misalignment between biological cut sites and computational representation
-Excessively weak or sparse peak sets
-If MACS3 produces very few peaks despite strong alignment and reasonable depth:
-overly strict q-value thresholds may be filtering true signal
-prior filtering (duplicates, mitochondrial reads) may have removed too much usable signal
-fragment signal may already be degraded (low TSS enrichment, low complexity library)
-This typically indicates a loss of signal before peak calling, not a failure of MACS3 itself.
-Expected consequence:
-promoter peaks disappear first
-distal regulatory elements fail to be detected
-replicate overlap becomes unstable
-Inflated or noisy peak sets
-If peak calling produces an unusually large number of weak or scattered peaks:
-residual mitochondrial or unmapped background reads may still be present
-PCR duplicates may be inflating low-confidence regions
-blacklist regions may not have been removed
-over-tagmentation can create widespread low-level accessibility
-In these cases, MACS3 will still generate peaks, but they will reflect technical background structure rather than chromatin accessibility
-Typical symptoms:
-peaks distributed across non-regulatory regions
-weak enrichment in promoters compared to genome-wide background
-poor reproducibility across replicates
-Loss of peak definition (broad or blurred peaks)
-If peaks are present but lack sharp boundaries:
-incorrect fragment modeling reduces resolution of accessibility signal
-absence of summit calling reduces positional precision
-high background signal reduces signal-to-noise ratio
-This leads to:
-diffuse promoter peaks instead of sharp enrichment
-difficulty separating closely spaced regulatory elements
-reduced interpretability in downstream annotation
-Genome mismatch or annotation inconsistency
-If peaks appear in unexpected genomic regions or do not align with known regulatory features:
-genome build mismatch between alignment and peak calling/visualization will shift peak coordinates
-inconsistent reference annotation may lead to incorrect interpretation of peak location
-coordinate sorting or file conversion issues can misrepresent peak positions
-This typically manifests as:
-apparent “novel” peaks that are not reproducible
-promoter signals appearing in intronic or intergenic misaligned regions
-MACS3 interpretation principle
-In ATAC-seq, MACS3 does not infer biology—it formalizes accessibility structure already present in the BAM file.
-Therefore:
-weak TSS enrichment → weak or absent peaks regardless of parameters
-high background → noisy peak set regardless of thresholding
-correct fragment representation → stable and reproducible peaks
-Pre–peak-calling sanity check (critical)
-Before trusting MACS3 output, the following should already be consistent:
-strong and narrow TSS enrichment
-expected fragment size distribution (nucleosomal patterning)
-low mitochondrial contamination
-controlled duplicate levels
-clear promoter/enhancer structure in genome browser
-If these are not met, MACS3 tuning will not fix downstream structure.
+
+A reliable peak set should show strong overlap with promoter regions, sharp peak boundaries, and consistency across replicates. Additionally, it should ressemble what can be seen in the previously generated coverage files.
+
 
 
