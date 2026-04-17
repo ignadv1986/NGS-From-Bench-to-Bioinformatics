@@ -63,7 +63,7 @@ Usually caused by a wrong normalization, this is one of the most common issues o
 
 ### No signal in coverage tracks
 
-- **Excessive removal of reads:** strict MAPQ thresholds or duplicate removal (using the *--ignoreDuplicates* parameter of bamcoverage) can eliminate real CUT&RUN signal.
+- **Excessive removal of reads:** strict MAPQ thresholds or duplicate removal (using the `--ignoreDuplicates` parameter of bamcoverage) can eliminate real CUT&RUN signal.
 - **Improper bin size selection:** while the default bin size used by bamcoverage is 50 bp, this can be modified with the `--binSize` parameter. A lower bin size will increase resolution, but will make the transformation more computationally demanding, and viceversa.
 - **Use of read extension:** CUT&RUN does not require fragment extension; applying it with *--extendReads* artificially broadens peaks and reduces apparent enrichment.
 
