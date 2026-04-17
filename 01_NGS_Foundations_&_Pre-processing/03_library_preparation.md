@@ -1,6 +1,6 @@
 # Library Preparation
 
-## Library preparation steps
+## Library Preparation Steps
 
 Understanding the chemistry of reversible terminators explains how a single molecule is read. However, to achieve massively parallel sequencing, we must first transform raw biological samples (DNA or RNA) into a format the sequencer can recognize, capture, and amplify. This brings us to **library preparation**.
 
@@ -69,7 +69,7 @@ The relationship between the fragment size and the **read length**, a setting th
 
 Lastly, in some protocols the library is amplified with a PCR step, to increase the concentration of DNA (see next section). In **PCR-free NGS protocols**, like whole genome-sequencing (WGS), we start with a much higher initial concentration of DNA (like 1 µg), so there is already enough material to be sequenced after adapter ligation. This has some advantages: PCR polymerases naturally "dislike" areas with high GC content (promoters) or high AT content. PCR-free sequencing provides the most even coverage across the entire genome because you remove the "enzyme preference" entirely. Additionally, PCR can sometimes introduce small insertions or deletions (stutter). PCR-free is superior for clinical variant calling. On the downside, PCR-free NGS protocols contain molecules with both, only one, or no adapters. This is because such adapters are used for library amplification in libraries that have a PCR step, so virtually all fragments will contain both adapters. However, in PCR-free protocols, the adapters are not used for amplification and there is no way to guarantee that all fragments will bind to both adapters.
 
-## Library amplification by PCR
+## Library Amplification by PCR
 
 The goal of library PCR is to add the remaining adapter sequences (if using indexed primers) and to amplify the library to a measurable concentration (typically 2–10 nM for loading). When deciding on the number of PCR cycles, two scenarios need to be avoided:
 
