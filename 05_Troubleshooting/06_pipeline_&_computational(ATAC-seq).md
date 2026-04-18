@@ -8,17 +8,18 @@ The TSS enrichment score is often the first indication that something is wrong d
 
 A flat or weak TSS enrichment profile can be a consequence of the following:
 
-- **Tn5 shift non applied:** As explained in the [ATAC-seq analysis](../04_Epigenomics/04_ATAC-seq_analysis.md), the transposases causes a 9 bp shif in the reads that needs to be considered during alignment. Failing to do so could lead to a misalignment of cut sites.
 - **BAM filtering:** BAM files from different samples need to be properly filtered (especially by removing reads mapping to chrM) to prevent accumulation of background reads that might mask enrichment at TSS.
+- **Over-Digitization:** If the Tn5 concentration is too high for the number of nuclei, it will force its way into the edges of nucleosomes, leading to a broad plateau instead of a sharp spike in the TSS enrichment plot.
+- **Low Non-Redundant Fraction (NFR):** If the TSS score is low and the duplication rate is high (low NRF), that is a signal of an under-sampled library. This often happens if the transposition was successful but the DNA recovery (PCR/clean-up) was poor, leading to a small amount of reads being repetaedly sequenced. Because the TSS score relies on a ratio of signal-to-background, a lack of unique diverse reads can actually make the TSS signal look artificially weak or statistically insignificant.
 
 ### Quick diagnostics guide
 
-| Symptom | Likely cause | What to check |
+| Symptom | Likely Cause | What to Check|
 | :--- | :--- | :--- |
-| Flat or low TSS enrichment profile | Missing Tn5 shift correction | Alignment parameters, read shifting (+4 / -5 offset) |
-| Broad, poorly centered TSS signal | Inaccurate read positioning | Whether Tn5 offset was correctly applied |
-| Weak enrichment despite good sequencing depth | Excess background reads | chrM reads, duplicate reads, filtering strategy |
-| High variability between samples | Inconsistent preprocessing | Uniformity of BAM filtering across samples |
+| Flat or low TSS enrichment profile | BAM filtering issues | Check for presence of chrM reads, PCR duplicates, or suboptimal filtering strategy in the final BAM |
+| Broad plateau instead of sharp spike | Over-transposition (Over-digitization) | Check Tn5-to-nuclei ratio. Excessive enzyme forces cuts into nucleosome edges, blurring the TSS signal |
+| Weak enrichment + High duplication | Low Library Complexity (NRF) | Check the Non-Redundant Fraction. Signal is likely masked by under-sampling due to poor DNA recovery post-transposition |
+| High variability between samples | Inconsistent Preprocessing | Verify that uniform filtering (e.g., same MAPQ thresholds and duplicate removal) was applied across the entire cohort |
 
 ## Early Visualization in Genome Browsers
 
@@ -132,10 +133,10 @@ If strong signal appears outside known regulatory elements:
 
 After alignment and preprocessing, MACS3 peak calling may still produce biologically inconsistent or unstable peak sets even when QC metrics look acceptable. In ATAC-seq, this is often due to mismatch between fragment representation, signal structure, and MACS3 assumptions, rather than the peak caller itself.
 
-A reliable peak set should show strong overlap with promoter regions, sharp peak boundaries, and consistency across replicates. Additionally, it should ressemble what can be seen in the previously generated coverage files.
+When inspecting the narrowPeak files generated in the peak calling step, a reliable peak set should show strong overlap with promoter regions, sharp peak boundaries, and consistency across replicates. Additionally, it should ressemble what can be seen in the coverage files.
 
 ### Broad or poorly defined peaks
 
-- **Missing Tn5 shift correction:** Without the standard +4/-5bp adjustment, the signal from the forward and reverse strands remains physically separated by the 9bp duplication created during transposition. This causes the peak caller to see two slightly offset sub-populations of reads rather than a single, unified insertion site. Consequently, MACS3 may "smear" the signal, resulting in artificially increased peak widths and a loss of the sharp, "pointy" summits characteristic of high-quality ATAC-seq data. This lack of precision can obscure fine-scale genomic features, such as transcription factor footprints, and dilute the statistical significance of narrow regulatory elements.
+- **Missing Tn5 shift correction:** Without the standard +4/-5bp adjustment, the signal from the forward and reverse strands remains physically separated by the 9 bp duplication created during transposition. This causes the peak caller to see two slightly offset sub-populations of reads rather than a single, unified insertion site. Consequently, MACS3 may "smear" the signal, resulting in artificially increased peak widths and a loss of the sharp, "pointy" summits characteristic of high-quality ATAC-seq data. This lack of precision can obscure fine-scale genomic features, such as transcription factor footprints, and dilute the statistical significance of narrow regulatory elements.
 
 
