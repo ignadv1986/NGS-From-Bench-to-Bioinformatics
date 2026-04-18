@@ -39,7 +39,7 @@ The fragment size profile of an ATAC-seq library is a direct reflection of chrom
 
 ### The 9 bp Tn5 Shift
 
-Because Tn5 dimerizes when it cuts the DNA, the two Tn5 molecules are offset by 9 base pairs. Reads aligned to the + strand are shifted +4 bp and those on the – strand are shifted –5 bp. Therefore, ATAC-seq requires correction of read positions to represent the true cut sites. Most modern pipelines handle this automatically, but it should be verified before downstream analysis.
+Because Tn5 dimerizes when it cuts the DNA, the two Tn5 molecules are offset by 9 base pairs. Reads aligned to the + strand are shifted +4 bp and those on the – strand are shifted –5 bp. Therefore, ATAC-seq requires correction of read positions to represent the true cut sites. How this shift is a handled from a computational perspective is reviewed in the [following section](./04. ATAC-seq_analysis.md).
 
 ## SPRI Selection
 
