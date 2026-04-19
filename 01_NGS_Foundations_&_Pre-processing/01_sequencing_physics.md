@@ -63,6 +63,14 @@ Note: 2-channel color mappings vary by instrument. For example, on the NextSeq 5
   <em>Comparison of Illumina 4-Channel vs. 2-Channel optical chemistry. Note how 'G' (Guanine) relies on the absence of signal in 2-channel systems.</em>
 </div>
 
+## Long-read Sequencing
+
+While this repository focuses on short-read Illumina sequencing, it is worth noting that long-read platforms — primarily **PacBio** (SMRT sequencing) and **Oxford Nanopore** (nanopore-based sequencing) — occupy an increasingly important role in genomics.
+
+Unlike Illumina, neither platform uses reversible terminators or cluster amplification: PacBio reads a single molecule in real time as a polymerase traverses it, while Oxford Nanopore measures disruptions in ionic current as DNA threads through a protein pore. Both produce reads in the kilobase-to-megabase range, which makes them uniquely suited for resolving repetitive regions, phasing haplotypes, detecting structural variants, and sequencing full-length isoforms without the ambiguity introduced by read assembly. The trade-off is a higher per-base error rate and cost compared to Illumina short reads, which is why long-read platforms are typically used for specific applications rather than as a general replacement for short-read sequencing.
+
+For most transcriptomic, epigenomic, and standard variant-calling workflows covered in this repository, short-read Illumina sequencing remains the practical and cost-effective standard.
+
 ## Patterned Flow Cells
 
 In earlier systems (MiSeq, HiSeq), DNA fragments bind to the flow cell at random. As bridge amplification occurs, clusters can grow too close to each other, leading to fluorescence overlapping, and thereby causing the camera to fail to distinguish the two signals. To overcome this challenge, a limiting dilution of sample is used, leading to random occupacy governed by Poisson statistics, and thereby reducing the possibility that two different DNA fragments "land" too close. However, this also leads to a big part of the flow cell being empty, limiting sequencing efficiency.
