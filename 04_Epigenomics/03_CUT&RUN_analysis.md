@@ -13,7 +13,7 @@ Before doing any analysis on the generated BAM files (the preferred tools for th
 
 ## Spike-in Normalization & Scaling Factor
 
-Because CUT&RUN has such a low background signal, traditional normalization methods (like total read count) can be misleading. It is critical to normalize using spike-in DNA (usually E. coli or yeast DNA added during the protocol). For a deeper dive into the theory behind this, see the section on [Spike-in Correction](../02_Mapping_&_Alignment/03_post-alignment_processing.md) of this repository.
+Because CUT&RUN has such a low background signal, traditional normalization methods (like total read count) can be misleading. It is critical to normalize using spike-in DNA (usually E. coli or yeast DNA added during the protocol). For a deeper dive into the theory behind this, see the section on [spike-in correction](../02_Mapping_&_Alignment/03_post-alignment_processing.md) of this repository.
 
 In CUT&RUN, we normalize technical variations by calculating a **scaling factor** for each sample:
 
