@@ -19,7 +19,7 @@ Source: (https://commons.wikimedia.org/wiki/File:CUT%26RUN_Protocol.tif)</em>
 
 ## Fragment Size
 
-While in other techniques, like RNA-seq, the size of the fragments is controlled during library prep, in CUT&RUN, fragments are generated during the protocol by the MNase. Because the nuclease cleaves specifically where the antibody is bound, the length of the resulting DNA is highly informative of the protein’s identity and its "footprint" on the genome. Generally, it is accepted that fragments <120 bp correspond to those bound by transcription factor, while 150 bp and 300 bp correspond to mono- and di-nucleosomes, respectively, indicating that the protein of interest is a histone or a histone binding protein. Fragments of 500 bp or above are usually considered background. Therefore, the SPRI step of the library prep is highly dependent on what is known about the protein of interest. In all cases, a double-sided size selection is recommended: first, a low ratio (~0.6x) is used to remove the big, uninformative pieces of DNA. The beads are discarded and the supernatant is kept. Depending on the type of protein being studied, the second SPRI, isolation step varies:
+While in other techniques, like RNA-seq, the size of the fragments is controlled during library prep, in CUT&RUN, fragments are generated during the protocol by the MNase. Because the nuclease cleaves specifically where the antibody is bound, the length of the resulting DNA is highly informative of the protein's identity and its "footprint" on the genome. Generally, it is accepted that fragments <120 bp correspond to those bound by a transcription factor, while 150 bp and 300 bp correspond to mono- and di-nucleosomes, respectively, indicating that the protein of interest is a histone or a histone-binding protein. Fragments of 500 bp or above are usually considered background. Therefore, the SPRI step of the library prep is highly dependent on what is known about the protein of interest. In all cases, a double-sided size selection is recommended: first, a low ratio (~0.6x) is used to remove the big, uninformative pieces of DNA. The beads are discarded and the supernatant is kept. Depending on the type of protein being studied, the second SPRI, isolation step varies:
 
 <br>
 
@@ -28,7 +28,7 @@ While in other techniques, like RNA-seq, the size of the fragments is controlled
 | Type of protein | Size (after adapter binding) | SPRI ratio | Purpose |
 |-----------------|------------------------------|------------|---------|
 | Transcription factor | 140-240 bp | 1x-1.2x | Captures small footprints while excluding <120 bp adapter dimers |
-| Histone-binding factor | ~270 bp | 0.8×-0.9× | Captures nucleosomal units while aggressively cleaning out TF noise and dimers |
+| Histone-binding factor | ~270 bp | 0.8x-0.9x | Captures nucleosomal units while aggressively cleaning out TF noise and dimers |
 
 </div>
 
@@ -51,7 +51,7 @@ When assessing fragment size with the TapeStation, a clean peak at the target si
 
 <br>
 
-While the TapeStation provides a physical assessment of the library before it hits the flow cell, it is essential to verify the fragment size distribution bioinformatically after sequencing. Tools such as [bedtools](https://bedtools.readthedocs.io/en/latest/) or the [bamPEFragmentSize](https://deeptools.readthedocs.io/en/develop/content/tools/bamPEFragmentSize.html) of deepTools are used on the aligned BAM files to generate a fragment size histogram. This step serves as a final quality control to ensure that the biological signal (e.g., the <120 bp transcription factor footprints or 150 bp nucleosomal peaks) was successfully captured and preserved throughout the sequencing process, and to confirm that the data is not dominated by technical artifacts like adapter dimers.
+While the TapeStation provides a physical assessment of the library before it hits the flow cell, it is essential to verify the fragment size distribution bioinformatically after sequencing. Tools such as [bedtools](https://bedtools.readthedocs.io/en/latest/) or the [bamPEFragmentSize](https://deeptools.readthedocs.io/en/develop/content/tools/bamPEFragmentSize.html) of deepTools are used on the aligned BAM files to generate a fragment size histogram. This step serves as a final quality control to ensure that the biological signal (e.g., the 140-200 bp transcription factor footprints or ~300 bp nucleosomal peaks) was successfully captured and preserved throughout the sequencing process, and to confirm that the data is not dominated by technical artifacts like adapter dimers.
 
 ## The IgG Control
 
@@ -67,7 +67,7 @@ After the adapters are ligated to the MNase-cut fragments, the library must be a
 
 A critical decision point in the CUT&RUN bioinformatic pipeline is the management of duplicate reads—identical fragments that map to the same genomic coordinates. While standard ChIP-seq protocols often mandate the removal of duplicates to mitigate PCR bias, CUT&RUN requires a more nuanced approach. Due to the targeted nature of pAG-MNase cleavage and the low starting cell numbers typical of CUT&RUN, multiple cells often yield identical DNA fragments. These are categorized as **biological duplicates** rather than technical artifacts. Indiscriminate removal of these reads can artificially truncate peak signal and reduce the dynamic range of the data, particularly for high-abundance targets like histone marks. Keeping the duplicate reads is recommended when PCR cycles are kept low (12–14 cycles) and the duplication rate remains within a standard range (<30–40%). This preserves the quantitative relationship between binding sites.
 
-It is worth noting that is perfectly normal to see no DNA in the IgG sample, since in this sample there was no antibody to guide the MNase. The IgG conditions should never be run for more cycles than the experimental samples. If the IgG is amplified more, the background noise would be artificially inflated, and if it shows no DNA after the same number of cycles as the target, that is actually a sign of a very clean experiment with low non-specific binding.
+It is worth noting that it is perfectly normal to see no DNA in the IgG sample, since in this sample there was no antibody to guide the MNase. The IgG conditions should never be run for more cycles than the experimental samples. If the IgG is amplified more, the background noise would be artificially inflated, and if it shows no DNA after the same number of cycles as the target, that is actually a sign of a very clean experiment with low non-specific binding.
 
 ## Quantification
 
@@ -77,9 +77,9 @@ While PCR amplification exponentially enriches for fragments with dual adapters,
 
 A spike-in refers to a **known quantity of external (exogenous) DNA or RNA** that is added (“spiked in”) in a known concentration to a sample before processing. Spike-in acts as an internal control or reference, allowing to distinguish biological differences from technical noise. Because **it is subjected to the same procedures as the material of interest**, it can be used as a normalization step at the end of the process.
 
-While some tools, like DESeq2, perform their own normalization, they assume that the overall transcriptome is unchanged in all samples, and that only differences in certain set of genes are expected. However, some treatments can affect the whole transcriptome, or different cell types can contain different amounts of RNA. In these cases, we need spike-in for the normalization.
+While some tools, like DESeq2, perform their own normalization, they assume that the overall transcriptome is unchanged in all samples, and that only differences in certain sets of genes are expected. However, some treatments can affect the whole transcriptome, or different cell types can contain different amounts of RNA. In these cases, we need spike-in for the normalization.
 
-The way it works is, a ratio of spike-in reads vs spike-in reads from a reference sample (this can be a control or an average of the spike-in reads for all samples) is calculated. If a sample has fewer endogenous reads per spike-in, that means less material entered the library. In this scenario, the data would just be normalized to library size, correcting as if a step between library prep and mapping had gone wrong. With spike-in, however, since the added DNA/RNA is subjected to the same sequencing steps and the concentration is equal for all samples, if one of the samples has less reads for the DNA/RNA but the same spike-in reads, this will mean that the sample contained less material for whatever reason, allowing to rule out technical issues.
+The way it works is, a ratio of spike-in reads vs spike-in reads from a reference sample (this can be a control or an average of the spike-in reads for all samples) is calculated. If a sample has fewer endogenous reads per spike-in, that means less material entered the library. In this scenario, the data would just be normalized to library size, correcting as if a step between library prep and mapping had gone wrong. With spike-in, however, since the added DNA/RNA is subjected to the same sequencing steps and the concentration is equal for all samples, if one of the samples has fewer reads for the DNA/RNA but the same spike-in reads, this will mean that the sample contained less material for whatever reason, allowing to rule out technical issues.
 Importantly, this requires that the reads are aligned to both the genome of the organism of interest and the one used for spike-in.
 
 While spike-in DNA is present from the initial stages of the protocol and undergoes the same PCR amplification as the target library, it is typically absent from TapeStation or Bioanalyzer traces. This is due to two main reasons:
@@ -97,6 +97,6 @@ While spike-in DNA is present from the initial stages of the protocol and underg
 
 <br>
 
-**Note:** If a spike-in signal is visible on the TapeStation, the spike-in-to-target ratio is too high. This swamping will necessitate significantly higher sequencing depth to recover sufficient target reads for downstream analysis.
+**Note:** If a spike-in signal is visible on the TapeStation, the spike-in-to-target ratio is too high. This over-saturation will necessitate significantly higher sequencing depth to recover sufficient target reads for downstream analysis.
 
 
