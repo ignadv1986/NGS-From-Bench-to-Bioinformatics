@@ -77,7 +77,7 @@ Because Salmon operates at the transcript level using probabilistic assignment, 
 
 If Salmon reports a low overall mapping rate (typically visible in the salmon_quant.log file):
 
-- If a **decoy-aware index was not built** (using the genome sequence as decoy), reads originating from unannotated genomic regions may map spuriously to the nearest transcript, inflating some counts while reducing overall confidence. A decoy-aware index using `salmon index` with the `--decoys flag` should always be built (or downloaded if computational power is limited)
+- If a **decoy-aware index was not built** (using the genome sequence as decoy), reads originating from unannotated genomic regions may map spuriously to the nearest transcript, inflating some counts while reducing overall confidence. A decoy-aware index using `salmon index` with the `--decoys` flag should always be built (or downloaded if computational power is limited)
 - The **transcriptome reference may not match the genome build used upstream**. Salmon requires a transcriptome FASTA, not a genome FASTA — using the wrong file type will produce near-zero mapping.
 - **Strandedness** must be specified correctly via `--libType`. Running a stranded library without specifying it causes Salmon to discard a large fraction of reads as incompatible. It is good practice to use `--libType A` for automatic detection on a small pilot subset first and then lock it in for the full run.
 
