@@ -157,4 +157,4 @@ $$FRiP = \frac{\text{Number of reads overlapping peaks}}{\text{Total number of m
 
 </div>
 
-The FRiP score is calculated automatically during diffBind analysis. When using the featureCounts method, it can be obtained by taking the sum of the counts in the count matrix and dividing it by the total reads (obtained via [samtools flagstat](https://www.htslib.org/doc/samtools-flagstat.html))
+The FRiP score is calculated automatically during diffBind analysis. When using the featureCounts method, it can be obtained by taking the sum of the counts in the count matrix and dividing it by the total reads (obtained via [samtools flagstat](https://www.htslib.org/doc/samtools-flagstat.html)).
