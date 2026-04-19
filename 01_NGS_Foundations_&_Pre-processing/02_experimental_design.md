@@ -1,6 +1,6 @@
 # NGS Experimental Design
 
-In addition to standard experimental design factors , such as experimental conditions and number of replicates, NGS experiments require several parameters to be defined prior to library preparation and sequencing, including sequencing depth, replication strategy, read configuration, and total data output. Defining these correctly is essential to ensure efficient use of time and budget, and to avoid under- or over-sequencing.
+In addition to standard experimental design factors, such as experimental conditions and number of replicates, NGS experiments require several parameters to be defined prior to library preparation and sequencing, including sequencing depth, replication strategy, read configuration, and total data output. Defining these correctly is essential to ensure efficient use of time and budget, and to avoid under- or over-sequencing.
 
 ## Number of Samples and Replicates
 
@@ -35,7 +35,7 @@ The higher the sequencing depth, the lower the possibility that some positions w
 
 ## Library Pooling and Demultiplexing
 
-To optimize sequencing capacity, multiple samples are often pooled and sequenced together using index sequences, a process known as multiplexing (see [library preparation](./03_library_preparation.md) section).
+To optimize sequencing capacity, multiple samples are often pooled and sequenced together using unique index sequences, a process known as multiplexing (see [library preparation](./03_library_preparation.md) section).
 
 From an experimental design perspective, multiplexing determines how sequencing reads are distributed across samples within a run. The number of samples that can be pooled depends on the total sequencing output and the required depth per sample.
 
