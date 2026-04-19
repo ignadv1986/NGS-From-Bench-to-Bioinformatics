@@ -4,11 +4,11 @@ In this section, we go through the computational workflow for RNA-seq analysis s
 
 ## Quantification of reads
 
-The BAM files generated during the alignment contain the coordinates of the detected genes, but not the number of copies that were detected. To convert the reads into a digital **count matrix**, the go-to option in the feature of the Subread binary package, [featureCounts](https://subread.sourceforge.net/featureCounts.html). Here is the [link](https://bioconductor.org/packages/release/bioc/html/Rsubread.html) for R users, where featureCounts is wrapped in the Bioconductor package Rsubread. It is very fast and memory efficient, and it takes a GTF annotation file to define the boundaries between exons and genes. **Important note:** if the GTF doesn't match the genome build, the counts will be zero. 
+The BAM files generated during the alignment contain the coordinates of the detected genes, but not the number of copies that were detected. To convert the reads into a digital **count matrix**, the go-to option is the feature of the Subread binary package, [featureCounts](https://subread.sourceforge.net/featureCounts.html). Here is the [link](https://bioconductor.org/packages/release/bioc/html/Rsubread.html) for R users, where featureCounts is wrapped in the Bioconductor package Rsubread. It is very fast and memory efficient, and it uses a GTF annotation file to define the boundaries between exons and genes. **Important note:** if the GTF doesn't match the genome build, the counts will be zero. 
 The 3 critical settings that must be taken into account when using featureCounts are the following:
 
 - **Strandness** (unstranded, forward stranded, or reverse stranded (standard dUTP/Illumina workflow): Picking the wrong one will lead to a massive decrease in the count number.
-- **Multi-mapping:** Usually, reads that map to multiple places are ignored to avoid noise, but in some cases (like repetitive elements), it might be needed to switch this on.
+- **Multi-mapping:** Usually, reads that map to multiple locations are ignored to avoid noise, but in some cases (like repetitive elements), it might be needed to switch this on.
 - **Paired-end:** Must be switched on when analyzing paired-end reads.
 
 The manual for the featureCounts package can be found [here](https://subread.sourceforge.net/SubreadUsersGuide.pdf).
@@ -66,7 +66,7 @@ It outputs a table containing:
 
 - **basemean:** The average expression across all samples.
 - **log2FoldChange (LFC):** The magnitude of the change (e.g., a value of 1 means a 2-fold increase; a value of -1 represents a 2-fold decrease).
-- **The adjusted p-value (padj):** Corrects for multiple testing, controlling for false discovery rate (FDR), using the Benjamini-Hochberg correction. Let´s say we have a p-value of 0.01. That means we have a 1% possibility of our result being a false positive. Padj drastically reduces this number, and in consequence a padj < 0.05 is considered the threshold for significance.
+- **The adjusted p-value (padj):** Corrects for multiple testing, controlling for false discovery rate (FDR), using the Benjamini-Hochberg correction. For example, a p-value of 0.01 means that there is a 1% possibility of the result being a false positive. Padj drastically reduces this number, and in consequence a padj < 0.05 is considered the threshold for significance.
 
 ### LFC shrinkage
 
@@ -120,6 +120,6 @@ When doing functional enrichment, a critical step is choosing the right backgrou
 
 ### Software & Visualization
 
-The gold standard for functional enrichment analysis is the R/Bioconductor package **[clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html)**. It allows for advanced visualization and GSEA (Gene Set Enrichment Analysis).
+The gold standard for functional enrichment analysis is the R/Bioconductor package [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html). It allows for advanced visualization and GSEA (Gene Set Enrichment Analysis).
 
 The standard output for this section includes **Dotplots** (showing the most enriched pathways by p-value and gene count) and **Cnetplots** (Gene-Concept Networks), which show the specific genes shared between different enriched pathways.
