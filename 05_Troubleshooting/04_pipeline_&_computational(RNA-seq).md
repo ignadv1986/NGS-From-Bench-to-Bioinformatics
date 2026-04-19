@@ -25,31 +25,31 @@ Even when the annotation is correct, unexpected results can arise when **countin
 
 If the correct GTF file was used, but the proportion of unassigned reads is still too high (>25-30%):
 
-- This is often due to an incorrect selection in the strandedness (`-s`) parameter, e.g., the strand specification (`s-0` for unstranded, `s-1` for forward stranded, and `s-2` for reverse stranded) does not match the library generation.
-- This can also be caused by an incorrect feature type selection (`-t`) or a mismatch with the one present on the GTF file. The standard in RNA-seq analysis is `-t exon`: if the GTF contains exon information under a different name, a mismatch will happen and reads will not be assigned correctly.
-- Finally a mismatch with attribute type (`-g`). The -t flag works in tandem with the -g flag; if `-t exon` is used, the `-g` flag must point to an attribute that exists within the exon lines (e.g., gene_id).
+- This is often due to an **incorrect selection in the strandedness (`-s`) parameter**, e.g., the strand specification (`s-0` for unstranded, `s-1` for forward stranded, and `s-2` for reverse stranded) does not match the library generation.
+- This can also be caused by an **incorrect feature type selection (`-t`)** or a mismatch with the one present on the GTF file. The standard in RNA-seq analysis is `-t exon`: if the GTF contains exon information under a different name, a mismatch will happen and reads will not be assigned correctly.
+- Finally a **mismatch with attribute type (`-g`)**. The -t flag works in tandem with the -g flag; if `-t exon` is used, the `-g` flag must point to an attribute that exists within the exon lines (e.g., gene_id).
 
 ### Gene counts lower than expected across all samples
 
 If overall expression levels appear systematically reduced, this often indicates a structural issue in counting.
 
-- Choosing the wrong feature type (`-t`) leads to underestimation of gene expression. While, as mentioned above, `-t exon` is the standard in most RNA-seq pipelines, different experimental aims require a specific selection. For example, if the goal is to detect unspliced transcripts, `-t gene` should be used instead of `-t exon`.
-- Incorrect attribute type (`-g`) selection can fragment counts across multiple identifiers, leading to gene count underestimation.
+- **Choosing the wrong feature type (`-t`)** leads to underestimation of gene expression. While, as mentioned above, `-t exon` is the standard in most RNA-seq pipelines, different experimental aims require a specific selection. For example, if the goal is to detect unspliced transcripts, `-t gene` should be used instead of `-t exon`.
+- **Incorrect attribute type (`-g`) selection** can fragment counts across multiple identifiers, leading to gene count underestimation.
 
 ### Inflated library sizes or unusually high counts 
 
 If total counts per sample are unexpectedly high, especially in paired-end data, counting may be incorrect.
 
-- When analysing data from paired-end sequencing, paired mode (`-p`) should be enabled, or paired reads will be treated as independent single reads, leading to double counting.
-- The parameter `--countReadPairs` also needs to be enabled, to ensure that fragments from paired-end reads are counted as single units.
+- When analysing data from paired-end sequencing, **paired mode (`-p`)** should be enabled, or paired reads will be treated as independent single reads, leading to double counting.
+- The parameter **`--countReadPairs`** also needs to be enabled, to ensure that fragments from paired-end reads are counted as single units.
 
 ### Loss of reads in specific regions
 
 If specific regions or the overall dataset show reduced counts, filtering parameters such as the following may be too strict:
 
-- Selecting the wrong fragment length thresholds (`-d`, `-D`) can lead to the loss of valid fragments, but also to the inflation of counts if the lower threshold is too small.
-- Enabling proper pairing requirement (`-B`) can lead to the loss of valid partially mapped fragments
-- While chimeric read exclusion (`-C`) is usually recommended, there are very specific contexts in which doing so might remove potentially biologically relevant reads.
+- Selecting the **wrong fragment length thresholds (`-d`, `-D`)** can lead to the loss of valid fragments, but also to the inflation of counts if the lower threshold is too small.
+- Enabling **proper pairing requirement (`-B`)** can lead to the loss of valid partially mapped fragments
+- While **chimeric read exclusion (`-C`)** is usually recommended, there are very specific contexts in which doing so might remove potentially biologically relevant reads.
 
 ### Quick diagnostic guide
 
@@ -73,42 +73,41 @@ After quantification, Salmon can produce expression estimates that appear incons
 
 Because Salmon operates at the transcript level using probabilistic assignment, small inconsistencies in reference or library structure can propagate into large differences at the gene level.
 
-### High proportion of low-confidence or unstable transcripts
+### High proportion of unmapped or low-confidence reads
 
-If a large fraction of transcripts show unstable or unexpectedly low abundance estimates, this often indicates ambiguity in read assignment.
+If Salmon reports a low overall mapping rate (typically visible in the salmon_quant.log file):
 
-- This can occur when the transcriptome contains many highly similar isoforms, making it difficult to uniquely assign reads.
-- It can also indicate an incomplete or overly simplified transcriptome reference.
-
-### Unexpected expression in transcripts that should not be active
-
-If transcripts are detected in conditions where they are not biologically expected, this may indicate issues with reference or mapping specificity.
-
-- Incomplete or outdated transcriptome annotations can lead to reads being assigned to incorrect transcript models.
-- High sequence similarity between transcripts can cause probabilistic assignment to favor incorrect isoforms.
-
-### Systematic strand-related or directional bias
-
-If expression appears biased toward the wrong strand or inconsistent with library preparation expectations, this suggests a mismatch in library type assumptions.
-
-- Reads may be assigned in the wrong orientation if library structure is incorrectly specified or inferred.
-- This can distort both transcript-level estimates and downstream gene summarization.
+- If a **decoy-aware index was not built** (using the genome sequence as decoy), reads originating from unannotated genomic regions may map spuriously to the nearest transcript, inflating some counts while reducing overall confidence. A decoy-aware index using `salmon index` with the `--decoys flag` should always be built (or downloaded if computational power is limited)
+- The **transcriptome reference may not match the genome build used upstream**. Salmon requires a transcriptome FASTA, not a genome FASTA — using the wrong file type will produce near-zero mapping.
+- **Strandedness** must be specified correctly via `--libType`. Running a stranded library without specifying it causes Salmon to discard a large fraction of reads as incompatible. It is good practice to use `--libType A` for automatic detection on a small pilot subset first and then lock it in for the full run.
 
 ### Inflated or unexpectedly high expression estimates
 
 If overall expression appears inflated or disproportionately concentrated in a subset of transcripts, this may indicate mapping ambiguity or missing reference information.
 
-- Incomplete transcriptomes can cause reads to map spuriously to similar available transcripts.
-- Lack of decoy-aware indexing can increase incorrect assignments from unannotated regions.
+- **Incomplete transcriptomes** can cause reads to map spuriously to similar available transcripts.
+- Typically caused by **multi-mapping reads being distributed across similar isoforms**. Salmon's algorithm will assign fractional counts to all compatible transcripts, so highly similar isoforms will each receive a share of ambiguous reads. Therefore isoform-level estimates are less reliable than gene-level ones. To collapse these transcripts to gene level, tools like [tximeta](https://bioconductor.org/packages/release/bioc/html/tximeta.html) or [tximport](https://bioconductor.org/packages/release/bioc/html/tximport.html) are often employed before differential expression analysis.
+
+### Gene-level counts discordant with featureCounts results
+
+Salmon and featureCounts operate on fundamentally different inputs — a transcriptome vs a genome — and use different assignment logic. Some discordance is expected, particularly for multi-isoform genes. However, if such discordance is extreme (order-of-magnitude differences for most genes), the following should be checked:
+
+- **Correct strandedness** was specified in both tools
+- **Same annotation version** was used to build the Salmon index and the featureCounts GTF.
+
+### TPM values look reasonable but DESeq2 results are poor
+
+Salmon's **TPM output should never be fed directly into DESeq2**. DESeq2 requires raw, unnormalized counts. tximport or tximeta are typically used to import Salmon's `quant.sf` files, which correctly handles the conversion to estimated counts while preserving the information DESeq2 needs for its own normalization. Passing TPM values into DESeq2 will produce results that appear to run without error but are statistically invalid.
 
 ### Quick diagnostic guide
 
 | Symptom | Likely cause | What to check |
 | :--- | :--- | :--- |
-| High fraction of unstable or low-confidence transcripts | Transcriptome ambiguity or incompleteness | Transcriptome reference quality |
-| Expression detected in unexpected transcripts | Incomplete or outdated annotation | Transcriptome version consistency |
-| Strand inconsistencies in expression patterns | Library structure mismatch | Library preparation assumptions |
-| Inflated expression in subsets of transcripts | Mapping ambiguity or missing decoy sequences | Reference completeness, decoy-aware index |
+| Low overall mapping rate | Wrong reference type or missing decoy | Transcriptome vs genome FASTA, decoy-aware index |
+| Large fraction of incompatible reads | Strandedness mismatch | `--libType`, library prep protocol |
+| Inflated counts in lowly expressed transcripts | Multi-mapping across similar isoforms | Isoform similarity, collapse to gene level |
+| Discordance with featureCounts | Expected; different assignment logic | Strandedness consistency, annotation version |
+| DESeq2 results look wrong after Salmon | TPM used instead of counts | Use tximport/tximeta to import `quant.sf` |
 
 ## Differential Expression (DESeq2)
 
