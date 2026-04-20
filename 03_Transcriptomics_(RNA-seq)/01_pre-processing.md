@@ -36,6 +36,8 @@ Additionally, in degraded or FFPE samples the poly-A tail is often separated fro
 
 Even with ribo-depletion and a low RIN, a 3' bias in coverage is expected — reads will be enriched toward the 3' end of transcripts because degradation proceeds from the 5' end. This should be flagged during QC and taken into account during interpretation, particularly for differential expression analysis where even coverage across transcript bodies is assumed.
 
+<br>
+
 <div align="center">
   
 | RIN | Sample type | RNA species needed | Recommended strategy
@@ -47,6 +49,8 @@ Even with ribo-depletion and a low RIN, a 3' bias in coverage is expected — re
 | 2-5 | Any | Any | Ribo-depletion mandatory; assess DV200 first |
 | Any | FFPE | Any | Ribo-depletion mandatory |
 </div>
+
+<br>
 
 **DV200:** percentage of RNA fragments that are longer than 200 nucleotides. If the DV200 is >30%, the sample is usually "salvageable" for a specialized Ribo-depletion library.
 2–5AnyAnyRibo-depletion mandatory; assess DV200 firstAnyAnyRibo-depletion mandatory
