@@ -21,7 +21,7 @@ The trade-off can be framed as follows:
 | :--- | :--- | :--- |
 | At or above recommended depth, fewer than 3 replicates | Add replicates | Statistical power is replicate-limited, not depth-limited |
 | Below recommended depth, sufficient replicates | Increase depth | Coverage gaps will compromise detection regardless of replication |
-| Highly variable biological system (e.g. primary cells, patient samples)| Prioritize replicates | Biological variance dominates; depth cannot compensate |
+| Highly variable biological system (e.g. primary cells, patient samples) | Prioritize replicates | Biological variance dominates; depth cannot compensate |
 | Rare transcript detection or low-input samples | Increase depth | Low-abundance targets require more reads to clear the detection threshold |
 | Fixed budget, forced choice | ≥3 replicates at minimum depth over 2 replicates at high depth | A statistically untestable experiment produces no publishable result |
 </div>
