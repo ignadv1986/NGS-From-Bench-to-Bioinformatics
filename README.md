@@ -1,6 +1,6 @@
 # NGS-From-Bench-to-Bioinformatics
 
-A technical reference manual covering the full Next Generation Sequencing workflow, from sequencing chemistry and library preparation through to computational analysis and troubleshooting. Unlike most resources that treat wet lab and bioinformatics as separate domains, this manual follows the data continuously from the flow cell to biological interpretation, with the goal of making each step understandable in the context of the ones before and after it.
+A technical reference manual covering the full Next Generation Sequencing workflow, from sequencing chemistry and library preparation through to computational analysis and troubleshooting. Each step is covered in the context of how it affects the ones that follow, with particular emphasis on practical troubleshooting and experimental decision-making.
 
 The troubleshooting sections are written from practical experience: each issue is traced back to its most likely origin in the experimental or computational workflow, with concrete diagnostic criteria and actionable recommendations.
 
