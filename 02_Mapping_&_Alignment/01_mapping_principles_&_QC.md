@@ -87,7 +87,7 @@ Sam files are human-readable text files, where each line is tab-delimited, showi
   
   <br><br>
   
-  <em>Read alignment with seed-and-extend approach. Adapted from Karpulevich et. al. BMC Bioinformatics (2024), used under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/deed.en)</em>
+  <em>Example SAM file showing common alignment outcomes</em>
 </div>
 
 <br>
@@ -107,7 +107,7 @@ If these rules are not fulfilled, the pair is flagged as **discordant** by the a
 
 ## Selecting the correct fragment size
 
-As mentioned in the library prep section of this repository, selecting a correct fragment size is critical for the alignment step, and the decision is made based on both the insert size and the read length. To illustrate this, we will use a paired-end sequencing set to 150 bp read length as an example:
+As mentioned in the [library preparation](./01_NGS_Foundations_&_Pre-processing/03_library_preparation.md) section of this repository, selecting a correct fragment size is critical for the alignment step, and the decision is made based on both the insert size and the read length. To illustrate this, a paired-end sequencing set to 150 bp read length will be used as an example:
 
 - If the insert size is less than 300 bp, the R1 and R2 reads will overlap in the middle (**overlapping reads**). This provides double sequencing depth for the center of the fragment, which can be used to correct sequencing errors, but limits the overall genomic coverage.
 - If inserts are over 400 bp, there will be an unsequenced gap in the middle, which the aligner will fill using paired-end logic. This reduces sequencing depth, but allows for a higher coverage in exchange.
@@ -129,10 +129,10 @@ The MAPQ score is a logarithmic scale (Phred-scaled) that represents the probabi
 
 $$\text{MAPQ} = -10 \log_{10}(P_{err})$$
 
-A MAPQ of 0 means that the sequence is multi-mapped: the aligner found two or more places in the genome where the read fits perfectly (e.g., in a repetitive element or a duplicated gene). Because the aligner can't be sure which one is right, it assigns a probability of zero that it chose the "correct" one.
+A MAPQ of 0 means that the sequence is multi-mapped: the aligner found two or more places in the genome where the read fits perfectly (e.g., in a repetitive element or a duplicated gene). Because the aligner can't be sure which one is right, it assigns a probability of zero that it chose the correct one.
 
 Different factors determine the score:
--	**Uniqueness:** How much better is the "best" hit compared to the "second best" hit? If the best hit has 0 mismatches and the second best has 5 mismatches, the MAPQ will be high (~60).
+-	**Uniqueness:** How much better is the best hit compared to the second best hit? If the best hit has 0 mismatches and the second best has 5 mismatches, the MAPQ will be high (~60).
 -	**Base Quality:** If the bases that match the genome have low Phred scores (Q10 or Q15), the aligner is less confident in the match, and the MAPQ drops.
 -	**Paired-End Information:** If R1 and R2 map to the same chromosome at the correct distance from each other, the MAPQ gets a "bonus" because the physical constraint of the DNA fragment confirms the location.
 
@@ -146,9 +146,9 @@ Importantly, different aligners use different MAPQ scores. This is critical when
 
 After the aligner finishes, it generates a log file with some important statistics about the whole run, including:
 
-- % of mapped reads: the closer to 100%, the better. Lower mapped reads can be a sign of wrong genome/annotation, contamination or poor library prep.
-- % of unique mapped reads and % of multi mapped reads: most reads should be uniquely mapped, otherwise it could indicate over-amplification or low library complexity.
-- % of properly paired reads: a low percentage here despite a high mapping rate often points to library prep issues (like chimeras).
+- **% of mapped reads:** the closer to 100%, the better. Lower mapped reads can be a sign of wrong genome/annotation, contamination or poor library prep.
+- **% of unique mapped reads and % of multi mapped reads:** most reads should be uniquely mapped, otherwise it could indicate over-amplification or low library complexity.
+- **% of properly paired reads:** a low percentage here despite a high mapping rate often points to library prep issues (like presence of chimeras).
 
 
 
