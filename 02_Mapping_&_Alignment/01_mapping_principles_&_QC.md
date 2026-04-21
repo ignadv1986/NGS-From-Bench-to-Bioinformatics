@@ -44,7 +44,8 @@ Aligners take short sequences (**seeds**) from the sequencing reads and try to f
   
   <br>
   
-  <em>Read alignment with seed-and-extend approach. Adapted from Karpulevich et. al. BMC Bioinformatics (2024), used under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/deed.en)</em> 
+  <em>Read alignment with seed-and-extend approach. Adapted from Karpulevich et. al. BMC Bioinformatics (2024), used under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/deed.en)</em>
+  
 </div>
 
 <br>
