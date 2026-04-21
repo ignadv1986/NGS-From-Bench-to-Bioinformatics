@@ -14,7 +14,7 @@ Coverage is calculated by bioinformatics tools such as ([bedtools](https://bedto
 
 $$\text{Coverage } = \left( \frac{\text{Number of bases with } \ge 1 \text{ read}}{\text{Total Genome Size}} \right) \times 100$$
 
-One important term is **uniformity of coverage**. This is a measure of the variability of coverage across the genome. While the overall coverage might be the desired one, this is an average across all positions, so some bases might not be reaching it while others have an inflated coverage, skewing the %. This can be problematic, especially in WGS, where a flat coverage is desired: if a position shows a much lower coverage, then the detection of mutations with high confidence won't be possible. In contrast, applications such as ATAC-seq or CUT&RUN benefit from non-uniform (“bumpy”) coverage patterns that reflect biological signal.
+One important term is **uniformity of coverage**. This is a measure of the variability of coverage across the genome. While the overall coverage might be the desired one, this is an average across all positions, so some bases might not be reaching it while others have an inflated coverage, skewing the %. This can be problematic, especially in WGS, where a flat coverage is desired: if a position shows a much lower coverage, then the detection of mutations with high confidence won't be possible. In contrast, applications such as ATAC-seq or CUT&RUN benefit from non-uniform (“bumpy”) coverage patterns that reflect biological signal (a detailed explanation of this can be found in the [CUT&RUN](../04_Epigenomics/02_CUT&RUN_sample_prep.md) and [ATAC-seq](../04_Epigenomics/04_ATAC-seq_sample_prep.md) sample prep sections).
 
 The most common cause of low uniformity of coverage is **PCR bias**. Some regions are easier to amplify by the polymerase, including those with lower GC content, leading to an overrepresentation of these fragments.
 
@@ -58,8 +58,8 @@ Average Phred score of the bases constituting each read sequence. It shows as a 
 
 - **Per Base Sequence Content**
 
-Shows the proportion of each nucleotide for each position in our reads. This proportion should be roughly the same for all nucleotides. We should therefore see straight lines very close to each other for all nucleotides. 
-The presence of wavy lines at the beginning of the reads is usually caused by adapters or random hexamer primer bias in the case of RNA-seq. In ATAC-seq, the Tn5 Transposase has a specific insertion bias. 
+Shows the proportion of each nucleotide for each position in the reads. This proportion should be roughly the same for all nucleotides. Straight lines very close to each other for all nucleotides should therefore be observed. 
+The presence of wavy lines at the beginning of the reads is usually caused by adapters or random hexamer primer bias in the case of RNA-seq, or by the specific Tn5 insertion bias in ATAC-seq. 
 Differences in the G-C vs. A-T ratio might have biological significance, so worth investigating, while sudden peaks are usually a red flag.
 
 <div align="center">
@@ -86,7 +86,7 @@ If we see two peaks instead of one, that might be a sign of contamination with D
 
 - **Per Base N Content**
 
-N is referred by the sequencer as bases that could not be properly identified. Obviously, this number should be close to 0 for all reads.
+N is referred by the sequencer as bases that could not be properly identified. Preferrably, this number should be close to 0 for all reads.
 As little as an increase to 1% in any position is already a bad sign.
 A rise towards the end of the reads might be normal and depending on the size it might be worth trimming.
 
@@ -96,8 +96,8 @@ Shows the distribution of the reads' lengths. All reads should be the same size 
 
 - **Sequence Duplication Levels**
 
-Shows the percentage of repeated reads, and how many times they are present. The title of the graph tells us what percentage of reads we would be left with if we removed all duplicated reads (so the percentage of unique reads). 
-This really changes depending on the type of samples we have. In RNA-seq, a high number of duplicated reads is expected, since many reads will map to abundant transcripts, while a high number of duplicates in WGS usually means that the library was overamplified. 
+Shows the percentage of repeated reads, and how many times they are present. The title of the graph shows the percentage of reads left after the removal of all duplicated reads (in other words, the percentage of unique reads). 
+The interpretation of this metric really changes depending on the type of samples. In RNA-seq, a high number of duplicated reads is expected, since many reads will map to abundant transcripts, while a high number of duplicates in WGS usually means that the library was overamplified. 
 
 - **Overrepresented sequences**
 
@@ -111,7 +111,7 @@ Specifically detects the presence of adapters. It should be 0, or otherwise trim
 
 As mentioned above, some sequences, such as **adapters, low quality bases, and poly-N tails** can affect downstream mapping and therefore need to be removed. This process is called trimming, and it can be achieved with different tools. The usual strategy is to run an initial round of fastQC to check the raw state of the run, followed by [fastp](https://github.com/opengene/fastp) to remove adapters and other non-desired elements and adding a QC report. It is good practice to run the cleaned data again through fastQC to see how the quality has improved.
 When more customization is needed, [cutadapt](https://cutadapt.readthedocs.io/en/stable/) is the preferred option, since it supports more complex trimming rules. This would be the case for small RNA-seq experiments and/or when variable length adapters were used. 
-Usually, trimming adapters is enough; the aligner (like BWA or STAR, see below) can handle a few low-quality bases at the ends.
+Usually, trimming adapters is enough; the aligner (like BWA or STAR) can handle a few low-quality bases at the ends.
 
 ## MultiQC
 
