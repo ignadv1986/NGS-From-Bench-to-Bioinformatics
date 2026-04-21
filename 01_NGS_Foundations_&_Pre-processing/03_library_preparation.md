@@ -141,18 +141,19 @@ The presence of a high concentration of adapter dimers can be problematic for se
 -	Smaller molecules physically diffuse to the flow cell surface and "capture" a grafting oligo much faster than long library fragments (300-500 bp).
 -	Because they are short, the "bridge" is easier to form, and they amplify more efficiently during cluster generation **(cluster side bias)**.
 
-Even if the library has only 5% dimers by mass (ng), they can take up 50% or more of the "clustering occupancy." Libraries with a percentage below 5% of adapter dimers are usually acceptable for sequencing.
+Even if the library has only 5% dimers by mass, they can take up 50% or more of the clustering occupancy. Libraries with a percentage below 5% of adapter dimers are usually acceptable for sequencing.
 
 The interpretation of fragment size profiles is assay-dependent and should always be considered in the context of the library preparation strategy and downstream application. More information on this can be found in the [fragment size distribution](../05_Troubleshooting/01_fragment_size_distribution.md) section of this repository.
 
 ### Molarity Calculation
 
-Sequencers don’t take absolute quantities of DNA, they work on molarities. In PCR-free protocols, where the quantification is done through qPCR (see above), the molarity (in nM) is already obtained. If no qPCR was done, then the formula to calculate the molarity of a library is:
+Sequencers don't take absolute quantities of DNA, they work on molarities. In PCR-free protocols, where the quantification is done through qPCR (see above), the molarity (in nM) is already obtained. If no qPCR was done, then the formula to calculate the molarity of a library is:
 
 $$ \text{Molarity (nM)} = \frac{\text{Concentration (ng/µL)} \times 10^6}{\text{Average Fragment Length (bp)} \times 660} $$
 
-This is assuming the result is in nM, where 660 is the average molecular weight of a bp, the average fragment length is provided by the TapeStation/fragment analyzer, and the concentration is obtained from the mass provided by the Qubit quantification. 
-Note: Always use the region tool in the TapeStation software to capture the entire smear, not just the highest peak, to get a true "average bp" for the formula.
+This is assuming the result is in nM, where 660 is the average molecular weight of a bp, the average fragment length is provided by the TapeStation/fragment analyzer, and the concentration is obtained from the mass provided by the Qubit quantification.
+
+**Note:** Always use the region tool in the TapeStation software to capture the entire smear, not just the highest peak, to get a true "average bp" for the formula.
 
 ## Library Pooling
 
