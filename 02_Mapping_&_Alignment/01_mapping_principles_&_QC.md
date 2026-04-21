@@ -82,11 +82,7 @@ Sam files are human-readable text files, where each line is tab-delimited, showi
 <br>
 
 <div align="center">
-  
   <img src="../Figures/SAM_file.png" width="800">
-  
-  <br><br>
-  
   <em>Example SAM file showing common alignment outcomes</em>
 </div>
 
