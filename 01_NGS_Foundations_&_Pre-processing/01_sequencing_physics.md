@@ -19,7 +19,7 @@ While Sanger relies on physical separation by size, the leap to NGS was made pos
 
 </div>
 
-## Illumina sequencing
+## Illumina Sequencing
 
 Illumina sequencers use a sequencing method called **sequencing by synthesis**. In this method, DNA strands bind to oligonucleotides on a glass slide that match the adapter sequence, and remain fixed at the same position throughout the entire sequencing reaction. For this to happen, the DNA that has been processed for sequencing, or **library** (we recommend reading the [library prep](./03_library_preparation.md) section of this repository for more information on library preparation) has to first be denatured. 
 Once bound, the DNA fragment (or forward strand) serves as a template for the extension of the oligonucleotide. 
