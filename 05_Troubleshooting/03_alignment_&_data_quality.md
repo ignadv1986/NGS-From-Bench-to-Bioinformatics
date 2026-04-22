@@ -17,7 +17,6 @@ The acceptable % of properly mapped reads varies greatly between different techn
 | Technique	| Acceptable (%)	| Excellent (%)	|
 | :--- | :--- | :--- |
 | RNA-seq |	>80	| >90 |
-| DNA-seq |	>85	| >95	|
 | ATAC-seq | >70	| >85	|
 | CUT&RUN |	>70	| >80	|
 
