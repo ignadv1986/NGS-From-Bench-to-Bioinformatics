@@ -20,8 +20,9 @@ A high, uniform background in a CUT&RUN experiment can be caused by different fa
 
 ### No visible enrichment
 
-If no peaks are present when inspecting the BAM files in the genome browser, there can be both technical and biological reasons: - **Antibody choice:** Even when showing specificity in other assays, not all antibodies are suitable for CUT&RUN experiments. It is therefore recommendable to run a pilot experiment to check if the antibody is suited for this purpose, or to use an antibody previously documented to work for CUT&RUN. If the antibody fails to bind the protein of interest, the MNase won't be tethered to specific genomic regions and no enrichment will be visible.
+If no peaks are present when inspecting the BAM files in the genome browser, there can be both technical and biological reasons:
 
+- **Antibody choice:** Even when showing specificity in other assays, not all antibodies are suitable for CUT&RUN experiments. It is therefore recommendable to run a pilot experiment to check if the antibody is suited for this purpose, or to use an antibody previously documented to work for CUT&RUN. If the antibody fails to bind the protein of interest, the MNase won't be tethered to specific genomic regions and no enrichment will be visible.
 - **Presence of protein of interest:** If the target protein is not expressed or is expressed at very low levels, the antibody won't have enough targets to bind and no enrichment will be observed.
 - **The protein of interest is not a chromatin binding factor:** If the aim of the CUT&RUN experiment is to determine if the protein of interest can bind to chromatin, then a negative result would also show no enrichment. However, the interpretation in this scenario is difficult, since the technical factors cited above cannot be ruled out.
 
@@ -38,7 +39,7 @@ If known loci are empty but signal appears elsewhere, the issue is usually mislo
 - **Wrong genome build or annotation mismatch:** If the genome assembly or annotation version does not match the expected reference, enrichment may appear “shifted” or assigned to incorrect genes/regions. This does not usually erase signal, but it makes expected loci appear empty while signal is observed elsewhere. This is especially relevant when comparing results to published datasets or known peak sets.
 - **Artifacts in repetitive or low-complexity regions:** Some genomic regions inherently attract ambiguous alignments. If not properly accounted for, (usually in the blacklist region removal step of BAM clean-up) these regions can accumulate reads that resemble real peaks. In this case, signal may look strong and well-defined, but it will not correspond to known regulatory or binding sites. This often leads to apparent “new peaks” that are not reproducible or biologically meaningful.
 
-### Quick diagnostics guide
+### Quick diagnostic guide
 
 | Symptom | Likely cause | What to check |
 | :--- | :--- | :--- |
@@ -65,7 +66,7 @@ Usually caused by a wrong normalization, this is one of the most common issues o
 ### No signal in coverage tracks
 
 - **Excessive removal of reads:** strict MAPQ thresholds or duplicate removal (using the `--ignoreDuplicates` parameter of bamcoverage) can eliminate real CUT&RUN signal.
-- **Improper bin size selection:** while the default bin size used by bamcoverage is 50 bp, this can be modified with the `--binSize` parameter. A lower bin size will increase resolution, but will make the transformation more computationally demanding, and viceversa.
+- **Improper bin size selection:** while the default bin size used by bamcoverage is 50 bp, this can be modified with the `--binSize` parameter. A lower bin size will increase resolution, but will make the transformation more computationally demanding, and vice versa.
 - **Use of read extension:** CUT&RUN does not require fragment extension; applying it with `--extendReads` artificially broadens peaks and reduces apparent enrichment.
 
 ### Unexpected enrichment patterns
@@ -76,7 +77,7 @@ If coverage profiles do not match the ones observed on the BAM files and/or they
 - **Mis-centering of reads:** While centering reads (`--centerReads`) can improve apparent peak sharpness in transcription factor CUT&RUN experiments, it assumes relatively uniform fragment sizes. If applied to heterogeneous fragment populations (e.g., mixed nucleosomal and sub-nucleosomal fragments), it can distort peak shape and shift apparent binding sites. For this reason, centering is best restricted to analyses focusing on short fragments, and should be avoided in general or histone mark workflows.
 - **Fragment size considerations:** Including all fragment sizes without filtering can obscure the distinction between TF binding (short fragments) and nucleosomal signal.
 
-### Quick diagnostics guide
+### Quick diagnostic guide
 
 | Symptom | Likely cause | What to check |
 | :--- | :--- | :--- |
@@ -115,7 +116,7 @@ If SEACR returns very few peaks, even when enrichment is visible in coverage tra
 
 This does not necessarily indicate a failure of the experiment, but highlights the importance of comparing against controls during interpretation.
 
-### Quick diagnostics guide
+### Quick diagnostic guide
 
 | Symptom | Likely cause | What to check |
 | :--- | :--- | :--- |
@@ -125,7 +126,7 @@ This does not necessarily indicate a failure of the experiment, but highlights t
 | Peaks in unexpected genomic regions | Alignment artifacts or annotation mismatch | Genome build, blacklist filtering |
 | Peaks present but weak or not convincing | Marginal signal above threshold | Coverage tracks vs peak locations |
 
-### Inconsistent peak detection across replicates
+## Inconsistent peak detection across replicates
 
 Even when coverage profiles appear similar, peak calling results may differ substantially between replicates when using SEACR.
 
