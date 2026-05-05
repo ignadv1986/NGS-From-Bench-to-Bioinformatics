@@ -12,7 +12,7 @@ $$\text{Sequencing Depth} = \frac{\text{Total Number of Reads} \times \text{Frag
 
 Coverage is calculated by bioinformatics tools such as ([bedtools](https://bedtools.readthedocs.io/en/latest/) or [samtools](https://www.htslib.org)) after the mapping step, with the following formula:
 
-$$\text{Coverage } = \left( \frac{\text{Number of bases with } \ge 1 \text{ read}}{\text{Total Genome Size}} \right) \times 100$$
+$$\text{Coverage} = \left(\frac{\text{Number of bases with } \ge 1 \text{ read}}{\text{Total Genome Size}} \right) \times 100$$
 
 One important term is **uniformity of coverage**. This is a measure of the variability of coverage across the genome. While the overall coverage might be the desired one, this is an average across all positions, so some bases might not be reaching it while others have an inflated coverage, skewing the %. This can be problematic, especially in WGS, where a flat coverage is desired: if a position shows a much lower coverage, then the detection of mutations with high confidence won't be possible. In contrast, applications such as ATAC-seq or CUT&RUN benefit from non-uniform (“bumpy”) coverage patterns that reflect biological signal (a detailed explanation of this can be found in the [CUT&RUN](../04_Epigenomics/02_CUT&RUN_sample_prep.md) and [ATAC-seq](../04_Epigenomics/04_ATAC-seq_sample_prep.md) sample prep sections).
 
