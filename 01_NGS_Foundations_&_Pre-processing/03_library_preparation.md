@@ -180,21 +180,21 @@ $$ \text{Molarity (nM)} = \frac{\text{Concentration (ng/µL)} \times 10^6}{\text
 
 This is assuming the result is in nM, where 660 is the average molecular weight of a bp, the average fragment length is provided by the TapeStation/fragment analyzer, and the concentration is obtained from the mass provided by the Qubit quantification.
 
-**Note:** Always use the region tool in the TapeStation software to capture the entire smear, not just the highest peak, to get a true "average bp" for the formula.
+**Note:** Always use the region tool in the TapeStation software to capture the entire smear, not just the highest peak, to get a true average bp for the formula.
 
 ## Library Pooling
 
-Once the molarity (nM) of each individual library is determined, they must be combined into a single **master pool**. This process of normalization ensures that the sequencing system's total clustering capacity is distributed accurately among the samples.
+Once the molarity (nM) of each individual library is determined, they must be combined into a single **master pool**. This process ensures that the sequencing system's total clustering capacity is distributed accurately among the samples.
 
 ### The Pooling Ratio
 
-In most NGS workflows, samples are pooled at a **1:1 molar ratio** to achieve equal read depth. Negative controls (like IgG in CUT&RUN workflows) are often pooled at a lower ratio (25%-50% less). Given their lower biological complexity, these samples require fewer total reads to establish a statistical background, allowing more clustering capacity to be diverted to experimental targets.
+In most NGS workflows, samples are pooled at a **1:1 molar ratio** to achieve equal read depth. Negative controls (like IgG in CUT&RUN workflows) are often pooled at a lower ratio (25% - 50% less). Given their lower biological complexity, these samples require fewer total reads to establish a statistical background, allowing more clustering capacity to be diverted to experimental targets.
 
 ### Normalization Calculation
 
 To minimize pipetting error, libraries should be diluted to a standardized intermediate concentration (e.g., 4 nM or 10 nM) before mixing. Utilizing volumes greater than 2 µL significantly improves the precision of the final pool.
 
-The volume of each library (V<sub>lib</sub>) required for a specific total pool volume (V<sub>pool</sub> ) is calculated using the following formula:
+The volume of each library (V<sub>lib</sub>) required for a specific total pool volume (V<sub>pool</sub>) is calculated using the following formula:
 
 $$V_{lib} = \frac{Molarity_{target} \times V_{pool}}{Molarity_{initial} \times n}$$
 
