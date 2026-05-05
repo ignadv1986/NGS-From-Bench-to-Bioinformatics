@@ -4,7 +4,7 @@ After sequencing, it is critical to perform quality control (QC) to verify that 
 
 ## Sequence Depth VS Coverage
 
-While  specific sequence depth and coverage (see the [experimental design](./02_experimental_design.md) section of this repo for more details on this) are defined during experimental design, it is important to check if they have been achieved once the run is over.
+While specific sequence depth and coverage (see the [experimental design](./02_experimental_design.md) section of this repo for more details on this) are defined during experimental design, it is important to check if they have been achieved once the run is over.
 
 The observed sequencing depth achieved in a sequencing run can be calculated through the following formula:
 
