@@ -10,7 +10,7 @@ Biological replicates are essential to capture biological variability and ensure
 
 From a sequencing perspective, there is a trade-off between the number of samples/replicates and the depth achieved per sample. Given a fixed sequencing capacity, increasing the number of replicates reduces the number of reads allocated to each sample, while unnecessarily increasing sequencing capacity leads to higher experimental costs. Therefore, when designing the experiment, deciding which is the limiting factor is critical.
 
-As a general principle, increasing the number of biological replicates provides greater statistical power than increasing sequencing depth beyond recommended levels. This is because sequencing depth addresses technical noise — the probability that a given base or transcript is detected — while replicates address biological variability, which is almost always the dominant source of uncertainty in a well-prepared library.
+As a general principle, increasing the number of biological replicates provides greater statistical power than increasing sequencing depth beyond recommended levels. This is because sequencing depth addresses technical noise (the probability that a given base or transcript is detected) while replicates address biological variability, which is almost always the dominant source of uncertainty in a well-prepared library.
 
 The practical implication is that once the recommended depth for a given application has been reached, additional reads yield diminishing returns. For example, in standard RNA-seq, this threshold is typically around 20–30 million reads per sample for well-annotated genomes. Sequencing the same sample at 60 million reads will not double the number of detected differentially expressed gene, but adding a third biological replicate to a two-replicate design often will, by giving DESeq2 the variance estimates it needs to distinguish signal from noise.
 
@@ -20,7 +20,7 @@ The trade-off can be framed as follows:
 
 <div align="center">
   
-| Situation| Recommendation | Reasoning |
+| Situation | Recommendation | Reasoning |
 | :--- | :--- | :--- |
 | At or above recommended depth, fewer than 3 replicates | Add replicates | Statistical power is replicate-limited, not depth-limited |
 | Below recommended depth, sufficient replicates | Increase depth | Coverage gaps will compromise detection regardless of replication |
