@@ -204,6 +204,6 @@ where n is the number of samples.
 
 Before the master pool is loaded onto the sequencer, a final verification step is required. This is the critical juncture for identifying technical failures before committing to the cost of a sequencing run.
 
-An automated electrophoresis run (e.g., TapeStation) of the final master pool should exhibit a distribution reflecting the weighted average of the constituent libraries. If a clear peak of adapter dimers are found in the pool, a new SPRI purification step might be required. 
+An automated electrophoresis run (e.g., TapeStation) of the final master pool should exhibit a distribution reflecting the weighted average of the constituent libraries. If a clear peak of adapter dimers is found in the pool, a new SPRI purification step might be required. 
 
-**Note:** If the overall concentration of the pool is significantly lower than the mathematical expectation, it suggests the DNA is sticking to the tube walls (often due to using a low-cation buffer or water instead of Tris-HCl).
+**Note:** If the overall concentration of the pool is significantly lower than the mathematical expectation, this suggests that the DNA is sticking to the tube walls (often due to using a low-cation buffer or water instead of Tris-HCl).
