@@ -21,7 +21,7 @@ While Sanger relies on physical separation by size, the leap to NGS was made pos
 
 ## Illumina Sequencing
 
-Illumina sequencers use a sequencing method called **sequencing by synthesis**. In this method, DNA strands bind to oligonucleotides on a glass slide that match the adapter sequence, and remain fixed at the same position throughout the entire sequencing reaction. For this to happen, the DNA that has been processed for sequencing, or **library** (we recommend reading the [library prep](./03_library_preparation.md) section of this repository for more information on library preparation) has to first be denatured. 
+Illumina sequencers use a sequencing method called **sequencing by synthesis**. In this method, DNA strands bind to oligonucleotides on a glass slide that match the adapter sequence and remain fixed at the same position throughout the entire sequencing reaction. For this to happen, the DNA that has been processed for sequencing, or **library** (we recommend reading the [library prep](./03_library_preparation.md) section of this repository for more information on library preparation) has to first be denatured. 
 Once bound, the DNA fragment (or forward strand) serves as a template for the extension of the oligonucleotide. 
 
 ### Bridge Amplification and Cluster Generation
@@ -40,7 +40,7 @@ Once the cluster is formed, it contains a mixture of both forward and reverse st
 
 ### Reading the Fragments
 
-Primers are added together with nucleotides that have a specific fluorophore for each of them and a terminator that prevents the chain from being further extended. The sequencer excites the fluorescent tag with a laser and the camera detects the fluorescent signal. The terminator is then washed away, and the process is repeated a determined number of times (**read length**). This leads to the generation of **reads**. In single-end sequencing, this would be the end of the workflow, while in paired-end reading it would conclude the generation of the first read (**R1**)
+Primers are added together with nucleotides that have a specific fluorophore for each of them and a terminator that prevents the chain from being further extended. The sequencer excites the fluorescent tag with a laser and the camera detects the fluorescent signal. The terminator is then washed away, and the process is repeated a determined number of times (**read length**). This leads to the generation of **reads**. In single-end sequencing, this would be the end of the workflow, while in paired-end sequencing (see below) it would conclude the generation of the first read (**R1**)
 
 ### Paired-end Sequencing
 
@@ -63,6 +63,12 @@ As explained above, the sequencer identifies bases by exciting fluorophores with
   <em>Comparison of Illumina 4-Channel vs. 2-Channel optical chemistry. Note how G relies on the absence of signal in 2-channel systems.</em>
 </div>
 
+### Patterned Flow Cells
+
+In earlier systems (MiSeq, HiSeq), DNA fragments bind to the flow cell at random. As bridge amplification occurs, clusters can grow too close to each other, leading to fluorescence overlapping, and thereby causing the camera to fail to distinguish the two signals. To overcome this challenge, a limiting dilution of sample is used, leading to random occupancy governed by Poisson statistics, and thereby reducing the possibility that two different DNA fragments "land" too close. However, this also leads to a big part of the flow cell being empty, limiting sequencing efficiency.
+
+Modern high-throughput machines (NovaSeq) use **patterned flow cells** where billions of nanowells are distributed on the glass at exact intervals. This allows the sequencer to know exactly where every cluster should be, maximizing the number of reads that can be obtained from a single slide. To ensure each nanowell contains only one unique DNA fragment, Illumina uses **ExAmp kinetics**. The reagents are designed so that the moment the first DNA molecule enters a well, it replicates so fast that it fills the entire volume of the well instantly. This high-speed cloning physically crowds out and excludes any other DNA molecules from entering.
+
 ## Long-read Sequencing
 
 While this repository focuses on short-read Illumina sequencing, it is worth noting that long-read platforms — primarily **PacBio** (SMRT sequencing) and **Oxford Nanopore** (nanopore-based sequencing) — occupy an increasingly important role in genomics.
@@ -70,12 +76,6 @@ While this repository focuses on short-read Illumina sequencing, it is worth not
 Unlike Illumina, neither platform uses reversible terminators or cluster amplification: PacBio reads a single molecule in real time as a polymerase traverses it, while Oxford Nanopore measures disruptions in ionic current as DNA threads through a protein pore. Both produce reads in the kilobase-to-megabase range, which makes them uniquely suited for resolving repetitive regions, phasing haplotypes, detecting structural variants, and sequencing full-length isoforms without the ambiguity introduced by read assembly. The trade-off is a higher per-base error rate and cost compared to Illumina short reads, which is why long-read platforms are typically used for specific applications rather than as a general replacement for short-read sequencing.
 
 For most transcriptomic, epigenomic, and standard variant-calling workflows covered in this repository, short-read Illumina sequencing remains the practical and cost-effective standard.
-
-## Patterned Flow Cells
-
-In earlier systems (MiSeq, HiSeq), DNA fragments bind to the flow cell at random. As bridge amplification occurs, clusters can grow too close to each other, leading to fluorescence overlapping, and thereby causing the camera to fail to distinguish the two signals. To overcome this challenge, a limiting dilution of sample is used, leading to random occupancy governed by Poisson statistics, and thereby reducing the possibility that two different DNA fragments "land" too close. However, this also leads to a big part of the flow cell being empty, limiting sequencing efficiency.
-
-Modern high-throughput machines (NovaSeq) use **patterned flow cells** where billions of nanowells are distributed on the glass at exact intervals. This allows the sequencer to know exactly where every cluster should be, maximizing the number of reads that can be obtained from a single slide. To ensure each nanowell contains only one unique DNA fragment, Illumina uses **ExAmp kinetics**. The reagents are designed so that the moment the first DNA molecule enters a well, it replicates so fast that it fills the entire volume of the well instantly. This high-speed cloning physically crowds out and excludes any other DNA molecules from entering.
 
 ## Technical Challenges
 
@@ -95,7 +95,7 @@ The traditional approach to sample indexing is **combinatorial dual indexing (CD
 
 Because ExAmp is a high-energy chemical reaction and wells are so close together, any leftover free adapters in the library can accidentally prime a reaction in a neighboring well. Taking the combinations above as an example, when a free adapter carrying i7-1 hops into a well seeded with a library from sample B, the resulting cluster will be read as i7-1 + i5-3 — a combination that legitimately belongs to sample A. This phenomenon is termed **index hopping**, and it leads to crosstalk where reads are silently misassigned to the wrong sample.
 
-To overcome this index hopping, modern protocols require **Unique Dual Indexes (UDIs)**, a digital safety net for the high-speed chemistry. Unlike combinatorial dual indexes — where individual i7 and i5 sequences are reused across samples — UDIs assign a completely unique index pair to every sample in the pool, with no single index sequence appearing more than once. This means that if a free adapter does hop to a neighboring well and primes an illegitimate cluster, the resulting i7+i5 combination will not match any entry in the sample sheet. The demultiplexer flags it as unknown and discards it, rather than silently assigning it to the wrong sample. Unlike in CDI, where the same hop would produce a valid combination indistinguishable from a legitimate read, the nonsense combination generated under UDIs is caught and removed before it can propagate downstream.
+To overcome this, modern protocols require **Unique Dual Indexes (UDIs)**. Unlike combinatorial dual indexes, where individual i7 and i5 sequences are reused across samples, UDIs assign a completely unique index pair to every sample in the pool, with no single index sequence appearing more than once. This means that if a free adapter does hop to a neighboring well and primes an illegitimate cluster, the resulting i7+i5 combination will not match any entry in the sample sheet. The demultiplexer flags it as unknown and discards it, rather than silently assigning it to the wrong sample. Unlike in CDI, where the same hop would produce a valid combination indistinguishable from a legitimate read, the nonsense combination generated under UDIs is caught and removed before it can propagate downstream.
 
 Importantly, as we will see on the next section of this repository, proper library cleanup to remove free adapters is the best defense against this phenomenon, and UDIs are the safeguard for what cleanup leaves behind.
 
