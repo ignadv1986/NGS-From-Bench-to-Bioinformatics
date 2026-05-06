@@ -126,6 +126,8 @@ The MAPQ score is a logarithmic scale (Phred-scaled) that represents the probabi
 
 $$\text{MAPQ} = -10 \log_{10}(P_{err})$$
 
+P is the probability that the base call is wrong, assigned by the aligner.
+
 A MAPQ of 0 means that the sequence is multi-mapped: the aligner found two or more places in the genome where the read fits perfectly (e.g., in a repetitive element or a duplicated gene). Because the aligner can't be sure which one is right, it assigns a probability of zero that it chose the correct one.
 
 Different factors determine the score:
