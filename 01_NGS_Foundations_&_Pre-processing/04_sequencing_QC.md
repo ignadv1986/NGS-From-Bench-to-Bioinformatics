@@ -86,7 +86,7 @@ If we see two peaks instead of one, that might be a sign of contamination with D
 
 - **Per Base N Content**
 
-N is referred by the sequencer as bases that could not be properly identified. Preferrably, this number should be close to 0 for all reads.
+N is referred by the sequencer as bases that could not be properly identified. Preferably, this number should be close to 0 for all reads.
 As little as an increase to 1% in any position is already a bad sign.
 A rise towards the end of the reads might be normal and depending on the size it might be worth trimming.
 
@@ -109,7 +109,7 @@ Specifically detects the presence of adapters. It should be 0, or otherwise trim
 
 ## Trimming
 
-As mentioned above, some sequences, such as **adapters, low quality bases, and poly-N tails** can affect downstream mapping and therefore need to be removed. This process is called trimming, and it can be achieved with different tools. The usual strategy is to run an initial round of fastQC to check the raw state of the run, followed by [fastp](https://github.com/opengene/fastp) to remove adapters and other non-desired elements and adding a QC report. It is good practice to run the cleaned data again through fastQC to see how the quality has improved.
+As mentioned above, some sequences, such as **adapters, low quality bases, and poly-N tails** can affect downstream mapping and therefore need to be removed. This process is called trimming, and it can be achieved with different tools. The usual strategy is to run an initial round of FastQC to check the raw state of the run, followed by [fastp](https://github.com/opengene/fastp) to remove adapters and other non-desired elements and adding a QC report. It is good practice to run the cleaned data again through FastQC to see how the quality has improved.
 When more customization is needed, [cutadapt](https://cutadapt.readthedocs.io/en/stable/) is the preferred option, since it supports more complex trimming rules. This would be the case for small RNA-seq experiments and/or when variable length adapters were used. 
 Usually, trimming adapters is enough; the aligner (like BWA or STAR) can handle a few low-quality bases at the ends.
 
