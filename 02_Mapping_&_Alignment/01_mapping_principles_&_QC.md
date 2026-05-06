@@ -10,7 +10,7 @@ The most widely used versions of human reference genome are GRCh37 and GRCh38, w
 
 •	GENCODE is a specific annotation project that focuses on producing high-quality, manually curated gene models — initially for human and mouse genomes.
 
-GENCODE and Ensembl are now technically the same for human and mouse. Since 2018, Ensembl uses the GENCODE gene set as its default, but the latter includes a lot of long non-coding RNAs (lncRNAs) and pseudogenes that standard RefSeq might ignore. This is why is preferred GENCODE/Ensembl over UCSC/RefSeq for RNA-seq.
+GENCODE and Ensembl are now technically the same for human and mouse. Since 2018, Ensembl uses the GENCODE gene set as its default, but the latter includes a lot of long non-coding RNAs (lncRNAs) and pseudogenes that standard RefSeq might ignore. This is why GENCODE/Ensembl is preferred over UCSC/RefSeq for RNA-seq.
 
 <br>
 
@@ -31,7 +31,7 @@ GENCODE and Ensembl are now technically the same for human and mouse. Since 2018
 
 If the aligner had to read the entire 3.2 billion base pairs of the human genome for every single read in the FASTQ files, the analysis would be incredibly slow and computationally infeasible. To overcome this, reference FASTA files are converted into a rapidly searchable database (an index) made up of short, overlapping subsequences known as **k-mers** (sequences of length *k*). This process is called **indexing**.
 
-One important practical consideration is that each aligner generates a different index format, and they are not compatible. Since generating an index is computationally expensive, it is good practice to download a pre-built one ([Illumina iGenomes](https://support.illumina.com/sequencing/sequencing_software/igenome.html), [AWS iGenomes](https://ewels.github.io/AWS-iGenomes/), or Ensembl/UCSC FTP) that can be used with the chosen aligner. 
+One important practical consideration is that each aligner generates a different index format, and they are not compatible. Since generating an index is computationally expensive, it is good practice to download a pre-built one (from [Illumina iGenomes](https://support.illumina.com/sequencing/sequencing_software/igenome.html), [AWS iGenomes](https://ewels.github.io/AWS-iGenomes/), or Ensembl/UCSC FTP) that can be used with the chosen aligner. 
 
 ## The Mapping Process
 
@@ -56,11 +56,11 @@ The result of this complex scoring and pairing process is recorded in a **SAM fi
 
 Sam files are human-readable text files, where each line is tab-delimited, showing:
 
-- the read name
-- a numerical flag. This is a compact way of storing multiple pieces of information about the read—such as whether it is paired, if it mapped to the forward or reverse strand, or if it failed to map entirely. To check what the number in this column means, the [Broad Institute SAM Flag Explainer](https://broadinstitute.github.io/picard/explain-flags.html) tool can be used.
-- the chromosome
-- the position
-- the **CIGAR string**. This is a compact code that describes the extend part of the mapping. For example, 150M means 150 bases matched perfectly, while 100M2D48M means 100 matches, a 2-base deletion, and 48 more matches.
+- Read name
+- Numerical flag. This is a compact way of storing multiple pieces of information about the read—such as whether it is paired, if it mapped to the forward or reverse strand, or if it failed to map entirely. To check what the number in this column means, the [Broad Institute SAM Flag Explainer](https://broadinstitute.github.io/picard/explain-flags.html) tool can be used.
+- Chromosome
+- Position
+- **CIGAR string**. This is a compact code that describes the extend part of the mapping. For example, 150M means 150 bases matched perfectly, while 100M2D48M means 100 matches, a 2-base deletion, and 48 more matches.
 
 <br>
 
@@ -68,7 +68,7 @@ Sam files are human-readable text files, where each line is tab-delimited, showi
 
 | Letter	| Meaning	| What it looks like |
 |---------|---------|--------------------|
-| M | Alignment Match	| The bases align (can be a match or a mismatch) |
+| M | Alignment match	| The bases align (can be a match or a mismatch) |
 | I | Insertion	| The read has extra bases that the reference doesn't |
 | D | Deletion | The reference has bases that the read is missing |
 | S | Soft-clipping	| These bases are at the ends and didn't match, so the aligner ignored them |
@@ -77,7 +77,7 @@ Sam files are human-readable text files, where each line is tab-delimited, showi
 
 <br>
 
-**Note:** The presence of many S (Soft-clipping) in a BAM file usually means that the adapter trimming (with fastp or cutadapt) didn't work perfectly. The aligner is doing the work by hiding the adapters so the read can still map.
+**Note:** The presence of many S (Soft-clipping) in a SAM file usually means that the adapter trimming (with fastp or cutadapt) didn't work perfectly. The aligner is doing the work by hiding the adapters so the read can still map.
 
 <br>
 
@@ -96,9 +96,9 @@ Due to the immense size of sequencing data, SAM files are typically converted in
 In a paired-end run, the aligner uses the physical properties of the DNA fragment in addition to the sequence to validate the mapping.
 First, R1 and R2 are aligned independently. Once candidate locations are found, the aligner validates the pair based on three criteria:
 
- - Chromosome: both reads must map to the same chromosome.
- - Orientation: inward-facing for most Illumina libraries.
- - Insert size: the distance between R1 and R2 should match the library preparation.
+ - **Chromosome:** both reads must map to the same chromosome.
+ - **Orientation:** inward-facing for most Illumina libraries.
+ - **Insert size:** the distance between R1 and R2 should match the library preparation.
 
 If these rules are not fulfilled, the pair is flagged as **discordant** by the aligner, keeping both reads but lowering their MAPQ score. The presence of a high mapping rate, together with a low properly-paired rate signals a problem during library preparation, such as over-fragmentation or chimera generation in the PCR step. In standard pipelines, these are often filtered out as noise, but in cancer genomics, they are essential for identifying structural variants and chromosomal rearrangements.
 
