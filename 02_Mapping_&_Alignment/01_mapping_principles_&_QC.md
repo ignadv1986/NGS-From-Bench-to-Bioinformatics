@@ -131,7 +131,7 @@ P is the probability that the base call is wrong, assigned by the aligner.
 A MAPQ of 0 means that the sequence is multi-mapped: the aligner found two or more places in the genome where the read fits perfectly (e.g., in a repetitive element or a duplicated gene). Because the aligner can't be sure which one is right, it assigns a probability of zero that it chose the correct one.
 
 Different factors determine the score:
--	**Uniqueness:** How much better is the best hit compared to the second best hit? If the best hit has 0 mismatches and the second best has 5 mismatches, the MAPQ will be high (~60).
+-	**Uniqueness:** How much better is the best hit compared to the second-best hit? If the best hit has 0 mismatches and the second best has 5 mismatches, the MAPQ will be high (~60).
 -	**Base Quality:** If the bases that match the genome have low Phred scores (Q10 or Q15), the aligner is less confident in the match, and the MAPQ drops.
 -	**Paired-End Information:** If R1 and R2 map to the same chromosome at the correct distance from each other, the MAPQ gets a "bonus" because the physical constraint of the DNA fragment confirms the location.
 
