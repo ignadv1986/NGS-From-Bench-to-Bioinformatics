@@ -107,8 +107,8 @@ If these rules are not fulfilled, the pair is flagged as **discordant** by the a
 As mentioned in the [library preparation](./01_NGS_Foundations_&_Pre-processing/03_library_preparation.md) section of this repository, selecting a correct fragment size is critical for the alignment step, and the decision is made based on both the insert size and the read length. To illustrate this, a paired-end sequencing set to 150 bp read length will be used as an example:
 
 - If the insert size is less than 300 bp, the R1 and R2 reads will overlap in the middle (**overlapping reads**). This provides double sequencing depth for the center of the fragment, which can be used to correct sequencing errors, but limits the overall genomic coverage.
-- If inserts are over 400 bp, there will be an unsequenced gap in the middle, which the aligner will fill using paired-end logic. This reduces sequencing depth, but allows for a higher coverage in exchange.
-- Finally, if the insert is shorter than the read length (below 150 bp), both R1 and R2 will cover the full genomic sequence and read into the adapter on the other end. This provides very high sequencing depth, but requires very heavy trimming to remove the adapter sequences.
+- If inserts are over 400 bp, there will be an unsequenced gap in the middle, which the aligner will fill using paired-end logic. This reduces sequencing depth but allows for a higher coverage in exchange.
+- Finally, if the insert is shorter than the read length (below 150 bp), both R1 and R2 will cover the full genomic sequence and read into the adapter on the other end. This provides very high sequencing depth but requires very heavy trimming to remove the adapter sequences.
 
 <br>
 
